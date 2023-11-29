@@ -12,3 +12,7 @@ class Order (db.Model):
     city = db.Column(db.String, nullable=False)
     state = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime)
+
+    order_products = db.relationship('OrderProduct', back_populates='order', cascade='all, delete-orphan')
+    user = db.relationship('User', back_populates='orders')
+    reviews = db.relationship('Review', back_populates='order')

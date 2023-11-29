@@ -21,6 +21,10 @@ class User(db.Model, UserMixin):
     profile_img = db.Column(db.String)
     description = db.Column(db.String)
 
+    favorites = db.relationship('FavoriteProduct', back_populates='user', cascade="all, delete-orphan")
+    items = db.relationship('Item', back_populates='owner', cascade="all, delete-orphan")
+    orders = db.relationship('Order', back_populates='user', cascade="all, delete-orphan")
+
     @property
     def password(self):
         return self.hashed_password

@@ -14,3 +14,8 @@ class Item(db.Model):
     description = db.Column(db.String, nullable=False)
     price = db.Column(db.Float, nullable=False)
     preview_img = db.Column(db.String)
+
+    order_products = db.relationship('OrderProduct', back_populates='item', cascade='all, delete-orphan')
+    favorites = db.relationship('FavoriteProduct', back_populates='item', cascade='all, delete-orphan')
+    owner = db.relationship('User', back_populates='items')
+    reviews = db.relationship('Review', back_populates='item', cascade='all, delete-orphan')
