@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, SubmitField
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import DataRequired, Email, ValidationError
 from app.models import User
 
@@ -19,9 +20,16 @@ def username_exists(form, field):
     if user:
         raise ValidationError('Username is already in use.')
 
+IMAGE_EXTENSIONS = {"pdf", "png", "jpg", "jpeg", "gif"}
 
 class SignUpForm(FlaskForm):
-    username = StringField(
-        'username', validators=[DataRequired(), username_exists])
-    email = StringField('email', validators=[DataRequired(), user_exists])
+    username = StringField('username', validators=[DataRequired(), username_exists])
+    email = StringField('email', validators=[DataRequired(), user_exists, Email("Please enter a valid email")])
     password = StringField('password', validators=[DataRequired()])
+    first_name = StringField("First Name", validators=[DataRequired()])
+    last_name = StringField("Last Name", validators=[DataRequired()])
+    address = StringField("Address", validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
+    state = StringField("State", validators=[DataRequired()])
+    profile_img = FileField('Profile Image', validators=[FileAllowed(list(IMAGE_EXTENSIONS))])
+    submit = SubmitField("submit")
