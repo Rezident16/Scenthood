@@ -14,8 +14,20 @@ class Item(db.Model):
     description = db.Column(db.String, nullable=False)
     price = db.Column(db.Float, nullable=False)
     preview_img = db.Column(db.String)
+    available_qty = db.Column(db.Integer)
 
     order_products = db.relationship('OrderProduct', back_populates='item', cascade='all, delete-orphan')
     favorites = db.relationship('FavoriteProduct', back_populates='item', cascade='all, delete-orphan')
     owner = db.relationship('User', back_populates='items')
     reviews = db.relationship('Review', back_populates='item', cascade='all, delete-orphan')
+
+    def to_dict_self(self):
+        return {
+            'id': self.id,
+            'owner_id': self.owner_id,
+            'brand': self.brand,
+            'description': self.description,
+            'price': self.price,
+            'preview_img': self.preview_img,
+            'available_qty': self.available_qty
+        }

@@ -16,3 +16,14 @@ class Review (db.Model):
 
     item = db.relationship('Item', back_populates='reviews')
     order = db.relationship('Order', back_populates='reviews')
+
+    def to_dict_self(self):
+        return {
+            'id': self.id,
+            'item_id': self.item_id,
+            'order_id': self.order_id,
+            'note': self.note,
+            'stars': self.stars,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+        }

@@ -16,3 +16,13 @@ class Order (db.Model):
     order_products = db.relationship('OrderProduct', back_populates='order', cascade='all, delete-orphan')
     user = db.relationship('User', back_populates='orders')
     reviews = db.relationship('Review', back_populates='order')
+
+    def to_dict_self(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'address': self.address,
+            'city': self.city,
+            'state': self.state,
+            'created_at': self.created_at,
+        }
