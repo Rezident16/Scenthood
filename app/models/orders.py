@@ -25,4 +25,5 @@ class Order (db.Model):
             'city': self.city,
             'state': self.state,
             'created_at': self.created_at,
+            'order_prodcts': [order.to_dict_self() for order in self.order_products]
         }

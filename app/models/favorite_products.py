@@ -13,6 +13,10 @@ class FavoriteProduct(db.Model):
     # is_favorite = db.Column(db.Boolean, default=False)
     note = db.Column(db.String, nullable=False)
 
+
+    user = db.relationship('User', back_populates = 'favorites')
+    item = db.relationship('Item', back_populates = 'favorites')
+
     def to_dict_self(self):
         return {
             'id': self.id,
@@ -20,6 +24,3 @@ class FavoriteProduct(db.Model):
             'product_id': self.product_id,
             'note': self.note,
         }
-
-    user = db.relationship('User', back_populates = 'favorites')
-    item = db.relationship('Item', back_populates = 'favorites')

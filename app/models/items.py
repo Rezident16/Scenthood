@@ -31,3 +31,18 @@ class Item(db.Model):
             'preview_img': self.preview_img,
             'available_qty': self.available_qty
         }
+    
+    def to_dict_owner(self):
+        return {
+            'id': self.id,
+            'owner_id': self.owner_id,
+            'brand': self.brand,
+            'description': self.description,
+            'price': self.price,
+            'preview_img': self.preview_img,
+            'available_qty': self.available_qty,
+            'owner': self.owner.to_dict_self(),
+            'reviews': [review.to_dict_self() for review in self.reviews],
+            'order_products': [order.to_dict_self() for order in self.order_products],
+            'favorites': [favorite.to_dict_self() for favorite in self.favorites]
+        }

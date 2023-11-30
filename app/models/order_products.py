@@ -23,3 +23,4 @@ class OrderProduct(db.Model):
             'order_id': self.order_id,
             'qty': self.qty,
         }
+    
