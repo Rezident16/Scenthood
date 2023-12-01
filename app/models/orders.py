@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from datetime import datetime
 
 class Order (db.Model):
     __tablename__ = 'orders'
@@ -11,7 +12,7 @@ class Order (db.Model):
     address = db.Column(db.String, nullable=False)
     city = db.Column(db.String, nullable=False)
     state = db.Column(db.String, nullable=False)
-    created_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     order_products = db.relationship('OrderProduct', back_populates='order', cascade='all, delete-orphan')
     user = db.relationship('User', back_populates='orders')

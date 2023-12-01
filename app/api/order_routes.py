@@ -3,7 +3,7 @@ from app.models import *
 from flask_login import current_user, login_required
 from datetime import time, datetime, date
 from app.forms import *
-from aws_helpers import *
+from .aws_helpers import *
 
 order_routes = Blueprint('orders', __name__)
 
@@ -21,7 +21,7 @@ def create_order():
             address = data['address'],
             city = data['city'],
             state = data['state'],
-            created_at = datetime.now()
+            # created_at = datetime.now()
         )
         req = request.get_json()
         items = req['items']

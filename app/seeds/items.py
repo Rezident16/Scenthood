@@ -1,26 +1,23 @@
-from app.models import db, User, environment, SCHEMA
+from app.models import db, Item, environment, SCHEMA
 from sqlalchemy.sql import text
 import csv
 
 
 # Adds a demo user, you can add other users here if you want
-def seed_users():
-    with open("app/seeds/Users.csv", "r") as file:
+def seed_items():
+    with open("app/seeds/Items.csv", "r") as file:
         csvreader = csv.reader(file)
-        for user_row in csvreader:
-            user = User(
-                username = (user_row[0]),
-                email=(user_row[1]),
-                password=(user_row[2]),
-                first_name=(user_row[3]),
-                last_name=(user_row[4]),
-                address=(user_row[5]),
-                city=(user_row[6]),
-                state=(user_row[7]),
-                profile_img=(user_row[8]),
-                description=(user_row[9])
+        for item_row in csvreader:
+            item = Item(
+                owner_id = int(item_row[0]),
+                name=(item_row[1]),
+                brand=(item_row[2]),
+                description=(item_row[3]),
+                price=float(item_row[4]),
+                preview_img=(item_row[5]),
+                available_qty=(item_row[6]),
             )
-            db.session.add(user)
+            db.session.add(item)
             db.session.commit()
     # demo = User(
     #     username='Demo', email='demo@aa.io', password='password', first_name='Demo', last_name='User', address='123 Main St', city='Fake', state='CA')
@@ -41,10 +38,10 @@ def seed_users():
 # incrementing primary key, CASCADE deletes any dependent entities.  With
 # sqlite3 in development you need to instead use DELETE to remove all data and
 # it will reset the primary keys for you as well.
-def undo_users():
+def undo_items():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.items RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM users"))
+        db.session.execute(text("DELETE FROM items"))
         
     db.session.commit()

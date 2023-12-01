@@ -35,7 +35,7 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(item_routes, url_prefix='/api/items')
 app.register_blueprint(order_routes, url_prefix='/api/orders')
 app.register_blueprint(favorite_routes, url_prefix='/api/favorites')
-app.app.register_blueprint(review_routes, url_prefix='/api/reviews')
+app.register_blueprint(review_routes, url_prefix='/api/reviews')
 db.init_app(app)
 Migrate(app, db)
 
@@ -96,4 +96,5 @@ def react_root(path):
 
 @app.errorhandler(404)
 def not_found(e):
+    # return "null"
     return app.send_static_file('index.html')

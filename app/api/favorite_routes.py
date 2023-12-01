@@ -5,7 +5,7 @@ from app.models import *
 from flask_login import current_user, login_required
 from datetime import time, datetime, date
 from app.forms import *
-from aws_helpers import *
+from .aws_helpers import *
 
 favorite_routes = Blueprint('favorites', __name__)
 

@@ -13,6 +13,7 @@ ARG REACT_APP_BASE_URL
 ARG SECRET_KEY
 WORKDIR /var/www
 COPY requirements.txt .
+RUN pip install email_validator
 RUN pip install -r requirements.txt
 RUN pip install psycopg2
 COPY . .
