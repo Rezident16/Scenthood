@@ -1,12 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { updateReviewThunk } from "../../store/item";
 import { createReviewThunk } from "../../store/item";
 import { fetchOneItem } from "../../store/item";
 import { FaStar } from "react-icons/fa";
 import "./items.css";
+import { getSpecific } from "../../store/user";
+import { fetchOneOrder } from "../../store/order";
+import { fetchUserOrders } from "../../store/orders";
 
 function ReviewForm({ formAction, itemId, orderId, review }) {
   const dispatch = useDispatch();
@@ -21,7 +24,8 @@ function ReviewForm({ formAction, itemId, orderId, review }) {
   const [errors, setErrors] = useState({});
   const [hover, setHover] = useState(null);
 
-  let h4Text = formAction === "edit" ? "Update You Review" : "Leave your comment"
+  let h4Text =
+    formAction === "edit" ? "Update You Review" : "Leave your comment";
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +37,7 @@ function ReviewForm({ formAction, itemId, orderId, review }) {
     if (!rating) {
       errorsObj.rating = "Star rating is required";
     }
-    setErrors(errorsObj)
+    setErrors(errorsObj);
     if (!Object.values(errorsObj).length) {
       const formdata = new FormData();
       formdata.append("item_id", itemId);
@@ -42,33 +46,33 @@ function ReviewForm({ formAction, itemId, orderId, review }) {
       formdata.append("stars", rating);
       if (formAction === "edit") {
         try {
-          await dispatch(updateReviewThunk(review.id, formdata))
-          await dispatch(fetchOneItem(itemId))
-          history.push(`/items/${itemId}`);
+          await dispatch(updateReviewThunk(review.id, formdata));
+          await dispatch(fetchOneItem(itemId));
+          await dispatch(fetchUserOrders(user.id));
           closeModal();
         } catch (e) {
-          //   const errors = await e.json();
-          //   setErrors(errors.errors);
-          console.log(e);
+          return e
         }
       } else {
         try {
           await dispatch(createReviewThunk(itemId, orderId, formdata));
-          history.push(`/items/${itemId}`);
+          await dispatch(fetchUserOrders(user.id));
+          await dispatch(fetchOneItem(itemId));
           closeModal();
         } catch (e) {
-          console.log(e);
-          //   const errors = await e.json();
-          //   setErrors(errors.errors);
+            return e
         }
       }
     }
   };
   return (
     <form onSubmit={onSubmit}>
-        <h4>{h4Text}</h4>
+      <h4>{h4Text}</h4>
       <label>
-        Review  <span aria-hidden="true" className="required">*</span>
+        Review{" "}
+        <span aria-hidden="true" className="required">
+          *
+        </span>
         <textarea
           rows="8"
           placeholder="Leave your review here..."
@@ -76,38 +80,36 @@ function ReviewForm({ formAction, itemId, orderId, review }) {
           onChange={(e) => setNote(e.target.value)}
         />
       </label>
-      {errors.note && (
-        <div>{errors.note}</div>
-      )}
+      {errors.note && <div>{errors.note}</div>}
       <div>
-        How do you rate it?  <span aria-hidden="true" className="required">*</span>
+        How do you rate it?{" "}
+        <span aria-hidden="true" className="required">
+          *
+        </span>
         <div>
-        {[...Array(5)].map((star, i) => {
-          const ratingValue = i + 1;
-          return (
-            <label>
-              <input
-                type="radio"
-                name="rating"
-                value={rating}
-                onClick={(e) => setRating(ratingValue)}
-              />
-              <FaStar
-                size={25}
-                onMouseEnter={(e) => setHover(ratingValue)}
-                onMouseLeave={(e) => setHover(rating)}
-                className="star"
-                color={ratingValue <= (hover || rating) ? "gold" : "gray"}
-              />
-            </label>
-          );
-        })}
-
+          {[...Array(5)].map((star, i) => {
+            const ratingValue = i + 1;
+            return (
+              <label>
+                <input
+                  type="radio"
+                  name="rating"
+                  value={rating}
+                  onClick={(e) => setRating(ratingValue)}
+                />
+                <FaStar
+                  size={25}
+                  onMouseEnter={(e) => setHover(ratingValue)}
+                  onMouseLeave={(e) => setHover(rating)}
+                  className="star"
+                  color={ratingValue <= (hover || rating) ? "gold" : "gray"}
+                />
+              </label>
+            );
+          })}
         </div>
       </div>
-      {errors.rating && (
-        <div>{errors.rating}</div>
-      )}
+      {errors.rating && <div>{errors.rating}</div>}
       <div>
         <button type="submit">
           {formAction !== "edit" ? "Submit" : "Update"}

@@ -8,6 +8,7 @@ import { createFavoriteThunk } from "../../store/item";
 // itemId + favorite
 import { fetchOneItem } from "../../store/item";
 import "./items.css";
+import { getSpecific } from "../../store/user";
 
 function FavoriteForm({ formAction, item, favorite }) {
   const dispatch = useDispatch();
@@ -39,11 +40,15 @@ function FavoriteForm({ formAction, item, favorite }) {
         if (formAction === "edit") {
             await dispatch(updateFavoriteThunk(favorite.id, formdata))
             await dispatch(fetchOneItem(item.id))
-            closeModal()
+            await dispatch(getSpecific(user.id)).then(
+                closeModal()
+            )
         } else {
             await dispatch(createFavoriteThunk(item.id, formdata))
             await dispatch(fetchOneItem(item.id))
-            closeModal()
+            await dispatch(getSpecific(user.id)).then(
+                closeModal()
+            )
         }
     }
   }

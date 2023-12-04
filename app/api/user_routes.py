@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required,current_user
-from app.models import User
+from app.models import User, Order
 
 
 user_routes = Blueprint('users', __name__)
@@ -35,3 +35,19 @@ def user(userId):
     except AttributeError:
         return None
     return user.to_dict_self()
+
+@user_routes.route('/<int:userId>/orders/<int:orderId>')
+def order(orderId):
+    try:
+        order = Order.query.get(orderId)
+    except AttributeError:
+        return None
+    return order.to_dict_self()
+
+@user_routes.route('/<int:userId>/orders')
+def orders(userId):
+    try:
+        orders = Order.query.filter(Order.user_id == userId).all()
+    except AttributeError:
+        return None
+    return [order.to_dict_self() for order in orders]

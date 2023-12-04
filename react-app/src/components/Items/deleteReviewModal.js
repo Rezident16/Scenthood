@@ -4,15 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { deleteReviewThunk } from "../../store/item";
 import { fetchOneItem } from "../../store/item";
+import { fetchUserOrders } from "../../store/orders";
 
 function DeleteReviewModal({ review }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-
+  console.log(review)
   const deleteReview = async (id) => {
     await dispatch(deleteReviewThunk(id))
     await dispatch(fetchOneItem(review.item_id))
+    await dispatch(fetchUserOrders(review.order.user.id))
     closeModal()
 
   };

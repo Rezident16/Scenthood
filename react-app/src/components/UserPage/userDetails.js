@@ -8,6 +8,10 @@ import { useHistory } from "react-router-dom/";
 import { createReviewThunk } from "../../store/item";
 import ReviewForm from "../Items/itemform";
 import OpenModalButton from "../OpenModalButton";
+import { fetchOneItem } from "../../store/item";
+import DeleteReviewModal from "../Items/deleteReviewModal";
+import { fetchUserOrders } from "../../store/orders";
+
 function UserDetails() {
   const { userId } = useParams();
   const dispatch = useDispatch();
@@ -17,8 +21,12 @@ function UserDetails() {
   const currUser = useSelector((state) => state.session.user);
   const [userOrders, setUserOrders] = useState(true);
 
-  useEffect(() => {
-    dispatch(getSpecific(userId));
+  const ordersObj = useSelector(state => state.orders)
+  const orders = Object.values(ordersObj)
+
+  useEffect(async () => {
+    await dispatch(getSpecific(userId));
+    await dispatch(fetchUserOrders(userId))
   }, [dispatch, userId]);
 
   if (!user) return null;
@@ -66,8 +74,8 @@ function UserDetails() {
             </div>
           ) : (
             <div className="all_orders">
-              {currUser && currUser.orders.length > 0 ? (
-                currUser.orders.map((order) => (
+              {currUser && orders.length > 0 ? (
+                orders.map((order) => (
                   <div className="order_details_container">
                     <div>
                       <div>Address: {order.address}</div>
@@ -87,19 +95,34 @@ function UserDetails() {
                           <div className="item_name_comment_container">
                             <div className="item_name_brand_container">
                               {orderProduct.item.name} by{" "}
-                              <span className="item_brand_order">{orderProduct.item.brand}</span>
+                              <span className="item_brand_order">
+                                {orderProduct.item.brand}
+                              </span>
                             </div>
                             {orderProduct.item.reviews.length == 0 ? (
-                              <OpenModalButton
-                              className="delete_review_button"
-                              buttonText={"Submit Review"}
-                              modalComponent={
-                                <ReviewForm formAction="create" itemId={orderProduct.item.id} orderId={order.id} />
-                              }
-                            />
+                              <div>
+                                <OpenModalButton
+                                  className="delete_review_button"
+                                  buttonText={"Submit Review"}
+                                  modalComponent={
+                                    <ReviewForm
+                                      formAction="create"
+                                      itemId={orderProduct.item.id}
+                                      orderId={order.id}
+                                    />
+                                  }
+                                />
+                              </div>
                             ) : (
                               <div>
                                 You said: {orderProduct.item.reviews[0].note}{" "}
+                                <OpenModalButton
+                                  className="delete_review_button"
+                                  buttonText={"Delete Review"}
+                                  modalComponent={
+                                    <DeleteReviewModal review={orderProduct.item.reviews[0]} />
+                                  }
+                                />
                               </div>
                             )}
                           </div>

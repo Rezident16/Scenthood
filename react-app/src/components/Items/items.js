@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchItems } from "../../store/items";
 import ItemTile from "./itemTile";
 import './items.css'
+import { clearItemState } from "../../store/item";
 
 function ItemsComponent () {
     const dispatch = useDispatch()
@@ -11,6 +12,7 @@ function ItemsComponent () {
     useEffect(() => {
         (async () => {
             await dispatch(fetchItems());
+            await dispatch(clearItemState())
         })();
     }, [dispatch]);
 

@@ -26,10 +26,9 @@ function ItemContainer() {
 
   useEffect(() => {
     dispatch(fetchOneItem(itemId));
-  }, [dispatch]);
+  }, [itemId]);
 
   const currentUser = useSelector((state) => state.session.user);
-  console.log(currentUser);
 
   const item = useSelector((state) => state.item);
 

@@ -39,4 +39,5 @@ class Review (db.Model):
             'stars': self.stars,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
+            'order': self.order.to_dict_delete_review()
     }

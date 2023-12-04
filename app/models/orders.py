@@ -35,3 +35,8 @@ class Order (db.Model):
         return {
             "user": self.user.to_dict_self()
         }
+    
+    def to_dict_delete_review(self):
+        return {
+            "user": self.user.to_dict_fav()
+        }

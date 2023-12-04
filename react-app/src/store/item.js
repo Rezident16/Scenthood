@@ -212,13 +212,16 @@ const oneItemReducer = (state ={}, action) => {
                 reviews: {...state.reviews, [action.review.id]: action.review}
             }
         case DELETE_REVIEW:
-            const reviews = {
-                ...state,
-                reviews: state.reviews.filter(
-                    review => review.id !== action.id
-                )
+            let newState = {...state}
+            if (newState.reviews) {
+                newState = {
+                    ...state,
+                    reviews: state.reviews.filter(
+                        review => review.id !== action.id
+                    )
+                }
             }
-            return reviews
+            return newState
         case CLEAR_STATE:
             return {}
         case CREATE_FAVORITE:

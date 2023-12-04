@@ -1,10 +1,13 @@
 import { FaStar } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import "./items.css";
+import { useDispatch } from "react-redux";
+import { fetchOneItem } from "../../store/item";
 
 function ItemTile({ item }) {
   const reviews = item.reviews;
+  const dispatch = useDispatch()
   let reviewRating = 0;
   reviews.forEach((review) => {
     reviewRating += review.stars;
@@ -20,7 +23,6 @@ function ItemTile({ item }) {
   } else {
     reviewText = "reviews";
   }
-
 
   const history = useHistory();
   function directToItem() {

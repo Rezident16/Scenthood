@@ -5,13 +5,17 @@ import userReducer from './user';
 import itemsReducer from './items';
 import oneItemReducer from './item';
 import cartReducer from './cart';
+import orderReducer from './order';
+import ordersReducer from './orders';
 
 const rootReducer = combineReducers({
   session,
   user: userReducer,
   items: itemsReducer,
   item: oneItemReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  order: orderReducer,
+  orders: ordersReducer
 });
 
 
