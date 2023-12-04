@@ -5,6 +5,9 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import ItemsComponent from "./components/Items/items";
+import ItemContainer from "./components/Items/itemContainer";
+import UserDetails from "./components/UserPage/userDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,8 +24,19 @@ function App() {
           <Route path="/login" >
             <LoginFormPage />
           </Route>
+          <Route
+          exact path = "/users/:userId"
+          >
+            <UserDetails />
+          </Route>
+          <Route exact path="/items/:itemId">
+            <ItemContainer />
+          </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path='/items'>
+            <ItemsComponent/>
           </Route>
         </Switch>
       )}

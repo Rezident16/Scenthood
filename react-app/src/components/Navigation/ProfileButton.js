@@ -10,7 +10,7 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
-  const openMenu = () => {
+  const openMenu = async () => {
     if (showMenu) return;
     setShowMenu(true);
   };

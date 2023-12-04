@@ -25,17 +25,20 @@ class Item(db.Model):
         return {
             'id': self.id,
             'owner_id': self.owner_id,
+            'name': self.name,
             'brand': self.brand,
             'description': self.description,
             'price': self.price,
             'preview_img': self.preview_img,
-            'available_qty': self.available_qty
+            'available_qty': self.available_qty,
+            
         }
     
     def to_dict_owner(self):
         return {
             'id': self.id,
             'owner_id': self.owner_id,
+            'name': self.name,
             'brand': self.brand,
             'description': self.description,
             'price': self.price,
@@ -45,4 +48,17 @@ class Item(db.Model):
             'reviews': [review.to_dict_self() for review in self.reviews],
             'order_products': [order.to_dict_self() for order in self.order_products],
             'favorites': [favorite.to_dict_self() for favorite in self.favorites]
+        }
+    
+    def to_dict_user_items(self): 
+        return {
+            'id': self.id,
+            'owner_id': self.owner_id,
+            'name': self.name,
+            'brand': self.brand,
+            'description': self.description,
+            'price': self.price,
+            'preview_img': self.preview_img,
+            'available_qty': self.available_qty,
+            'reviews': [review.to_dict_user_items() for review in self.reviews],
         }

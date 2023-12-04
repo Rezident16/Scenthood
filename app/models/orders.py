@@ -12,6 +12,7 @@ class Order (db.Model):
     address = db.Column(db.String, nullable=False)
     city = db.Column(db.String, nullable=False)
     state = db.Column(db.String, nullable=False)
+    price = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     order_products = db.relationship('OrderProduct', back_populates='order', cascade='all, delete-orphan')
@@ -25,6 +26,12 @@ class Order (db.Model):
             'address': self.address,
             'city': self.city,
             'state': self.state,
+            'price': self.price,
             'created_at': self.created_at,
-            'order_prodcts': [order.to_dict_self() for order in self.order_products]
+            'order_prodcts': [order.to_dict_self() for order in self.order_products],
+            'reviews': [review.to_dict_user_items() for review in self.reviews if review.order_id == self.id]
+        }
+    def to_dict_review(self):
+        return {
+            "user": self.user.to_dict_self()
         }

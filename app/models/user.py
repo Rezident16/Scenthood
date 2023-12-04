@@ -47,5 +47,22 @@ class User(db.Model, UserMixin):
             'city': self.city,
             'state': self.state,
             'profile_img': self.profile_img,
-            'description': self.description
+            'description': self.description,
+            'favorites': [favorite.to_dict_self() for favorite in self.favorites],
+            'items': [item.to_dict_user_items() for item in self.items],
+            'orders': [order.to_dict_self() for order in self.orders]
+        }
+    
+    def to_dict_fav(self): 
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'address': self.address,
+            'city': self.city,
+            'state': self.state,
+            'profile_img': self.profile_img,
+            'description': self.description,
         }

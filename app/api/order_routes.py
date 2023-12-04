@@ -26,19 +26,20 @@ def create_order():
         req = request.get_json()
         items = req['items']
         order_products = list()
-
+        price = 0
         for item in items:
             new_order_product = OrderProduct(
                 product_id = item['id'],
                 order_id = new_order.id,
                 qty = item['qty']
             )
+            price += item['price'] * item['qty']
 
             order_products.append(new_order_product)
             db.session.add(new_order_product)
 
         new_order.order_products = order_products
-
+        new_order.price = price
         db.session.add(new_order)
         db.session.commit()
         return new_order.to_dict_self()

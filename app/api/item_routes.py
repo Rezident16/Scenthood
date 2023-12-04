@@ -128,6 +128,11 @@ def favorite_item(itemId):
 
     if not item:
         return {}
+    
+    existing_favorite = FavoriteProduct.query.filter_by(product_id=itemId, user_id = current_user.id).first()
+
+    if existing_favorite is not None:
+        return abort(400, description="User already has favorited this item")
 
     form = FavoriteForm()
     form['csrf_token'].data = request.cookies['csrf_token']

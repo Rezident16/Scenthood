@@ -41,6 +41,7 @@ def update_review(reviewId):
     
         review.note = data['note']
         review.stars = data['stars']
+        review.updated_at = datetime.now()
         
         db.session.commit()
         return review.to_dict_self(), 200

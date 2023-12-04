@@ -22,5 +22,6 @@ class OrderProduct(db.Model):
             'product_id': self.product_id,
             'order_id': self.order_id,
             'qty': self.qty,
+            'item': self.item.to_dict_user_items()
         }
     

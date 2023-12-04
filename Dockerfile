@@ -2,6 +2,7 @@ FROM node:15-alpine3.10 as build
 COPY /react-app /react_app
 WORKDIR /react_app
 RUN npm install && CI=false && npm run build
+RUN npm install react-icons
 FROM python:3.9.18-alpine3.18
 RUN apk add build-base
 RUN apk add postgresql-dev gcc python3-dev musl-dev

@@ -27,4 +27,16 @@ class Review (db.Model):
             'stars': self.stars,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
+            'order': self.order.to_dict_review()
         }
+    
+    def to_dict_user_items(self):
+        return {
+            'id': self.id,
+            'item_id': self.item_id,
+            'order_id': self.order_id,
+            'note': self.note,
+            'stars': self.stars,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+    }

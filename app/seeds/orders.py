@@ -11,6 +11,7 @@ def seed_orders():
                 address=(order_row[1]),
                 city=(order_row[2]),
                 state=(order_row[3]),
+                price=float(order_row[4])
             )
             db.session.add(order)
             db.session.commit()
