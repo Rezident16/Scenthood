@@ -63,8 +63,10 @@ def sign_up():
     """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    
     if form.validate_on_submit():
         image = form.data['profile_img']
+        print(form.data)
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
         user = User(
@@ -76,12 +78,14 @@ def sign_up():
             address = form.data['address'],
             city = form.data['city'].title(),
             state = form.data['state'],
-            profile_img = upload['url']
+            profile_img = upload['url'],
+            description = form.data['description']
         )
         db.session.add(user)
         db.session.commit()
         login_user(user)
         return user.to_dict_self()
+    # print (validation_errors_to_error_messages(form.errors))
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 

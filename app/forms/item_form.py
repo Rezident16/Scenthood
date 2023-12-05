@@ -12,5 +12,5 @@ class ItemForm(FlaskForm):
     description = TextAreaField('description', validators=[DataRequired()])
     price = FloatField('price', validators=[DataRequired()])
     preview_img = FileField("preview image", validators=[FileAllowed(list(IMAGE_EXTENSIONS))])
-    available_qty = IntegerField('Available Quantity', validators=[DataRequired()])
+    available_qty = IntegerField('Available Quantity')
     submit = SubmitField("submit")

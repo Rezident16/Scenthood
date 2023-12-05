@@ -32,7 +32,7 @@ export const clearCart = () => ({
     type: CHECKOUT_CART,
   });
 
-export const submitOrder = (body, id) => async (dispatch) => {
+export const submitOrder = (body) => async (dispatch) => {
     const response = await fetch(`/api/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,27 +40,31 @@ export const submitOrder = (body, id) => async (dispatch) => {
     });
     if (response.ok) {
       const data = await response.json();
+      console.log('ok')
       dispatch(clearCart());
       return data;
     } else {
+      console.log('not ok')
       const errors = await response.json();
       return errors;
     }
   };
 
-export const loadCartThunk = () => async (dispatch) => {
+export const fetchLoadCart = () => async (dispatch) => {
     let cart = localStorage.getItem("scenthoodcart");
-    let items = {};
-    const objectItems = Object.values(JSON.parse(cart));
-    for (const key in objectItems) {
-      const item = objectItems[key];
-      const res = await fetch(`/api/items/${item.id}`);
-      if (res.ok) {
-        const data = await res.json()
-        items[item.id] = {...item, ...data};
+    const  cartItems = {};
+    if (cart) {
+      const objectItems = Object.values(JSON.parse(cart));
+      for (const key in objectItems) {
+        const item = objectItems[key];
+        const res = await fetch(`/api/items/${item.id}`);
+        if (res.ok) {
+          const data = await res.json()
+          cartItems[item.id] = {...item, ...data};
+        }
       }
     }
-    localStorage.setItem("scenthoodcart", JSON.stringify(items));
+    localStorage.setItem("scenthoodcart", JSON.stringify(cartItems));
     dispatch(loadCart());
   };
 

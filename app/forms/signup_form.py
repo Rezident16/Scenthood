@@ -32,4 +32,5 @@ class SignUpForm(FlaskForm):
     city = StringField('City', validators=[DataRequired()])
     state = StringField("State", validators=[DataRequired()])
     profile_img = FileField('Profile Image', validators=[FileAllowed(list(IMAGE_EXTENSIONS))])
+    description = StringField('Description')
     submit = SubmitField("submit")

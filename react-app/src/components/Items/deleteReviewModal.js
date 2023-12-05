@@ -10,13 +10,11 @@ function DeleteReviewModal({ review }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  console.log(review)
   const deleteReview = async (id) => {
     await dispatch(deleteReviewThunk(id))
     await dispatch(fetchOneItem(review.item_id))
     await dispatch(fetchUserOrders(review.order.user.id))
     closeModal()
-
   };
 
   return (

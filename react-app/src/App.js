@@ -8,6 +8,8 @@ import Navigation from "./components/Navigation";
 import ItemsComponent from "./components/Items/items";
 import ItemContainer from "./components/Items/itemContainer";
 import UserDetails from "./components/UserPage/userDetails";
+import { fetchLoadCart } from "./store/cart";
+import Checkout from "./components/Cart/Checkout";
 
 function App() {
   const dispatch = useDispatch();
@@ -16,17 +18,25 @@ function App() {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
+  useEffect(() => {
+    const storage = localStorage.getItem("scenthoodcart");
+    if (storage) {
+      dispatch(fetchLoadCart(JSON.parse(storage)));
+    }
+  }, [dispatch]);
+
   return (
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/login" >
+          <Route path="/login">
             <LoginFormPage />
           </Route>
-          <Route
-          exact path = "/users/:userId"
-          >
+          <Route exact path="/checkout">
+            <Checkout />
+          </Route>
+          <Route exact path="/users/:userId">
             <UserDetails />
           </Route>
           <Route exact path="/items/:itemId">
@@ -35,8 +45,8 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path='/items'>
-            <ItemsComponent/>
+          <Route exact path="/items">
+            <ItemsComponent />
           </Route>
         </Switch>
       )}

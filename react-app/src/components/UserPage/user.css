@@ -25,10 +25,10 @@
 }
 
 .order_details_container {
-display: flex;
-gap: 50px;
-border-top: 1px solid gray;
-padding-top: 10px;
+    display: flex;
+    gap: 50px;
+    border-top: 1px solid gray;
+    padding-top: 10px;
 }
 
 .all_orders {
@@ -47,4 +47,66 @@ padding-top: 10px;
     color: rgb(35, 35, 35);
     font-size: 18px;
     font-weight: bold;
+}
+
+.user_items_orders {
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+}
+
+.user_items_orders>* {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid black;
+    height: 30px;
+}
+.add_item_button  {
+    border: 1px solid gray;
+    box-shadow: none;
+    background-color: #ff9900;
+    color: black;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.add_item_button:hover {
+    border: 1px solid gray;
+    background-color: #ffd79b;
+    font-weight: bold;
+    color: black;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 1s;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.selected {
+    border: 1px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(black, rgb(133, 3, 3));
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-image 2s;
+}
+
+.not_selected {
+    border: 1px solid gray;
+    box-shadow: none;
+    background-image: linear-gradient(white, gray);
+    color: black;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-image 2s;
+}
+
+.selected:hover,
+.not_selected:hover
+{
+    cursor: pointer;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
 }

@@ -12,10 +12,11 @@ import { useModal } from "../../context/Modal";
 import { deleteReviewThunk } from "../../store/item";
 import OpenModalButton from "../OpenModalButton";
 import DeleteReviewModal from "./deleteReviewModal";
-import ReviewForm from "./itemform";
+import ReviewForm from "./reviewForm";
 import { clearItemState } from "../../store/item";
 import FavoriteForm from "./favoriteForm";
 import DeleteCommentModal from "./deleteCommentModal";
+import { clearState } from "../../store/user";
 
 function ItemContainer() {
   const dispatch = useDispatch();
@@ -24,9 +25,10 @@ function ItemContainer() {
   const [Qty, setQty] = useState(1);
   const { closeModal } = useModal();
 
-  useEffect(() => {
-    dispatch(fetchOneItem(itemId));
-  }, [itemId]);
+  useEffect(async () => {
+    await dispatch(clearState());
+    await dispatch(fetchOneItem(itemId));
+  }, [dispatch, itemId]);
 
   const currentUser = useSelector((state) => state.session.user);
 
@@ -66,9 +68,10 @@ function ItemContainer() {
     }
   }
   const stock = item.available_qty;
-  if (stock) {
+  if (stock >= 0) {
     if (stock == 0) {
       inStock = "Out of Stock";
+      console.log("wer are here");
       stockClassName = "out_of_stock";
     } else if (stock == 1) {
       inStock = `Only ${stock} item left in stock - order soon`;
@@ -162,25 +165,26 @@ function ItemContainer() {
                 <form onSubmit={AddToCart}>
                   <h3>About this item</h3>
                   <p>{item.description}</p>
-                  <div className="add_to_cart">
-                    <select
-                      value={Qty}
-                      onChange={(e) => setQty(e.target.value)}
-                      className="quantity"
-                    >
-                      {options().map((option) => (
-                        <option value={option} key={option}>
-                          {" "}
-                          {option}{" "}
-                        </option>
-                      ))}
-                    </select>
-
-                    <button className="modal_buttons">
-                      {" "}
-                      Add {Qty} To Cart • ${(item.price * Qty).toFixed(2)}
-                    </button>
-                  </div>
+                  {stock > 0 ? (
+                    <div className="add_to_cart">
+                      <select
+                        value={Qty}
+                        onChange={(e) => setQty(e.target.value)}
+                        className="quantity"
+                      >
+                        {options().map((option) => (
+                          <option value={option} key={option}>
+                            {" "}
+                            {option}{" "}
+                          </option>
+                        ))}
+                      </select>
+                      <button className="modal_buttons">
+                        {" "}
+                        Add {Qty} To Cart • ${(item.price * Qty).toFixed(2)}
+                      </button>
+                    </div>
+                  ) : null}
                 </form>
               </div>
               {!userFavorite && currentUser && (
@@ -277,26 +281,26 @@ function ItemContainer() {
                         <div>{fav.note}</div>
                       </div>
                       {currentUser &&
-                      (fav.user_id == currentUser.id ? (
-                        <div>
-                          <OpenModalButton
-                            className="delete_review_button"
-                            buttonText={"Edit Comment"}
-                            modalComponent={
-                              <FavoriteForm
-                                favorite={fav}
-                                formAction="edit"
-                                item={item}
-                              />
-                            }
-                          />
-                          <OpenModalButton
-                            className="delete_review_button"
-                            buttonText={"Delete Comment"}
-                            modalComponent={<DeleteCommentModal fav={fav} />}
-                          />
-                        </div>
-                      ) : null)}
+                        (fav.user_id == currentUser.id ? (
+                          <div>
+                            <OpenModalButton
+                              className="delete_review_button"
+                              buttonText={"Edit Comment"}
+                              modalComponent={
+                                <FavoriteForm
+                                  favorite={fav}
+                                  formAction="edit"
+                                  item={item}
+                                />
+                              }
+                            />
+                            <OpenModalButton
+                              className="delete_review_button"
+                              buttonText={"Delete Comment"}
+                              modalComponent={<DeleteCommentModal fav={fav} />}
+                            />
+                          </div>
+                        ) : null)}
                     </div>
                   ))}
               </div>

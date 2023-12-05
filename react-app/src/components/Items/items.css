@@ -19,6 +19,12 @@
     font-style: italic;
     font-weight: bold;
 }
+#item_form_img {
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    height: 200px;
+}
 
 .item_tile > img {
     height: 300px;
