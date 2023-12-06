@@ -77,14 +77,16 @@ function ItemTile({ item }) {
         <div className="item_price_item_tile">${item.price}</div>
       </div>
       {visible ? (
-        <div>
+        <div className="item_review_buttons user_item_change_buttons">
             <OpenModalButton
               buttonText={"Update"}
               modalComponent={<ItemForm item={item} formType="edit" />}
+              className={'delete_review_button'}
             />
             <OpenModalButton
               buttonText={"Delete"}
               modalComponent={<DeleteItemModal item={item} />}
+              className={'delete_review_button'}
             />
         </div>
       ) : null}

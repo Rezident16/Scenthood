@@ -33,14 +33,14 @@ function CartModal() {
       setModalContent(<LoginFormModal />);
       return;
     } else {
-      history.push('/checkout');
-      closeModal()
+      history.push("/checkout");
+      closeModal();
     }
   };
 
   return (
     <div className="cart_modal">
-      <div className="all_cart_items">
+      <div className="cart_items">
         {items.length ? (
           items.map((item) => <CartItem item={item} key={item.id}></CartItem>)
         ) : (
@@ -48,23 +48,23 @@ function CartModal() {
         )}
       </div>
       <div className="cart_buttons">
-        {total > 0 && (
-          <div>
-            <div>Subtotal ${total}</div>
-            <div onClick={onClick}>Checkout</div>
+        <div>
+          <div className="subtotal">Subtotal ${total}</div>
+          <div className="cart_button" onClick={onClick}>
+            Checkout
           </div>
-        )}
+        </div>
 
         {items.length ? (
-          <button
-            className="modal_buttons"
+          <div
+            className="cart_button"
             onClick={(e) => {
               e.preventDefault();
               dispatch(clearCart());
             }}
           >
             Clear Cart
-          </button>
+          </div>
         ) : null}
       </div>
     </div>

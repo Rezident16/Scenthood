@@ -20,6 +20,11 @@ function UserDetails() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const goBack = async (e) => {
+    await dispatch(clearItemState());
+    history.push("/items");
+  };
+
   const user = useSelector((state) => state.user.user);
   const currUser = useSelector((state) => state.session.user);
   const [userOrders, setUserOrders] = useState(true);
@@ -57,6 +62,9 @@ function UserDetails() {
 
   return (
     <div>
+      <div className="go_back_button" onClick={goBack}>
+        {"< Back to items"}
+      </div>
       <div>
         <div>
           <img className="user_details_profile_img" src={user.profile_img} />
@@ -98,7 +106,7 @@ function UserDetails() {
           {userOrders == false ? (
             <div className="all_items">
               {user.items.length ? (
-                <div>
+                <div className="user_items">
                   <h3>{userText}</h3>
                   {user.items
                     .sort((a, b) => b.reviews.length - a.reviews.length)
@@ -116,6 +124,7 @@ function UserDetails() {
             </div>
           ) : (
             <div className="all_orders">
+              <h3>Orders</h3>
               {currUser && orders.length > 0 ? (
                 orders.map((order) => (
                   <div className="order_details_container" key={order.id}>
@@ -164,7 +173,7 @@ function UserDetails() {
                                   />
                                 </div>
                               ) : (
-                                <div>
+                                <div className="item_profile_order_review">
                                   You said: {userReview[0].note}{" "}
                                   <OpenModalButton
                                     className={"delete_review_button"}

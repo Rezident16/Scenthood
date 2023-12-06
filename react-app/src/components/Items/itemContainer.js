@@ -229,7 +229,7 @@ function ItemContainer() {
                       <div>{review.note}</div>
                       {currentUser &&
                         (review.order.user.id === currentUser.id ? (
-                          <div>
+                          <div className="item_review_buttons">
                             <OpenModalButton
                               className="delete_review_button"
                               buttonText={"Update Review"}
@@ -282,10 +282,10 @@ function ItemContainer() {
                       </div>
                       {currentUser &&
                         (fav.user_id == currentUser.id ? (
-                          <div>
+                          <div className="item_review_buttons">
                             <OpenModalButton
                               className="delete_review_button"
-                              buttonText={"Edit Comment"}
+                              buttonText={"Update Comment"}
                               modalComponent={
                                 <FavoriteForm
                                   favorite={fav}

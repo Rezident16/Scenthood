@@ -49,8 +49,7 @@ function Checkout() {
         state: state,
         items: items,
       };
-
-      await dispatch(submitOrder(order));
+      await dispatch(submitOrder(order))
       for (let item of items) {
         const formData = new FormData();
         formData.append("name", item.name);
@@ -61,6 +60,7 @@ function Checkout() {
         formData.append("preview_img", item.preview_img);
         await dispatch(fetchUpdateItem(item.id, formData));
       }
+      history.push(`users/${user.id}`)
     } else {
       console.log("hello");
       setErrors(errorsObj);
@@ -153,8 +153,9 @@ function Checkout() {
             </select>
           </label>
         </div>
-        <div>Order Total: ${total}</div>
-        <button type="submit">Place Order</button>
+        <div>Order Total: ${total.toFixed(2)}</div>
+        {items.length ? (<button type="submit">Place Order</button>): (null)}
+        
       </form>
 
       <div className="checkout_items_tiles">

@@ -10,6 +10,8 @@ import ItemContainer from "./components/Items/itemContainer";
 import UserDetails from "./components/UserPage/userDetails";
 import { fetchLoadCart } from "./store/cart";
 import Checkout from "./components/Cart/Checkout";
+import IntroPage from "./components/Splash/SplashPage";
+import Footer from "./components/Splash/footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +35,9 @@ function App() {
           <Route path="/login">
             <LoginFormPage />
           </Route>
+          <Route exact path="/">
+            <IntroPage />
+          </Route>
           <Route exact path="/checkout">
             <Checkout />
           </Route>
@@ -48,8 +53,12 @@ function App() {
           <Route exact path="/items">
             <ItemsComponent />
           </Route>
+          <Route path="/:notHome">
+            <Footer />
+          </Route>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }

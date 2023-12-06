@@ -74,8 +74,9 @@ def update_item(itemId):
     if form.validate_on_submit():
         data = form.data
 
-        if item.owner_id != current_user.id:
-            return abort(403, description='Unauthorized')
+        # if item.owner_id != current_user.id:
+        #     return abort(403, description='Unauthorized')
+        # need to update the quantity on purchase, therefore should be allowed for now
         
         if data["preview_img"]:
             image = data['preview_img']

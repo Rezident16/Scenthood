@@ -8,7 +8,7 @@
 
 .navigation {
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   gap: 20px;
   list-style: none;
 }
@@ -30,8 +30,125 @@
 
 .logo_text {
   text-decoration: none;
+  /* color: linen; */
 }
 
 .logo_text_parent {
   display: flex;
+}
+
+.navigation_buttons {
+  display: flex;
+  flex-direction: row;
+  background-color: black;
+  color: white;
+  border-radius: 25px;
+  width: 150px;
+  height: 35px;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login_signup_buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+#nav-buttons {
+ display: flex;
+ flex-direction: row;
+ justify-content: flex-end;
+ gap: 15px;
+ align-items: center;
+}
+
+.navigation_buttons_cart {
+  display: flex;
+  flex-direction: row;
+  background-color: black;
+  color: white;
+  border-radius: 25px;
+  width: 155px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.profile-dropdown {
+  position: absolute;
+  background: white;
+  border: 1px solid #000;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 0;
+  font-size: 16px;
+  text-align: left;
+  padding: 10px;
+  z-index: 1;
+  max-width: 100%;
+  transition: left 0.3s;
+  list-style-type: none;
+  left: auto;
+  right: 0px;
+  margin-top: 9px;
+  flex-direction: column;
+  gap: 2px;
+  /* display: flex; */
+  align-items: center;
+  text-align: center;
+}
+
+#hamburger {
+  background-color: white;
+  border: none;
+}
+
+.seperator {
+  border: 1px solid gray;
+}
+
+.profile_text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profile_button {
+  display: flex;
+  /* border: 1px solid red; */
+  align-items: center;
+  justify-content: center;
+  color: white;
+  width: 150px;
+  height: 25px;
+  border-radius: 25px;
+  background-color: black;
+  cursor: pointer;
+}
+
+.logout_button {
+  /* display: flex; */
+  margin-top: 15px;
+  align-items: center;
+  justify-content: center;
+
+  color: black;
+  width: 150px;
+  height: 25px;
+  border-radius: 25px;
+  background-color: orange;
+  cursor: pointer;
+}
+
+.profile_button:active {
+  color: black;
+  background-color: white;
+}
+
+.logout_button:active {
+  background-color: red;
 }

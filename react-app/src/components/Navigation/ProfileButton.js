@@ -50,6 +50,10 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
+  const goToProfile = () => {
+    history.push(`/users/${user.id}`)
+  }
+
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
@@ -64,6 +68,7 @@ function ProfileButton({ user }) {
   return (
     <div id="nav-buttons">
       <OpenModalButton
+      className={'navigation_buttons_cart'}
         buttonText={
           <>
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>{" "}
@@ -83,38 +88,48 @@ function ProfileButton({ user }) {
           />
         </button>
         <ul className={ulClassName} ref={ulRef}>
+          <div className="profile_text">
           <li>{user?.username}</li>
           <li>{user?.email}</li>
+          <li>{user?.first_name} {user?.last_name}</li>
           <li className="seperator"></li>
+          <li className="profile_button" onClick={goToProfile}>
+              My Profile
+          </li>
           <li>
             <OpenModalDiv
+            className={'profile_button'}
               buttonText="Sell Your Item"
               onItemClick={closeMenu}
               modalComponent={<ItemForm formType='create' />}
             />
           </li>
           <li>
-            <button onClick={handleLogout} className="loginButton">
+            <button onClick={handleLogout} className="logout_button">
               Log Out
             </button>
           </li>
+
+          </div>
         </ul>
       </div>
 
       {!user && (
-        <>
+        <div className="login_signup_buttons">
           <OpenModalButton
+          className={'navigation_buttons'}
             buttonText="Log In"
             onItemClick={closeMenu}
             modalComponent={<LoginFormModal />}
           />
 
           <OpenModalButton
+                    className={'navigation_buttons'}
             buttonText="Sign Up"
             onItemClick={closeMenu}
             modalComponent={<SignupFormModal />}
           />
-        </>
+        </div>
       )}
     </div>
   );

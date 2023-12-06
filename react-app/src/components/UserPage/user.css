@@ -35,6 +35,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    /* margin-top: 25px; */
 }
 
 .item_name_comment_container {
@@ -94,6 +95,12 @@
     transition: background-image 2s;
 }
 
+.item_profile_order_review {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 .not_selected {
     border: 1px solid gray;
     box-shadow: none;
@@ -109,4 +116,11 @@
 {
     cursor: pointer;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.individual_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
