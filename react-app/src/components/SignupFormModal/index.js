@@ -44,7 +44,7 @@ function SignupFormModal() {
     !profile_img ||
     !description ||
     !password ||
-    password != confirmPassword
+	!confirmPassword
   ) {
     buttonClassname = "disabled_signup_login_button";
   } else {
