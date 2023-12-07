@@ -9,13 +9,13 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    opacity: 99%;
+    /* opacity: 99%; */
     cursor: pointer;
 }
 
 .intro_button:hover {
     background-color: black;
-    opacity: 100%;
+    /* opacity: 100%; */
 }
 
 .splash_page {
