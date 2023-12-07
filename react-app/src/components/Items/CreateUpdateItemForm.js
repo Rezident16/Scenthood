@@ -47,7 +47,7 @@ function ItemForm({ item, formType, userId }) {
     !brand ||
     !price ||
     !preview_img ||
-    !available_qty < 0 ||
+    !parseInt(available_qty) < 0 ||
     !description
   ) {
     buttonClassname = "disabled_signup_login_button";
@@ -55,7 +55,7 @@ function ItemForm({ item, formType, userId }) {
     buttonClassname = "signup_login_button";
   }
 
-  console.log(description.length)
+  console.log(available_qty.length)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,6 +67,7 @@ function ItemForm({ item, formType, userId }) {
     if (!preview_img) errorsObj.preview_img = "Image is required";
     if (!description) errorsObj.description = "Description is required";
     if (description.length < 25) errorsObj.description = "Description needs to be at least 25 charachters"
+    if (parseInt(available_qty).length == 0 || parseInt(available_qty) < 0) errorsObj.available_qty = "Available quantity can't be less than 0 or empty"
 
     if (!Object.keys(errorsObj).length) {
       const formData = new FormData();
@@ -115,6 +116,7 @@ function ItemForm({ item, formType, userId }) {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
               />
                               <span style={{ height: "12px" }}>
                   {errors.name && (
@@ -134,6 +136,7 @@ function ItemForm({ item, formType, userId }) {
                 type="text"
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
+                required
               />
                               <span style={{ height: "12px" }}>
                   {errors.brand && (
@@ -158,6 +161,7 @@ function ItemForm({ item, formType, userId }) {
                   min="0"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
+                  required
                 />
               </div>
               <span style={{ height: "12px" }}>
@@ -180,6 +184,7 @@ function ItemForm({ item, formType, userId }) {
                 min="0"
                 value={available_qty}
                 onChange={(e) => setAvailableQty(e.target.value)}
+                required
               />
                               <span style={{ height: "12px" }}>
                   {errors.available_qty && (
@@ -201,6 +206,7 @@ function ItemForm({ item, formType, userId }) {
             rows="10"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required
           />
                           <span style={{ height: "12px" }}>
                   {errors.description && (
