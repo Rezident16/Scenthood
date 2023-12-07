@@ -247,7 +247,9 @@ input::file-selector-button {
     justify-content: space-around;
 }
 
-
+.image_placeholder_signup {
+    height: 110px;
+}
 
 ::-webkit-scrollbar {
     display: none;

@@ -393,11 +393,14 @@ function SignupFormModal() {
                   <span className="errors">{errors.profile_img}</span>
                 )}
               </span>
+			  <div className="image_placeholder_signup">
+
               {localImg && (
                 <div>
                   <img id="profile_form_img" src={localImg} alt="" />
                 </div>
               )}
+			  </div>
             </label>
           </div>
         </div>
