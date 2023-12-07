@@ -7,18 +7,20 @@
     justify-content: center;
 }
 
-.go_back_button{
+.go_back_button {
     padding-left: 10px;
     width: fit-content;
     background-image: linear-gradient(white gray);
     color: #007185;
     cursor: pointer;
 }
+
 .go_back_button:hover {
     text-decoration: underline;
     font-style: italic;
     font-weight: bold;
 }
+
 #item_form_img {
     display: flex;
     justify-content: center;
@@ -26,11 +28,16 @@
     height: 200px;
 }
 
-.item_tile > img {
+.item_tile>img {
     height: 300px;
     width: 240px;
     margin-bottom: 5px;
 }
+
+/* .item_tile_outer {
+    border: 1px solid #ccc;
+
+} */
 
 .item_tile {
     border: 1px solid #ccc;
@@ -43,7 +50,7 @@
 }
 
 .item_tile:hover {
-cursor: pointer;
+    cursor: pointer;
 }
 
 .item_name {
@@ -88,7 +95,7 @@ cursor: pointer;
     color: rgb(80, 80, 80);
 }
 
-.item_container > img {
+.item_container>img {
     width: 380px;
     height: 475px;
 }
@@ -119,13 +126,14 @@ cursor: pointer;
     flex-direction: column;
     gap: 10px;
 }
-.add_to_cart > select {
+
+.add_to_cart>select {
     width: 40px;
     height: 22px;
     border-radius: 5px;
 }
 
-.add_to_cart > button {
+.add_to_cart>button {
     background-color: black;
     color: white;
     width: 230px;
@@ -133,7 +141,7 @@ cursor: pointer;
     border-radius: 5px;
 }
 
-.add_to_cart > button:hover {
+.add_to_cart>button:hover {
     background-image: linear-gradient(black, rgb(133, 3, 3));
     cursor: pointer;
 }
@@ -161,7 +169,7 @@ cursor: pointer;
     padding: 10px;
 }
 
-.link_to_see_user{
+.link_to_see_user {
     cursor: pointer;
     /* border: 1px solid red; */
     width: fit-content;
@@ -247,30 +255,56 @@ input[type="radio"] {
 
 .item_name {
     overflow-wrap: break-word;
-    text-wrap: wrap;   
+    text-wrap: wrap;
 }
 
 .price_qty {
     display: flex;
     justify-content: space-between;
-  }
+}
 
-  .subtotal {
+.subtotal {
     text-align: center;
     margin-bottom: 5px;
-  }
+}
 
-  .user_item_change_buttons {
+.user_item_change_buttons {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+    padding-right: 7px;
+    /* margin-bottom: 3px; */
 
-  /* .qty {
+}
+
+/* .qty {
     border: 1px solid black;
     background-color: lightgray;
     border-radius: 25px;
     height: 25px;
     text-align: center; */
 
-  /* } */
+/* } */
+
+.fa-trash,
+.fa-edit {
+    color: gray;
+    border: none;
+    background-color: transparent;
+    padding: 0px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.fa-trash:hover,
+.fa-edit:hover {
+    color: black;
+}
+
+.icons_delete_update {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 3px;
+
+}

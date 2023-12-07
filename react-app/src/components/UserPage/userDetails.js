@@ -61,7 +61,7 @@ function UserDetails() {
   }
 
   return (
-    <div>
+    <div className="user_whole_container">
       <div className="go_back_button" onClick={goBack}>
         {"< Back to items"}
       </div>

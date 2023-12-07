@@ -25,6 +25,10 @@
 
 }
 
+.user_whole_container {
+    margin-bottom: 5px;
+}
+
 .order_details_container {
     display: flex;
     gap: 50px;

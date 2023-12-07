@@ -7,7 +7,7 @@ import { fetchOneItem } from "../../store/item";
 import { clearState } from "../../store/user";
 import OpenModalButton from "../OpenModalButton";
 import ItemForm from "./CreateUpdateItemForm";
-import DeleteItemModal from './deleteItem';
+import DeleteItemModal from "./deleteItem";
 
 function ItemTile({ item }) {
   const reviews = item.reviews;
@@ -40,7 +40,8 @@ function ItemTile({ item }) {
   }
 
   return (
-    <div>
+    <div className="item_tile_outer">
+
       <div className="item_tile" onClick={directToItem}>
         <img src={item.preview_img} />
         <div>
@@ -75,21 +76,27 @@ function ItemTile({ item }) {
           )}
         </div>
         <div className="item_price_item_tile">${item.price}</div>
+        <div style={{ height: "20px" }}></div>
       </div>
-      {visible ? (
-        <div className="item_review_buttons user_item_change_buttons">
+      <div
+        className="icons_delete_update"
+        style={{ height: "20px", zIndex: "1" }}
+      >
+        {visible ? (
+          <div className="item_review_buttons user_item_change_buttons">
             <OpenModalButton
-              buttonText={"Update"}
+              buttonText={""}
               modalComponent={<ItemForm item={item} formType="edit" />}
-              className={'delete_review_button'}
+              className={"fas fa-edit"}
             />
             <OpenModalButton
-              buttonText={"Delete"}
+              buttonText={""}
               modalComponent={<DeleteItemModal item={item} />}
-              className={'delete_review_button'}
+              className={"fa-solid fa-trash"}
             />
-        </div>
-      ) : null}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
