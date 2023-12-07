@@ -140,7 +140,11 @@
 }
 
 .address_placed_total {
-    width: 340px
+    width: 350px;
+}
+
+.address_placed_total > div {
+    width: 350px;
 }
 
 .community_comments_container {
