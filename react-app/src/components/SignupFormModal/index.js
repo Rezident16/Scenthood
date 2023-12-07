@@ -487,11 +487,12 @@ function SignupFormModal() {
     if (!city) errorsObj.city = "City is required";
     if (!state) errorsObj.state = "State is required";
     if (!profile_img) errorsObj.profile_img = "Profile Image is required";
-    if (!description) errorsObj.description = "Description is required";
+    if (!description) errorsObj.description = "About you required";
     if (password !== confirmPassword) {
       errorsObj.password =
         "Confirm Password field must be the same as the Password field";
     }
+	if (description.length < 25) errorsObj.description = "About you needs to be at least 25 characters"
 
     if (!Object.values(errorsObj).length) {
       setImageLoading(true);
