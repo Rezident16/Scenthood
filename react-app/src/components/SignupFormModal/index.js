@@ -825,7 +825,8 @@ function SignupFormModal() {
         </label>
         <div>
           <div className={tooltip}>
-            <span className={tooltiptext}>Don't forget to fill out everything</span>
+			{tooltip != "" ? (<span className={tooltiptext}>Don't forget to fill out everything</span>) : (null) }
+            
             <button className={buttonClassname} type="submit">
               Sign Up
             </button>
