@@ -217,7 +217,7 @@ input::file-selector-button {
     /* width: 300px; */
     overflow-x: hidden;
     height: fit-content;
-    height: 70vh;
+    height: 80vh;
 }
 
 .signup_form_container {
