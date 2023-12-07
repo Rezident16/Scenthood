@@ -11,55 +11,89 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
-  const history = useHistory()
+  const history = useHistory();
+
+  let errorsClassname = "errors_login_container_none";
   const demoLogin = async (e) => {
     e.preventDefault();
-    await dispatch(login("emo@aa.io", "password"))
-    history.push('/items')
-    closeModal()
+    await dispatch(login("emo@aa.io", "password"));
+    history.push("/items");
+    closeModal();
   };
+
+  let buttonClassname;
+  if (
+    !email ||
+    !password
+  ) {
+    buttonClassname = "disabled_signup_login_button";
+  } else {
+    buttonClassname = "signup_login_button";
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+      let dataErrors = {};
+      data.forEach((error) => {
+        const oneError = error.split(" : ");
+        dataErrors[oneError[0]] = oneError[1];
+      });
+      setErrors(dataErrors);
+      errorsClassname = "errors_login_container";
     } else {
-        closeModal()
+      closeModal();
+      errorsClassname = "errors_login_container_none";
     }
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Log In</button>
-        <div className="demo_login" onClick={demoLogin}>Demo User</div>
-      </form>
-    </>
+    <form className="form_container" onSubmit={handleSubmit}>
+      <h2>Log In</h2>
+      <label className="form_label">
+        <div>
+          Email{" "}
+          <span aria-hidden="true" className="required">
+            *
+          </span>
+        </div>
+        <input
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="login_input"
+        />
+      </label>
+      <span style={{ height: "22px" }}>
+        {errors.email && <span className="errors">{errors.email}</span>}
+      </span>
+      <label className="form_label">
+        <div>
+          Password{" "}
+          <span aria-hidden="true" className="required">
+            *
+          </span>
+        </div>
+        <input
+          className="login_input"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </label>
+      <span style={{ height: "22px" }}>
+        {errors.password && <span className="errors">{errors.password}</span>}
+      </span>
+      <button className={buttonClassname} type="submit">
+        Log In
+      </button>
+      <div className="demo_login" onClick={demoLogin}>
+        Demo User
+      </div>
+    </form>
   );
 }
 

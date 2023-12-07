@@ -130,7 +130,7 @@ cursor: pointer;
     color: white;
     width: 230px;
     height: 35px;
-    border-radius: 25px;
+    border-radius: 5px;
 }
 
 .add_to_cart > button:hover {
@@ -188,15 +188,19 @@ input[type="radio"] {
 
 .delete_review_button {
     width: 150px;
-    border-radius: 25px;
-    color: white;
-    background-color: black;
+    border-radius: 5px;
+    color: black;
+    background-color: lavenderblush;
     cursor: pointer;
 }
 
 .delete_review_button:active {
     color: black;
-    background-color: white;
+    background-color: rgb(213, 201, 206);
+}
+
+.delete_review_button:hover {
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .item_review_buttons {
@@ -216,7 +220,7 @@ input[type="radio"] {
     justify-content: center;
     color: white;
     background-color: black;
-    border-radius: 25px;
+    border-radius: 5px;
     cursor: pointer;
 }
 

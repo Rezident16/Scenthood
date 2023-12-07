@@ -47,26 +47,27 @@ function CartModal() {
           <p>Nothing in cart yet!</p>
         )}
       </div>
-      <div className="cart_buttons">
-        <div>
-          <div className="subtotal">Subtotal ${total}</div>
-          <div className="cart_button" onClick={onClick}>
-            Checkout
-          </div>
-        </div>
+      {items.length ? (
 
-        {items.length ? (
-          <div
-            className="cart_button"
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(clearCart());
-            }}
-          >
-            Clear Cart
+          <div className="cart_buttons">
+            <div>
+              <div className="subtotal">Subtotal ${total}</div>
+              <div className="cart_button" onClick={onClick}>
+                Checkout
+              </div>
+            </div>
+            <div
+              className="cart_button"
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(clearCart());
+              }}
+            >
+              Clear Cart
+            </div>
           </div>
-        ) : null}
-      </div>
+
+      ) : null}
     </div>
   );
 }

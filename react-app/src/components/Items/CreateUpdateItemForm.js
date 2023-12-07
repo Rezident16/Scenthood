@@ -32,10 +32,15 @@ function ItemForm({ item, formType, userId }) {
   const [errors, setErrors] = useState({});
   const [imageLoading, setImageLoading] = useState(false);
 
-  function onFileChange(e) {
-    setPreviewImg(e.target.files[0]);
-    setLocalImg(URL.createObjectURL(e.target.files[0]));
-  }
+  const onFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      setPreviewImg(e.target.files[0]);
+      const imageUrl = URL.createObjectURL(file);
+      setLocalImg(imageUrl);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

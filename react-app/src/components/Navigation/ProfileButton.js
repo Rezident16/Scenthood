@@ -52,11 +52,13 @@ function ProfileButton({ user }) {
 
   const goToProfile = () => {
     history.push(`/users/${user.id}`)
+    closeMenu()
   }
 
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    closeMenu()
     history.push('/items')
   };
 
@@ -104,7 +106,7 @@ function ProfileButton({ user }) {
               modalComponent={<ItemForm formType='create' />}
             />
           </li>
-          <li>
+          <li className="logout_button_li">
             <button onClick={handleLogout} className="logout_button">
               Log Out
             </button>

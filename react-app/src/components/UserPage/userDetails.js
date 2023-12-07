@@ -106,7 +106,7 @@ function UserDetails() {
           {userOrders == false ? (
             <div className="all_items">
               {user.items.length ? (
-                <div className="user_items">
+                <div>
                   <h3>{userText}</h3>
                   {user.items
                     .sort((a, b) => b.reviews.length - a.reviews.length)
@@ -128,7 +128,7 @@ function UserDetails() {
               {currUser && orders.length > 0 ? (
                 orders.map((order) => (
                   <div className="order_details_container" key={order.id}>
-                    <div>
+                    <div className="address_placed_total">
                       <div>Address: {order.address}</div>
                       <div>Placed at: {order.created_at}</div>
                       <div>Total: ${order.price}</div>
@@ -175,15 +175,29 @@ function UserDetails() {
                               ) : (
                                 <div className="item_profile_order_review">
                                   You said: {userReview[0].note}{" "}
-                                  <OpenModalButton
-                                    className={"delete_review_button"}
-                                    buttonText={"Delete Review"}
-                                    modalComponent={
-                                      <DeleteReviewModal
-                                        review={userReview[0]}
-                                      />
-                                    }
-                                  />
+                                  <div className="username_update_delete_review">
+                                    <OpenModalButton
+                                      className={"delete_review_button"}
+                                      buttonText={"Delete Review"}
+                                      modalComponent={
+                                        <DeleteReviewModal
+                                          review={userReview[0]}
+                                        />
+                                      }
+                                    />
+                                    <OpenModalButton
+                                      className="delete_review_button"
+                                      buttonText={"Update Review"}
+                                      modalComponent={
+                                        <ReviewForm
+                                          formAction="edit"
+                                          review={userReview[0]}
+                                          itemId={orderProduct.item.id}
+                                          orderId={order.id}
+                                        />
+                                      }
+                                    />
+                                  </div>
                                 </div>
                               )}
                             </div>

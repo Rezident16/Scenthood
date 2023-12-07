@@ -13,13 +13,37 @@ function Navigation({ isLoaded }) {
   return (
     <ul className="navigation">
       <li className="left_nav">
-        <NavLink  className="left_nav" exact to="/">
-			<img className='logo' src="https://scenthood.s3.us-east-2.amazonaws.com/113536.png" />
-          <div className="logo_text_parent">
-            <div className="logo_text" style={{ fontWeight: 600 }}>Scent</div>
-            <div className="logo_text" style={{ fontWeight: 500 }}>hood</div>
-          </div>
-        </NavLink>
+        {sessionUser ? (
+          <NavLink className="left_nav" exact to="/items">
+            <img
+              className="logo"
+              src="https://scenthood.s3.us-east-2.amazonaws.com/113536.png"
+            />
+            <div className="logo_text_parent">
+              <div className="logo_text" style={{ fontWeight: 600 }}>
+                Scent
+              </div>
+              <div className="logo_text" style={{ fontWeight: 500 }}>
+                hood
+              </div>
+            </div>
+          </NavLink>
+        ) : (
+          <NavLink className="left_nav" exact to="/">
+            <img
+              className="logo"
+              src="https://scenthood.s3.us-east-2.amazonaws.com/113536.png"
+            />
+            <div className="logo_text_parent">
+              <div className="logo_text" style={{ fontWeight: 600 }}>
+                Scent
+              </div>
+              <div className="logo_text" style={{ fontWeight: 500 }}>
+                hood
+              </div>
+            </div>
+          </NavLink>
+        )}
       </li>
       {isLoaded && (
         <li>

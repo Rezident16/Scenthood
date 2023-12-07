@@ -21,13 +21,35 @@ function SignupFormModal() {
   const [imageLoading, setImageLoading] = useState(false);
   const [localImg, setLocalImg] = useState(null);
 
-  function onFileChange(e) {
-    console.log(e.target.files[0]);
-    setProfileImg(e.target.files[0]);
-    setLocalImg(URL.createObjectURL(e.target.files[0]));
-  }
+  const onFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      setProfileImg(e.target.files[0]);
+      const imageUrl = URL.createObjectURL(file);
+      setLocalImg(imageUrl);
+    }
+  };
 
   const { closeModal } = useModal();
+  let buttonClassname;
+  if (
+    !email ||
+    !username ||
+    !firstName ||
+    !lastName ||
+    !address ||
+    !city ||
+    !state ||
+    !profile_img ||
+    !description ||
+    !password ||
+    password != confirmPassword
+  ) {
+    buttonClassname = "disabled_signup_login_button";
+  } else {
+    buttonClassname = "signup_login_button";
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,9 +63,10 @@ function SignupFormModal() {
     if (!state) errorsObj.state = "State is required";
     if (!profile_img) errorsObj.profile_img = "Profile Image is required";
     if (!description) errorsObj.description = "Description is required";
-    if (password !== confirmPassword)
+    if (password !== confirmPassword) {
       errorsObj.password =
         "Confirm Password field must be the same as the Password field";
+    }
 
     if (!Object.values(errorsObj).length) {
       setImageLoading(true);
@@ -70,192 +93,322 @@ function SignupFormModal() {
         });
         errorsObj = { ...errorsObj, ...dataErrors };
         setErrors(errorsObj);
+        setImageLoading(false);
       } else {
         closeModal();
       }
     } else {
-      setErrors(errors);
+      setErrors(errorsObj);
     }
+    console.log(errorsObj);
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
-      <form enctype="multipart/form-data" onSubmit={handleSubmit}>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        {errors.email && <p className="item-errors">{errors.email}</p>}
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        {errors.username && <p className="item-errors">{errors.username}</p>}
-        <label>
-          First Name
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </label>
-        {errors.firstName && <p className="item-errors">{errors.firstName}</p>}
-        <label>
-          Last Name
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </label>
-        {errors.lastName && <p className="item-errors">{errors.lastName}</p>}
-        <label>
-          Address
-          <input
-            type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-        </label>
-        {errors.address && <p className="item-errors">{errors.address}</p>}
-        <label>
-          City
-          <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            required
-          />
-        </label>
-        {errors.city && <p className="item-errors">{errors.city}</p>}
-        <label>
-          State
-          <select
-            type="text"
-            value={state}
-            onChange={(e) => {
-              setState(e.target.value);
-            }}
-            required
-          >
-            <option value="" disabled hidden>
-              State
-            </option>
-            <option value="AL">Alabama</option>
-            <option value="AK">Alaska</option>
-            <option value="AZ">Arizona</option>
-            <option value="AR">Arkansas</option>
-            <option value="CA">California</option>
-            <option value="CO">Colorado</option>
-            <option value="CT">Connecticut</option>
-            <option value="DE">Delaware</option>
-            <option value="DC">District Of Columbia</option>
-            <option value="FL">Florida</option>
-            <option value="GA">Georgia</option>
-            <option value="HI">Hawaii</option>
-            <option value="ID">Idaho</option>
-            <option value="IL">Illinois</option>
-            <option value="IN">Indiana</option>
-            <option value="IA">Iowa</option>
-            <option value="KS">Kansas</option>
-            <option value="KY">Kentucky</option>
-            <option value="LA">Louisiana</option>
-            <option value="ME">Maine</option>
-            <option value="MD">Maryland</option>
-            <option value="MA">Massachusetts</option>
-            <option value="MI">Michigan</option>
-            <option value="MN">Minnesota</option>
-            <option value="MS">Mississippi</option>
-            <option value="MO">Missouri</option>
-            <option value="MT">Montana</option>
-            <option value="NE">Nebraska</option>
-            <option value="NV">Nevada</option>
-            <option value="NH">New Hampshire</option>
-            <option value="NJ">New Jersey</option>
-            <option value="NM">New Mexico</option>
-            <option value="NY">New York</option>
-            <option value="NC">North Carolina</option>
-            <option value="ND">North Dakota</option>
-            <option value="OH">Ohio</option>
-            <option value="OK">Oklahoma</option>
-            <option value="OR">Oregon</option>
-            <option value="PA">Pennsylvania</option>
-            <option value="RI">Rhode Island</option>
-            <option value="SC">South Carolina</option>
-            <option value="SD">South Dakota</option>
-            <option value="TN">Tennessee</option>
-            <option value="TX">Texas</option>
-            <option value="UT">Utah</option>
-            <option value="VT">Vermont</option>
-            <option value="VA">Virginia</option>
-            <option value="WA">Washington</option>
-            <option value="WV">West Virginia</option>
-            <option value="WI">Wisconsin</option>
-            <option value="WY">Wyoming</option>
-          </select>
-        </label>
-        {errors.state && <p className="item-errors">{errors.state}</p>}
-        <label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.password && <p className="item-errors">{errors.password}</p>}
-        <label>
-          Confirm Password
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label className="item-form-labels">
-          Upload Image
-          <input
-            type="file"
-            name="profile_img"
-            accept=".jpg, .jpeg, .png"
-            onChange={onFileChange}
-          />
-          {localImg && (
+    <div className="form_container_signup">
+      <form
+        enctype="multipart/form-data"
+        className="form_container_signup"
+        onSubmit={handleSubmit}
+      >
+        <h2>Sign Up</h2>
+        <div className="button_field">
+          <div className="about_password">
             <div>
-              <img id="item_form_img" src={localImg} alt="" />
+              <div>
+                <label className="form_label">
+                  <div>
+                    Email
+                    <span aria-hidden="true" className="required">
+                      *
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="login_signup_input"
+                  />
+                  <span style={{ height: "22px", width: "250px" }}>
+                    {errors.email && (
+                      <span className="errors">{errors.email}</span>
+                    )}
+                  </span>
+                </label>
+                <label className="form_label">
+                  <did>
+                    Username
+                    <span aria-hidden="true" className="required">
+                      *
+                    </span>
+                  </did>
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    className="login_signup_input"
+                  />
+                  <div style={{ height: "22px" }}>
+                    {errors.username && (
+                      <span className="errors">{errors.username}</span>
+                    )}
+                  </div>
+                </label>
+                <label className="form_label">
+                  <div>
+                    First Name
+                    <span aria-hidden="true" className="required">
+                      *
+                    </span>
+                  </div>
+                  <input
+                    className="login_signup_input"
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                  />
+                  <span style={{ height: "22px" }}>
+                    {errors.firstName && (
+                      <span className="errors">{errors.firstName}</span>
+                    )}
+                  </span>
+                </label>
+                <label className="form_label">
+                  <div>
+                    Last Name
+                    <span aria-hidden="true" className="required">
+                      *
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                    className="login_signup_input"
+                  />
+                  <span style={{ height: "22px" }}>
+                    {errors.lastName && (
+                      <span className="errors">{errors.lastName}</span>
+                    )}
+                  </span>
+                </label>
+              </div>
             </div>
-          )}
-        </label>
-        {errors.profile_img && (
-          <p className="item-errors">{errors.profile_img}</p>
-        )}
-        <button type="submit">Sign Up</button>
-        {imageLoading && <p>Image is Loading...</p>}
+            <div>
+              <div className="address_city_state">
+                <label className="form_label">
+                  <div>
+                    Address
+                    <span aria-hidden="true" className="required">
+                      *
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                    className="login_signup_input"
+                  />
+                  <span style={{ height: "22px" }}>
+                    {errors.address && (
+                      <span className="errors">{errors.address}</span>
+                    )}
+                  </span>
+                </label>
+                <label className="form_label">
+                  <div>
+                    City
+                    <span aria-hidden="true" className="required">
+                      *
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    required
+                    className="login_signup_input"
+                  />
+                  <span style={{ height: "22px" }}>
+                    {errors.city && (
+                      <span className="errors">{errors.city}</span>
+                    )}
+                  </span>
+                </label>
+                <label className="form_label">
+                  <div>
+                    State
+                    <span aria-hidden="true" className="required">
+                      *
+                    </span>
+                  </div>
+                  <select
+                    className="login_signup_input"
+                    type="text"
+                    value={state}
+                    onChange={(e) => {
+                      setState(e.target.value);
+                    }}
+                    required
+                  >
+                    <option value="" disabled hidden>
+                      State
+                    </option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                  <span style={{ height: "22px" }}>
+                    {errors.state && (
+                      <span className="errors">{errors.state}</span>
+                    )}
+                  </span>
+                </label>
+              </div>
+              <label className="form_label">
+                <div>
+                  About You:
+                  <span aria-hidden="true" className="required">
+                    *
+                  </span>
+                </div>
+                <textarea
+                  className="login_signup_textarea"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+                <span style={{ height: "22px" }}>
+                  {errors.description && (
+                    <span className="errors">{errors.description}</span>
+                  )}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div className="password_form">
+            <label className="form_label">
+              <div>
+                Password
+                <span aria-hidden="true" className="required">
+                  *
+                </span>
+              </div>
+              <input
+                className="login_signup_input"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <span style={{ height: "22px", width: "250px" }}>
+                {errors.password && (
+                  <span className="errors">{errors.password}</span>
+                )}
+              </span>
+            </label>
+            <label className="form_label">
+              <div>
+                Confirm Password
+                <span aria-hidden="true" className="required">
+                  *
+                </span>
+              </div>
+              <input
+                className="login_signup_input"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </label>
+            <label className="file_input">
+              <div>
+                Upload Image{" "}
+                <span aria-hidden="true" className="required">
+                  *
+                </span>
+              </div>
+              <input
+                type="file"
+                name="profile_img"
+                accept=".jpg, .jpeg, .png"
+                onChange={onFileChange}
+                className="image_file_container"
+              />
+              <span style={{ height: "22px" }}>
+                {errors?.profile_img && (
+                  <span className="errors">{errors.profile_img}</span>
+                )}
+              </span>
+              {localImg && (
+                <div>
+                  <img id="profile_form_img" src={localImg} alt="" />
+                </div>
+              )}
+            </label>
+          </div>
+        </div>
+        <div>
+          <button className={buttonClassname} type="submit">
+            Sign Up
+          </button>
+          {imageLoading && <p>Image is Loading...</p>}
+        </div>
       </form>
-    </>
+    </div>
   );
 }
 
