@@ -203,7 +203,7 @@ function ItemContainer() {
           </div>
           <div>
             {reviews.length ? (
-              <div>
+              <div className="user_review_container">
                 <h2 className="h2_reviews_text">Customer Reviews</h2>
                 {reviews &&
                   reviews.map((review) => (
@@ -264,7 +264,7 @@ function ItemContainer() {
           </div>
           <div>
             {favorites.length ? (
-              <div>
+              <div className="community_comments_container">
                 <h2 className="h2_reviews_text">Community Comments</h2>
                 {favorites &&
                   favorites.map((fav) => (

@@ -37,7 +37,25 @@
   .checkout_form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
+    width: 455px;
+    gap: 25px;
+  }
+
+  .order_total_button {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 25px;
+  }
+  .checkout_container {
+    margin-bottom: 25px;
+  }
+
+  .checkout_form_inputs {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
   }
 
   .form_labels {

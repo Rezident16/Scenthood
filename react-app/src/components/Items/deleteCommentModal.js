@@ -17,7 +17,7 @@ function DeleteCommentModal({ fav }) {
   };
 
   return (
-    <div>
+    <div  className="form_container">
       <h1>Confirm Delete</h1>
       <span id="delete-item-span">
         Are you sure you want to delete your comment?
@@ -25,12 +25,15 @@ function DeleteCommentModal({ fav }) {
       <button
         style={{ cursor: "pointer" }}
         onClick={() => deleteFav(fav.id)}
+        className="signup_login_button"
+        
       >
         Yes (Delete comment)
       </button>
       <button
         style={{ cursor: "pointer" }}
         onClick={closeModal}
+        className="signup_login_button keep_item"
       >
         No (Keep comment)
       </button>

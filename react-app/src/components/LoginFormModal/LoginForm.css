@@ -63,7 +63,7 @@
 }
 
 .login_signup_input {
-    border-radius: 5px;
+    /* border-radius: 5px; */
     border: 1px solid gray;
     width: 130px;
 }
@@ -84,7 +84,7 @@
 }
 
 .login_signup_textarea {
-    border-radius: 5px;
+    /* border-radius: 5px; */
     border: 1px solid gray;
     width: 420px;
     height: 147px;
@@ -149,35 +149,56 @@
 
 .image_file_container {
     position: relative;
-    left: 32%;
+    left: 22%;
 }
 
 input::file-selector-button {
-    font-weight: bold;
-    color: white;
-    /* padding: 0.5em; */
-    /* width: 140px; */
-    border-radius: 5px;
-    background-color: black;
-    /* margin-bottom: 10px; */
+    border: none;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  width: 130px;
+  /* height: 25px; */
+  border: 1px solid gray;
+  margin-top: 2px;
+  background-color: white;
+}
+
+.image_file_container::file-selector-button:hover {
+    /* background-color: orange; */
+  color: black;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
 
 .signup_login_button {
     font-weight: bold;
     color: white;
     padding: 0.5em;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     background-color: black;
     margin-bottom: 10px;
     width: 200px;
     cursor: pointer;
+    border: none;
+}
+
+.signup_login_button:hover {
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
 
 .disabled_signup_login_button {
     font-weight: bold;
     color: black;
     padding: 0.5em;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     background-color: rgba(0, 0, 0, 0.14);
     margin-bottom: 10px;
     width: 200px;

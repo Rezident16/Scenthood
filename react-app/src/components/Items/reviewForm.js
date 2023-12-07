@@ -24,8 +24,18 @@ function ReviewForm({ formAction, itemId, orderId, review }) {
   const [errors, setErrors] = useState({});
   const [hover, setHover] = useState(null);
 
+  let buttonClassname;
+  if (
+    !note ||
+    !rating
+  ) {
+    buttonClassname = "disabled_signup_login_button";
+  } else {
+    buttonClassname = "signup_login_button";
+  }
+
   let h4Text =
-    formAction === "edit" ? "Update You Review" : "Leave your comment";
+    formAction === "edit" ? "Update You Review" : "How was your purchase?";
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +61,7 @@ function ReviewForm({ formAction, itemId, orderId, review }) {
           await dispatch(fetchUserOrders(user.id));
           closeModal();
         } catch (e) {
-          return e
+          return e;
         }
       } else {
         try {
@@ -60,20 +70,24 @@ function ReviewForm({ formAction, itemId, orderId, review }) {
           await dispatch(fetchOneItem(itemId));
           closeModal();
         } catch (e) {
-            return e
+          return e;
         }
       }
     }
   };
   return (
-    <form onSubmit={onSubmit}>
-      <h4>{h4Text}</h4>
-      <label>
-        Review{" "}
-        <span aria-hidden="true" className="required">
-          *
-        </span>
+    <form className="form_label" onSubmit={onSubmit}>
+      <div>
+        <h4>
+          {h4Text}{" "}
+          <span aria-hidden="true" className="required">
+            *
+          </span>
+        </h4>
+      </div>
+      <label className="form_label">
         <textarea
+          className="login_signup_textarea review_text_area"
           rows="8"
           placeholder="Leave your review here..."
           value={note}
@@ -82,11 +96,14 @@ function ReviewForm({ formAction, itemId, orderId, review }) {
       </label>
       {errors.note && <div>{errors.note}</div>}
       <div>
+        <div className="review_rating_div">
+
         How do you rate it?{" "}
         <span aria-hidden="true" className="required">
           *
         </span>
-        <div>
+        </div>
+        <div className="stars_review">
           {[...Array(5)].map((star, i) => {
             const ratingValue = i + 1;
             return (
@@ -111,7 +128,7 @@ function ReviewForm({ formAction, itemId, orderId, review }) {
       </div>
       {errors.rating && <div>{errors.rating}</div>}
       <div>
-        <button type="submit">
+        <button className={buttonClassname} type="submit">
           {formAction !== "edit" ? "Submit" : "Update"}
         </button>
       </div>

@@ -20,6 +20,14 @@ function FavoriteForm({ formAction, item, favorite }) {
     formAction === "edit" ? favorite.note : ""
   );
   const [errors, setErrors] = useState({});
+  let buttonClassname;
+  if (
+    !comment
+  ) {
+    buttonClassname = "disabled_signup_login_button";
+  } else {
+    buttonClassname = "signup_login_button";
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -49,14 +57,18 @@ function FavoriteForm({ formAction, item, favorite }) {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form  className="form_label comment_form" onSubmit={onSubmit}>
       <h4>Have this fragrance? Let others know what you think?</h4>
-      <label>
+      <label  className="form_label">
+        <div>
         Your Comment{" "}
         <span aria-hidden="true" className="required">
           *
         </span>
+
+        </div>
         <textarea
+        className="login_signup_textarea comment_text_area"
           rows="8"
           placeholder="Leave your comment here..."
           value={comment}
@@ -64,7 +76,7 @@ function FavoriteForm({ formAction, item, favorite }) {
         />
         <div>{errors.comment && <div>{errors.comment}</div>}</div>
       </label>
-      <button type="submit">
+      <button className={buttonClassname} type="submit">
         {formAction !== "edit" ? "Submit" : "Update"}
       </button>
     </form>

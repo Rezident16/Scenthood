@@ -18,7 +18,7 @@ function DeleteReviewModal({ review }) {
   };
 
   return (
-    <div>
+    <div  className="form_container">
       <h1>Confirm Delete</h1>
       <span id="delete-item-span">
         Are you sure you want to delete your review?
@@ -26,12 +26,14 @@ function DeleteReviewModal({ review }) {
       <button
         style={{ cursor: "pointer" }}
         onClick={() => deleteReview(review.id)}
+        className="signup_login_button"
       >
         Yes (Delete review)
       </button>
       <button
         style={{ cursor: "pointer" }}
         onClick={closeModal}
+        className="signup_login_button keep_item"
       >
         No (Keep Review)
       </button>

@@ -30,6 +30,13 @@ function Checkout() {
   const [state, setState] = useState(user ? `${user.state}` : "");
   const [errors, setErrors] = useState({});
 
+    let buttonClassname;
+    if (!city || !state || !address) {
+      buttonClassname = "disabled_signup_login_button";
+    } else {
+      buttonClassname = "signup_login_button";
+    }
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -37,6 +44,8 @@ function Checkout() {
     if (!city) errorsObj.city = "City is required";
     if (!state) errorsObj.state = "State is required";
     if (!address) errorsObj.address = "Address is required";
+
+
 
     if (!user) {
       setModalContent(<LoginFormModal />);
@@ -49,7 +58,7 @@ function Checkout() {
         state: state,
         items: items,
       };
-      await dispatch(submitOrder(order))
+      await dispatch(submitOrder(order));
       for (let item of items) {
         const formData = new FormData();
         formData.append("name", item.name);
@@ -60,7 +69,7 @@ function Checkout() {
         formData.append("preview_img", item.preview_img);
         await dispatch(fetchUpdateItem(item.id, formData));
       }
-      history.push(`users/${user.id}`)
+      history.push(`users/${user.id}`);
     } else {
       console.log("hello");
       setErrors(errorsObj);
@@ -68,10 +77,10 @@ function Checkout() {
   };
 
   return (
-    <div>
+    <div className="checkout_container">
       <form className="checkout_form" onSubmit={onSubmit}>
-        <div className="form_labels">
-          <label>
+        <div className="checkout_form_inputs">
+          <label className="form_label">
             Address
             <input
               type="text"
@@ -79,7 +88,7 @@ function Checkout() {
               value={address}
             />
           </label>
-          <label>
+          <label className="form_label">
             City
             <input
               type="text"
@@ -87,7 +96,7 @@ function Checkout() {
               value={city}
             />
           </label>
-          <label>
+          <label className="form_label">
             State
             <select
               type="text"
@@ -153,9 +162,10 @@ function Checkout() {
             </select>
           </label>
         </div>
-        <div>Order Total: ${total.toFixed(2)}</div>
-        {items.length ? (<button type="submit">Place Order</button>): (null)}
-        
+        <div className="order_total_button">
+          <div>Order Total: ${total.toFixed(2)}</div>
+          {items.length ? <button className={buttonClassname} type="submit">Place Order</button> : null}
+        </div>
       </form>
 
       <div className="checkout_items_tiles">

@@ -15,7 +15,7 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const ulRef = useRef();
-  const history = useHistory()
+  const history = useHistory();
 
   const [qty, setQty] = useState(0);
   const cart = useSelector((state) => state.cart);
@@ -51,15 +51,15 @@ function ProfileButton({ user }) {
   }, [showMenu]);
 
   const goToProfile = () => {
-    history.push(`/users/${user.id}`)
-    closeMenu()
-  }
+    history.push(`/users/${user.id}`);
+    closeMenu();
+  };
 
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
-    closeMenu()
-    history.push('/items')
+    closeMenu();
+    history.push("/items");
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -70,7 +70,7 @@ function ProfileButton({ user }) {
   return (
     <div id="nav-buttons">
       <OpenModalButton
-      className={'navigation_buttons_cart'}
+        className={"navigation_buttons_cart"}
         buttonText={
           <>
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>{" "}
@@ -91,27 +91,28 @@ function ProfileButton({ user }) {
         </button>
         <ul className={ulClassName} ref={ulRef}>
           <div className="profile_text">
-          <li>{user?.username}</li>
-          <li>{user?.email}</li>
-          <li>{user?.first_name} {user?.last_name}</li>
-          <li className="seperator"></li>
-          <li className="profile_button" onClick={goToProfile}>
+            <li>{user?.username}</li>
+            <li>{user?.email}</li>
+            <li>
+              {user?.first_name} {user?.last_name}
+            </li>
+            <li className="seperator"></li>
+            <li className="profile_button" onClick={goToProfile}>
               My Profile
-          </li>
-          <li>
-            <OpenModalDiv
-            className={'profile_button'}
-              buttonText="Sell Your Item"
-              onItemClick={closeMenu}
-              modalComponent={<ItemForm formType='create' />}
-            />
-          </li>
-          <li className="logout_button_li">
-            <button onClick={handleLogout} className="logout_button">
-              Log Out
-            </button>
-          </li>
-
+            </li>
+            <li onClick={closeMenu}>
+              <OpenModalDiv
+                onItemClick={closeMenu}
+                className={"profile_button"}
+                buttonText="Sell Your Item"
+                modalComponent={<ItemForm formType="create" />}
+              />
+            </li>
+            <li className="logout_button_li">
+              <div onClick={handleLogout} className="logout_button">
+                Log Out
+              </div>
+            </li>
           </div>
         </ul>
       </div>
@@ -119,14 +120,14 @@ function ProfileButton({ user }) {
       {!user && (
         <div className="login_signup_buttons">
           <OpenModalButton
-          className={'navigation_buttons'}
+            className={"navigation_buttons"}
             buttonText="Log In"
             onItemClick={closeMenu}
             modalComponent={<LoginFormModal />}
           />
 
           <OpenModalButton
-                    className={'navigation_buttons'}
+            className={"navigation_buttons"}
             buttonText="Sign Up"
             onItemClick={closeMenu}
             modalComponent={<SignupFormModal />}

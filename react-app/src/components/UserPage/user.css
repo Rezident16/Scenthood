@@ -74,6 +74,7 @@
     border: 1px solid gray;
     box-shadow: none;
     background-color: #ff9900;
+    background-image: linear-gradient(white, gray);
     color: black;
     border-radius: 5px;
     cursor: pointer;
@@ -81,7 +82,8 @@
 }
 .add_item_button:hover {
     border: 1px solid gray;
-    background-color: #ffd79b;
+    /* background-color: #ffd79b; */
+    background-image: linear-gradient(lavenderblush, #ff9900);
     font-weight: bold;
     color: black;
     border-radius: 5px;
@@ -91,7 +93,7 @@
 }
 
 .selected {
-    border: 1px solid black;
+    border: 1px solid gray;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     background-image: linear-gradient(white, orange);
     /* background-image: linear-gradient(gray, orange(133, 3, 3)); */
@@ -115,6 +117,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-image 2s;
+    
 }
 
 .selected:hover,
@@ -138,4 +141,8 @@
 
 .address_placed_total {
     width: 340px
+}
+
+.community_comments_container {
+    padding-bottom: 15px;
 }

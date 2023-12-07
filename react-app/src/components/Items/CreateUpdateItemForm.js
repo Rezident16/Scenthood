@@ -41,6 +41,19 @@ function ItemForm({ item, formType, userId }) {
       setLocalImg(imageUrl);
     }
   };
+  let buttonClassname;
+  if (
+    !name ||
+    !brand ||
+    !price ||
+    !preview_img ||
+    !available_qty < 0 ||
+    !description
+  ) {
+    buttonClassname = "disabled_signup_login_button";
+  } else {
+    buttonClassname = "signup_login_button";
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,70 +92,122 @@ function ItemForm({ item, formType, userId }) {
 
   return (
     <div>
-      <form enctype="multipart/form-data" onSubmit={handleSubmit}>
-        <label>
-          Product setName
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <label>
-          Brand
-          <input
-            type="text"
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
-          />
-        </label>
-        <label>
-          Description
+      <form
+        className="form_container item_form"
+        enctype="multipart/form-data"
+        onSubmit={handleSubmit}
+      >
+        {formType == "edit" ? <h2>Update Item</h2> : <h2>Add New Item</h2>}
+        <div className="name_brand_price">
+          <div className="brand_name">
+            <label className="form_label">
+              <div>
+                Product Name
+                <span aria-hidden="true" className="required">
+                  *
+                </span>
+              </div>
+              <input
+                className="login_input"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </label>
+            <label className="form_label">
+              <div>
+                Brand
+                <span aria-hidden="true" className="required">
+                  *
+                </span>
+              </div>
+              <input
+                className="login_input"
+                type="text"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+              />
+            </label>
+          </div>
+          <div className="price_qty">
+            <label className="form_label">
+              <div>
+                Price
+                <span aria-hidden="true" className="required">
+                  *
+                </span>
+              </div>
+              <div>
+                <input
+                  className="login_input"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </div>
+            </label>
+            <label className="form_label">
+              <div>
+                Available Quantity
+                <span aria-hidden="true" className="required">
+                  *
+                </span>
+              </div>
+              <input
+                className="login_input available_qty_form"
+                type="number"
+                step="1"
+                min="0"
+                value={available_qty}
+                onChange={(e) => setAvailableQty(e.target.value)}
+              />
+            </label>
+          </div>
+        </div>
+        <label className="form_label">
+          <div>
+            Description
+            <span aria-hidden="true" className="required">
+              *
+            </span>
+          </div>
           <textarea
+            className="login_signup_textarea"
             rows="10"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </label>
-        <label>
-          Price
+
+        <label className="form_label item_form_input">
+          <div>
+            Upload Image
+            <span aria-hidden="true" className="required">
+              *
+            </span>
+          </div>
           <input
-            type="number"
-            step="0.01"
-            min="0"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </label>
-        <label>
-          Available Quantity
-          <input
-            type="number"
-            step="1"
-            min="0"
-            value={available_qty}
-            onChange={(e) => setAvailableQty(e.target.value)}
-          />
-        </label>
-        <label className="item-form-labels">
-          Upload Image
-          <input
+            className="input_create_item"
             id="item-img-input"
             type="file"
             name="Item Image"
             accept=".jpg, .jpeg, .png"
             onChange={onFileChange}
           />
-          {localImg && (
-            <div>
-              <img id="item_form_img" src={localImg} alt="" />
-            </div>
-          )}
         </label>
+          <div className="image_placeholder_item">
+            {localImg && (
+              <div>
+                <img id="item_form_img" src={localImg} alt="" />
+              </div>
+            )}
+          </div>
         {errors.preview_img && (
           <p className="item-errors">{errors.preview_img}</p>
         )}
-        <button className="item-submit-button">Submit</button>
+        <button className={buttonClassname}>Submit</button>
         {imageLoading && <p>Image is Loading...</p>}
       </form>
     </div>
