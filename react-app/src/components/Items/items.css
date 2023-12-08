@@ -386,31 +386,31 @@ input[type="radio"] {
 }
 
 .item_form_input {
-display: flex!important;
-flex-direction: column!important;
-align-items: center!important;
-justify-content: center!important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .input_create_item::file-selector-button {
     /* border: none !important; */
-  color: inherit!important;
-  cursor: pointer;
-  display: flex!important;
-  align-items: center!important;
-  justify-content: center!important;
-  outline: none!important;
-  position: inherit!important;
-  -webkit-transition: all 0.3s!important;
-  -moz-transition: all 0.3s!important;
-  transition: all 0.3s!important;
-  width: 180px!important;
-  margin-left: 10px;
-  margin-bottom: 5px;
-  /* height: 25px; */
-  border: 1px solid gray;
-  margin-top: 2px;
-  background-color: white;
+    color: inherit !important;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    outline: none !important;
+    position: inherit !important;
+    -webkit-transition: all 0.3s !important;
+    -moz-transition: all 0.3s !important;
+    transition: all 0.3s !important;
+    width: 180px !important;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    /* height: 25px; */
+    border: 1px solid gray;
+    margin-top: 2px;
+    background-color: white;
 }
 
 .input_create_item::file-selector-button:hover {
@@ -419,8 +419,8 @@ justify-content: center!important;
 }
 
 .input_create_item {
-    display: flex!important;
-    flex-direction: row!important;
+    display: flex !important;
+    flex-direction: row !important;
     margin-left: 55px;
     margin-bottom: 5px;
 }
@@ -447,4 +447,23 @@ justify-content: center!important;
     position: relative;
     left: 3%;
     margin-bottom: 5px;
+}
+
+.loader_spinner_container {
+    position: relative;
+    top: 180px;
+}
+
+.countdown {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0px;
+    height: 550px;
+}
+
+.countdown>h2 {
+    position: relative;
+    top: 72px;
+    left: 5px;
 }

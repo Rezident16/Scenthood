@@ -17,6 +17,7 @@ import { clearItemState } from "../../store/item";
 import FavoriteForm from "./favoriteForm";
 import DeleteCommentModal from "./deleteCommentModal";
 import { clearState } from "../../store/user";
+import LoaderComp from "./loader";
 
 function ItemContainer() {
   const dispatch = useDispatch();
@@ -24,6 +25,17 @@ function ItemContainer() {
   const history = useHistory();
   const [Qty, setQty] = useState(1);
   const { closeModal } = useModal();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [seconds, setSeconds] = useState(1);
+
+  useEffect(() => {
+    seconds > 0 && setTimeout(() => setSeconds(seconds - 1), 1000);
+  }, [seconds]);
+
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 1200);
 
   useEffect(async () => {
     await dispatch(clearState());
@@ -119,196 +131,209 @@ function ItemContainer() {
       <div className="go_back_button" onClick={goBack}>
         {"< Back to items"}
       </div>
-      {item.name ? (
+      {isLoading ? (
+          <div className="countdown">
+            <LoaderComp />
+            {/* <h2>{seconds}..</h2> */}
+          </div>
+      ) : (
         <div>
-          <div className="item_container">
-            <img src={item.preview_img} />
-            <div className="item_description">
-              <div className="link_to_see_user" onClick={goToUser}>
-                Visit the seller {item.owner.username}
-              </div>
-              <div className="item_container_name">
-                {item.name} by {item.brand}
+          {item.name ? (
+            <div>
+              <div className="item_container">
+                <img src={item.preview_img} />
+                <div className="item_description">
+                  <div className="link_to_see_user" onClick={goToUser}>
+                    Visit the seller {item.owner.username}
+                  </div>
+                  <div className="item_container_name">
+                    {item.name} by {item.brand}
+                  </div>
+                  <div>
+                    {reviews.length ? (
+                      <div>
+                        <div className="item_review_rating">
+                          {[...Array(Math.round(avgReview))].map((star) => {
+                            return <FaStar color="gold" />;
+                          })}
+                          {[...Array(5 - Math.round(avgReview))].map((star) => {
+                            return <FaStar color="gray" />;
+                          })}
+                          <div className="item_review_text">
+                            {avgReview.toFixed(2)} from {reviews.length}{" "}
+                            {reviewText}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div>
+                          {" "}
+                          {[...Array(5 - Math.round(avgReview))].map((star) => {
+                            return <FaStar color="gray" />;
+                          })}
+                        </div>
+                        <div>No reviews yet</div>
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <div className="item_container_price">${item.price}</div>
+                    <div className={stockClassName}>{inStock}</div>
+                    <div>{inStock ? <div></div> : <div></div>}</div>
+                    <form onSubmit={AddToCart}>
+                      <h3>About this item</h3>
+                      <p>{item.description}</p>
+                      {stock > 0 ? (
+                        <div className="add_to_cart">
+                          <select
+                            value={Qty}
+                            onChange={(e) => setQty(e.target.value)}
+                            className="quantity"
+                          >
+                            {options().map((option) => (
+                              <option value={option} key={option}>
+                                {" "}
+                                {option}{" "}
+                              </option>
+                            ))}
+                          </select>
+                          <button className="modal_buttons">
+                            {" "}
+                            Add {Qty} To Cart • ${(item.price * Qty).toFixed(2)}
+                          </button>
+                        </div>
+                      ) : null}
+                    </form>
+                  </div>
+                  {!userFavorite && currentUser && (
+                    <div>
+                      <h3>
+                        Have this fragrance? Let others know what you think
+                      </h3>
+                      <OpenModalButton
+                        className="delete_review_button"
+                        buttonText={"Add Your Comment"}
+                        modalComponent={
+                          <FavoriteForm formAction="create" item={item} />
+                        }
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
               <div>
                 {reviews.length ? (
-                  <div>
-                    <div className="item_review_rating">
-                      {[...Array(Math.round(avgReview))].map((star) => {
-                        return <FaStar color="gold" />;
-                      })}
-                      {[...Array(5 - Math.round(avgReview))].map((star) => {
-                        return <FaStar color="gray" />;
-                      })}
-                      <div className="item_review_text">
-                        {avgReview.toFixed(2)} from {reviews.length}{" "}
-                        {reviewText}
-                      </div>
-                    </div>
+                  <div className="user_review_container">
+                    <h2 className="h2_reviews_text">Customer Reviews</h2>
+                    {reviews &&
+                      reviews.map((review) => (
+                        <div className="user_review">
+                          <div>
+                            <div className="user_review_profile">
+                              <img
+                                className="item_profile_img"
+                                src={review.order.user.profile_img}
+                              />
+                              <div>{review.order.user.first_name}</div>
+                              <div>{review.order.user.last_name}</div>
+                            </div>
+                            <div>
+                              {[...Array(review.stars)].map((star) => {
+                                return <FaStar color="gold" />;
+                              })}
+                              {[...Array(5 - review.stars)].map((star) => {
+                                return <FaStar color="gray" />;
+                              })}
+                            </div>
+                          </div>
+                          <div>{review.note}</div>
+                          {currentUser &&
+                            (review.order.user.id === currentUser.id ? (
+                              <div className="item_review_buttons">
+                                <OpenModalButton
+                                  className="delete_review_button"
+                                  buttonText={"Update Review"}
+                                  modalComponent={
+                                    <ReviewForm
+                                      review={review}
+                                      formAction="edit"
+                                      itemId={item.id}
+                                      orderId={review.order.id}
+                                    />
+                                  }
+                                />
+                                <OpenModalButton
+                                  className="delete_review_button"
+                                  buttonText={"Delete Review"}
+                                  modalComponent={
+                                    <DeleteReviewModal review={review} />
+                                  }
+                                />
+                              </div>
+                            ) : null)}
+                        </div>
+                      ))}
                   </div>
                 ) : (
                   <div>
-                    <div>
-                      {" "}
-                      {[...Array(5 - Math.round(avgReview))].map((star) => {
-                        return <FaStar color="gray" />;
-                      })}
-                    </div>
-                    <div>No reviews yet</div>
+                    <h2 className="h2_reviews_text">
+                      There are currently no customer reviews
+                    </h2>
                   </div>
                 )}
               </div>
               <div>
-                <div className="item_container_price">${item.price}</div>
-                <div className={stockClassName}>{inStock}</div>
-                <div>{inStock ? <div></div> : <div></div>}</div>
-                <form onSubmit={AddToCart}>
-                  <h3>About this item</h3>
-                  <p>{item.description}</p>
-                  {stock > 0 ? (
-                    <div className="add_to_cart">
-                      <select
-                        value={Qty}
-                        onChange={(e) => setQty(e.target.value)}
-                        className="quantity"
-                      >
-                        {options().map((option) => (
-                          <option value={option} key={option}>
-                            {" "}
-                            {option}{" "}
-                          </option>
-                        ))}
-                      </select>
-                      <button className="modal_buttons">
-                        {" "}
-                        Add {Qty} To Cart • ${(item.price * Qty).toFixed(2)}
-                      </button>
-                    </div>
-                  ) : null}
-                </form>
-              </div>
-              {!userFavorite && currentUser && (
-                <div>
-                  <h3>Have this fragrance? Let others know what you think</h3>
-                  <OpenModalButton
-                    className="delete_review_button"
-                    buttonText={"Add Your Comment"}
-                    modalComponent={
-                      <FavoriteForm formAction="create" item={item} />
-                    }
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-          <div>
-            {reviews.length ? (
-              <div className="user_review_container">
-                <h2 className="h2_reviews_text">Customer Reviews</h2>
-                {reviews &&
-                  reviews.map((review) => (
-                    <div className="user_review">
-                      <div>
-                        <div className="user_review_profile">
-                          <img
-                            className="item_profile_img"
-                            src={review.order.user.profile_img}
-                          />
-                          <div>{review.order.user.first_name}</div>
-                          <div>{review.order.user.last_name}</div>
-                        </div>
+                {favorites.length ? (
+                  <div className="community_comments_container">
+                    <h2 className="h2_reviews_text">Community Comments</h2>
+                    {favorites &&
+                      favorites.map((fav) => (
                         <div>
-                          {[...Array(review.stars)].map((star) => {
-                            return <FaStar color="gold" />;
-                          })}
-                          {[...Array(5 - review.stars)].map((star) => {
-                            return <FaStar color="gray" />;
-                          })}
-                        </div>
-                      </div>
-                      <div>{review.note}</div>
-                      {currentUser &&
-                        (review.order.user.id === currentUser.id ? (
-                          <div className="item_review_buttons">
-                            <OpenModalButton
-                              className="delete_review_button"
-                              buttonText={"Update Review"}
-                              modalComponent={
-                                <ReviewForm
-                                  review={review}
-                                  formAction="edit"
-                                  itemId={item.id}
-                                  orderId={review.order.id}
-                                />
-                              }
-                            />
-                            <OpenModalButton
-                              className="delete_review_button"
-                              buttonText={"Delete Review"}
-                              modalComponent={
-                                <DeleteReviewModal review={review} />
-                              }
-                            />
+                          <div className="user_review">
+                            <div className="user_review_profile">
+                              <img
+                                className="item_profile_img"
+                                src={fav.user.profile_img}
+                              />
+                              <div>{fav.user.first_name}</div>
+                              <div>{fav.user.last_name}</div>
+                            </div>
+                            <div>{fav.note}</div>
                           </div>
-                        ) : null)}
-                    </div>
-                  ))}
-              </div>
-            ) : (
-              <div>
-                <h2 className="h2_reviews_text">
-                  There are currently no customer reviews
-                </h2>
-              </div>
-            )}
-          </div>
-          <div>
-            {favorites.length ? (
-              <div className="community_comments_container">
-                <h2 className="h2_reviews_text">Community Comments</h2>
-                {favorites &&
-                  favorites.map((fav) => (
-                    <div>
-                      <div className="user_review">
-                        <div className="user_review_profile">
-                          <img
-                            className="item_profile_img"
-                            src={fav.user.profile_img}
-                          />
-                          <div>{fav.user.first_name}</div>
-                          <div>{fav.user.last_name}</div>
-                        </div>
-                        <div>{fav.note}</div>
-                      </div>
-                      {currentUser &&
-                        (fav.user_id == currentUser.id ? (
-                          <div className="item_review_buttons">
-                            <OpenModalButton
-                              className="delete_review_button"
-                              buttonText={"Update Comment"}
-                              modalComponent={
-                                <FavoriteForm
-                                  favorite={fav}
-                                  formAction="edit"
-                                  item={item}
+                          {currentUser &&
+                            (fav.user_id == currentUser.id ? (
+                              <div className="item_review_buttons">
+                                <OpenModalButton
+                                  className="delete_review_button"
+                                  buttonText={"Update Comment"}
+                                  modalComponent={
+                                    <FavoriteForm
+                                      favorite={fav}
+                                      formAction="edit"
+                                      item={item}
+                                    />
+                                  }
                                 />
-                              }
-                            />
-                            <OpenModalButton
-                              className="delete_review_button"
-                              buttonText={"Delete Comment"}
-                              modalComponent={<DeleteCommentModal fav={fav} />}
-                            />
-                          </div>
-                        ) : null)}
-                    </div>
-                  ))}
+                                <OpenModalButton
+                                  className="delete_review_button"
+                                  buttonText={"Delete Comment"}
+                                  modalComponent={
+                                    <DeleteCommentModal fav={fav} />
+                                  }
+                                />
+                              </div>
+                            ) : null)}
+                        </div>
+                      ))}
+                  </div>
+                ) : null}
               </div>
-            ) : null}
-          </div>
+            </div>
+          ) : (
+            <p>Item Not Found</p>
+          )}
         </div>
-      ) : (
-        <p>Item Not Found</p>
       )}
     </div>
   );
