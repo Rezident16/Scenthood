@@ -42,6 +42,8 @@ function ItemForm({ item, formType, userId }) {
     }
   };
   let buttonClassname;
+  let tooltip;
+  let tooltiptext;
   if (
     !name ||
     !brand ||
@@ -51,11 +53,15 @@ function ItemForm({ item, formType, userId }) {
     !description
   ) {
     buttonClassname = "disabled_signup_login_button";
+    tooltip = "tooltip";
+    tooltiptext = "tooltiptext";
   } else {
     buttonClassname = "signup_login_button";
+    tooltip = "";
+    tooltiptext = "";
   }
 
-  console.log(available_qty.length)
+  console.log(available_qty.length);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,8 +72,11 @@ function ItemForm({ item, formType, userId }) {
     if (price <= 0) errorsObj.price = `Price must be above $0.00`;
     if (!preview_img) errorsObj.preview_img = "Image is required";
     if (!description) errorsObj.description = "Description is required";
-    if (description.length < 25) errorsObj.description = "Description needs to be at least 25 charachters"
-    if (parseInt(available_qty).length == 0 || parseInt(available_qty) < 0) errorsObj.available_qty = "Available quantity can't be less than 0 or empty"
+    if (description.length < 25)
+      errorsObj.description = "Description needs to be at least 25 charachters";
+    if (parseInt(available_qty).length == 0 || parseInt(available_qty) < 0)
+      errorsObj.available_qty =
+        "Available quantity can't be less than 0 or empty";
 
     if (!Object.keys(errorsObj).length) {
       const formData = new FormData();
@@ -118,11 +127,9 @@ function ItemForm({ item, formType, userId }) {
                 onChange={(e) => setName(e.target.value)}
                 required
               />
-                              <span style={{ height: "12px" }}>
-                  {errors.name && (
-                    <span className="errors">{errors.name}</span>
-                  )}
-                </span>
+              <span style={{ height: "20px" }}>
+                {errors.name && <span className="errors">{errors.name}</span>}
+              </span>
             </label>
             <label className="form_label">
               <div>
@@ -138,11 +145,9 @@ function ItemForm({ item, formType, userId }) {
                 onChange={(e) => setBrand(e.target.value)}
                 required
               />
-                              <span style={{ height: "12px" }}>
-                  {errors.brand && (
-                    <span className="errors">{errors.brand}</span>
-                  )}
-                </span>
+              <span style={{ height: "20px" }}>
+                {errors.brand && <span className="errors">{errors.brand}</span>}
+              </span>
             </label>
           </div>
           <div className="price_qty">
@@ -164,11 +169,9 @@ function ItemForm({ item, formType, userId }) {
                   required
                 />
               </div>
-              <span style={{ height: "12px" }}>
-                  {errors.price && (
-                    <span className="errors">{errors.price}</span>
-                  )}
-                </span>
+              <span style={{ height: "20px" }}>
+                {errors.price && <span className="errors">{errors.price}</span>}
+              </span>
             </label>
             <label className="form_label">
               <div>
@@ -186,11 +189,11 @@ function ItemForm({ item, formType, userId }) {
                 onChange={(e) => setAvailableQty(e.target.value)}
                 required
               />
-                              <span style={{ height: "12px" }}>
-                  {errors.available_qty && (
-                    <span className="errors">{errors.available_qty}</span>
-                  )}
-                </span>
+              <span style={{ height: "20px" }}>
+                {errors.available_qty && (
+                  <span className="errors">{errors.available_qty}</span>
+                )}
+              </span>
             </label>
           </div>
         </div>
@@ -208,11 +211,11 @@ function ItemForm({ item, formType, userId }) {
             onChange={(e) => setDescription(e.target.value)}
             required
           />
-                          <span style={{ height: "12px" }}>
-                  {errors.description && (
-                    <span className="errors">{errors.description}</span>
-                  )}
-                </span>
+          <span style={{ height: "20px" }}>
+            {errors.description && (
+              <span className="errors">{errors.description}</span>
+            )}
+          </span>
         </label>
 
         <label className="form_label item_form_input">
@@ -231,19 +234,26 @@ function ItemForm({ item, formType, userId }) {
             onChange={onFileChange}
           />
         </label>
-          <div className="image_placeholder_item">
-            {localImg && (
-              <div>
-                <img id="item_form_img" src={localImg} alt="" />
-              </div>
-            )}
-          </div>
-          <span style={{ height: "12px" }}>
-                  {errors.preview_img && (
-                    <span className="errors">{errors.preview_img}</span>
-                  )}
-                </span>
-        <button className={buttonClassname}>Submit</button>
+        <div className="image_placeholder_item">
+          {localImg && (
+            <div>
+              <img id="item_form_img" src={localImg} alt="" />
+            </div>
+          )}
+        </div>
+        <span style={{ height: "20px" }}>
+          {errors.preview_img && (
+            <span className="errors">{errors.preview_img}</span>
+          )}
+        </span>
+        <div className={tooltip}>
+          {tooltip != "" ? (
+            <span className={tooltiptext}>
+              Don't forget to fill out everything
+            </span>
+          ) : null}
+          <button className={buttonClassname}>Submit</button>
+        </div>
         {imageLoading && <p>Image is Loading...</p>}
       </form>
     </div>

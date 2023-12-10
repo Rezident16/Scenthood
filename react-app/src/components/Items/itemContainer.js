@@ -18,6 +18,9 @@ import FavoriteForm from "./favoriteForm";
 import DeleteCommentModal from "./deleteCommentModal";
 import { clearState } from "../../store/user";
 import LoaderComp from "./loader";
+import ItemForm from "./CreateUpdateItemForm";
+import DeleteItemModal from "./deleteItem";
+import OpenModalDiv from "../Navigation/DivModal";
 
 function ItemContainer() {
   const dispatch = useDispatch();
@@ -45,6 +48,11 @@ function ItemContainer() {
   const currentUser = useSelector((state) => state.session.user);
 
   const item = useSelector((state) => state.item);
+
+  let visible = false;
+  if (currentUser) {
+    visible = currentUser.id == item.owner_id ? true : false;
+  }
 
   if (!item) return null;
   if (!item?.reviews) return null;
@@ -132,10 +140,10 @@ function ItemContainer() {
         {"< Back to items"}
       </div>
       {isLoading ? (
-          <div className="countdown">
-            <LoaderComp />
-            {/* <h2>{seconds}..</h2> */}
-          </div>
+        <div className="countdown">
+          <LoaderComp />
+          {/* <h2>{seconds}..</h2> */}
+        </div>
       ) : (
         <div>
           {item.name ? (
@@ -179,6 +187,28 @@ function ItemContainer() {
                   </div>
                   <div>
                     <div className="item_container_price">${item.price}</div>
+                    {visible ? (
+                      <div className="item_review_buttons user_item_change_buttons item_delete_update">
+                        <div className="item_container_owner_buttons">
+                        <OpenModalDiv
+                          buttonText={""}
+                          modalComponent={
+                            <ItemForm item={item} formType="edit" />
+                          }
+                          className={"fas fa-edit"}
+                          divText="Update"
+                        />
+                        </div>
+                        <div className="item_container_owner_buttons">
+                        <OpenModalDiv
+                          buttonText={""}
+                          modalComponent={<DeleteItemModal item={item} />}
+                          className={"fa-solid fa-trash"}
+                          divText="Delete"
+                        />
+                        </div>
+                      </div>
+                    ) : null}
                     <div className={stockClassName}>{inStock}</div>
                     <div>{inStock ? <div></div> : <div></div>}</div>
                     <form onSubmit={AddToCart}>
