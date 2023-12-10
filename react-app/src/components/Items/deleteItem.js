@@ -18,6 +18,7 @@ function DeleteItemModal({ item }) {
     await dispatch(getSpecific(item.owner_id))
     await dispatch(removeFromCart(item))
     await dispatch(fetchLoadCart())
+    history.push('/items')
     closeModal()
   };
 
