@@ -51,7 +51,7 @@ function CartModal() {
 
           <div className="cart_buttons">
             <div>
-              <div className="subtotal">Subtotal ${total}</div>
+              <div className="subtotal">Subtotal ${total.toFixed(2)}</div>
               <div className="cart_button" onClick={onClick}>
                 Checkout
               </div>

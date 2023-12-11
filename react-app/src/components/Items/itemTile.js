@@ -75,7 +75,7 @@ function ItemTile({ item }) {
             </div>
           )}
         </div>
-        <div className="item_price_item_tile">${item.price}</div>
+        <div className="item_price_item_tile">${item.price.toFixed(2)}</div>
         <div style={{ height: "20px" }}></div>
       </div>
       <div

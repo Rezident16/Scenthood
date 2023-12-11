@@ -14,7 +14,7 @@ function CartItemTile({ item }) {
           <div className="item_qty_order">{item.qty}</div>
         </div>
       </div>
-      <div>Price: ${item.price}</div>
+      <div>Price: ${item.price.toFixed(2)}</div>
     </div>
   );
 }

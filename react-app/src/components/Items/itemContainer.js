@@ -186,7 +186,7 @@ function ItemContainer() {
                     )}
                   </div>
                   <div>
-                    <div className="item_container_price">${item.price}</div>
+                    <div className="item_container_price">${item.price.toFixed(2)}</div>
                     {visible ? (
                       <div className="item_review_buttons user_item_change_buttons item_delete_update">
                         <div className="item_container_owner_buttons">

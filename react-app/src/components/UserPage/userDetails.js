@@ -131,7 +131,7 @@ function UserDetails() {
                     <div className="address_placed_total">
                       <div>Address: {order.address}</div>
                       <div>Placed at: {order.created_at}</div>
-                      <div>Total: ${order.price}</div>
+                      <div>Total: ${order.price.toFixed(2)}</div>
                     </div>
                     <div className="order_items">
                       {order.order_prodcts.map((orderProduct) => {
