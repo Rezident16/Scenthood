@@ -35,6 +35,8 @@ function SearchBar({ items, className }) {
 
   return (
     <div className={className}>
+        <div className="search_bar_glass">
+        <i class="fa-solid fa-magnifying-glass"></i>
       <input
         ref={searchRef}
         type="text"
@@ -43,6 +45,7 @@ function SearchBar({ items, className }) {
         onChange={handleInputChange}
         className="search_bar"
       />
+        </div>
       <div className={searchBarClassName}>
         {searchTerm &&
           filteredItems

@@ -28,6 +28,12 @@ function ItemsComponent() {
     pageNumbers.push(i);
   }
 
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [itemsPerPage]);
+
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -113,7 +119,12 @@ function ItemsComponent() {
               <select
                 className="select_items_per_page"
                 value={itemsPerPage}
-                onChange={(e) => setItemsPerPage(e.target.value)}
+                onChange={(e) => {
+                  
+                  setItemsPerPage(e.target.value);
+              }
+                
+              }
               >
                 <option value="5">5</option>
                 <option value="10">10</option>

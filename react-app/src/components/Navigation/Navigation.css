@@ -12,6 +12,16 @@
   gap: 20px;
   list-style: none;
   align-items: center;
+  padding-right: 35px;
+  background-color: white;
+  height: 100%;
+  margin: 0px;
+  padding: 16px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid gray;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.06);
 }
 
 .logo {
