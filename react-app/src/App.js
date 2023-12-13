@@ -12,6 +12,7 @@ import { fetchLoadCart } from "./store/cart";
 import Checkout from "./components/Cart/Checkout";
 import IntroPage from "./components/Splash/SplashPage";
 import Footer from "./components/Splash/footer";
+import { fetchItems } from "./store/items";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,11 @@ function App() {
     if (storage) {
       dispatch(fetchLoadCart(JSON.parse(storage)));
     }
+  }, [dispatch]);
+  useEffect(() => {
+    (async () => {
+      await dispatch(fetchItems());
+    })();
   }, [dispatch]);
 
   return (

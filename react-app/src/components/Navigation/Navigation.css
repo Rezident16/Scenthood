@@ -11,6 +11,7 @@
   justify-content: space-between;
   gap: 20px;
   list-style: none;
+  align-items: center;
 }
 
 .logo {
@@ -148,6 +149,11 @@
   color: black;
 }
 
+.search_bar_component {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 

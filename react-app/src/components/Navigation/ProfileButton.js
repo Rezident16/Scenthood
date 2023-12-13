@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import OpenModalDiv from "./DivModal";
 import ItemForm from "../Items/CreateUpdateItemForm";
 import { useHistory } from "react-router-dom";
+import SearchBar from "../Items/SearchBar";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function ProfileButton({ user }) {
   const [isUser, setIsUser] = useState(false);
   const ulRef = useRef();
   const history = useHistory();
+  const items = useSelector((state) => state.items);
 
   const [qty, setQty] = useState(0);
   const cart = useSelector((state) => state.cart);

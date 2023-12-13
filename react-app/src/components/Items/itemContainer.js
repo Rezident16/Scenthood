@@ -21,6 +21,7 @@ import LoaderComp from "./loader";
 import ItemForm from "./CreateUpdateItemForm";
 import DeleteItemModal from "./deleteItem";
 import OpenModalDiv from "../Navigation/DivModal";
+import { likeItem, unlikeItem } from "./like_remove";
 
 function ItemContainer() {
   const dispatch = useDispatch();
@@ -60,15 +61,20 @@ function ItemContainer() {
   const reviews = item.reviews;
   const favorites = item.favorites;
   let userFavorite = false;
+  let favoriteItem = null;
   if (favorites) {
     if (favorites.length && currentUser) {
       favorites.forEach((favorite) => {
         if (favorite.user.id == currentUser.id) {
           userFavorite = true;
+          favoriteItem = favorite;
+          return;
         }
       });
     }
   }
+
+  console.log(favoriteItem);
   let reviewRating = 0;
   let avgReview = 0;
   let reviewText;
@@ -154,8 +160,29 @@ function ItemContainer() {
                   <div className="link_to_see_user" onClick={goToUser}>
                     Visit the seller {item.owner.username}
                   </div>
-                  <div className="item_container_name">
-                    {item.name} by {item.brand}
+                  <div>
+                    <div className="item_container_name">
+                      {item.name} by {item.brand}
+                      {currentUser ? (
+                        !userFavorite && currentUser ? (
+                          <div
+                            onClick={() => likeItem(dispatch, item, currentUser)}
+                            className="icon-container"
+                          >
+                            <i className="fa-regular fa-heart"></i>
+                            {/* <i className="fa-solid fa-heart"></i> */}
+                          </div>
+                        ) : (
+                          <div>
+                            <i
+                              onClick={() => unlikeItem(dispatch, favoriteItem)}
+                              class="fa-solid fa-heart selected_star"
+                            ></i>
+                          </div>
+                        )
+                        
+                        ) : (null)}
+                    </div>
                   </div>
                   <div>
                     {reviews.length ? (
@@ -186,26 +213,28 @@ function ItemContainer() {
                     )}
                   </div>
                   <div>
-                    <div className="item_container_price">${item.price.toFixed(2)}</div>
+                    <div className="item_container_price">
+                      ${item.price.toFixed(2)}
+                    </div>
                     {visible ? (
                       <div className="item_review_buttons user_item_change_buttons item_delete_update">
                         <div className="item_container_owner_buttons">
-                        <OpenModalDiv
-                          buttonText={""}
-                          modalComponent={
-                            <ItemForm item={item} formType="edit" />
-                          }
-                          className={"fas fa-edit"}
-                          divText="Update"
-                        />
+                          <OpenModalDiv
+                            buttonText={""}
+                            modalComponent={
+                              <ItemForm item={item} formType="edit" />
+                            }
+                            className={"fas fa-edit"}
+                            divText="Update"
+                          />
                         </div>
                         <div className="item_container_owner_buttons">
-                        <OpenModalDiv
-                          buttonText={""}
-                          modalComponent={<DeleteItemModal item={item} />}
-                          className={"fa-solid fa-trash"}
-                          divText="Delete"
-                        />
+                          <OpenModalDiv
+                            buttonText={""}
+                            modalComponent={<DeleteItemModal item={item} />}
+                            className={"fa-solid fa-trash"}
+                            divText="Delete"
+                          />
                         </div>
                       </div>
                     ) : null}
@@ -236,7 +265,8 @@ function ItemContainer() {
                       ) : null}
                     </form>
                   </div>
-                  {!userFavorite && currentUser && (
+
+                  {/* {!userFavorite && currentUser && (
                     <div>
                       <h3>
                         Have this fragrance? Let others know what you think
@@ -249,7 +279,7 @@ function ItemContainer() {
                         }
                       />
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
               <div>
@@ -277,7 +307,7 @@ function ItemContainer() {
                               })}
                             </div>
                           </div>
-                          <div>{review.note}</div>
+                          <div className="review_text">{review.note}</div>
                           {currentUser &&
                             (review.order.user.id === currentUser.id ? (
                               <div className="item_review_buttons">
@@ -313,7 +343,7 @@ function ItemContainer() {
                   </div>
                 )}
               </div>
-              <div>
+              {/* <div>
                 {favorites.length ? (
                   <div className="community_comments_container">
                     <h2 className="h2_reviews_text">Community Comments</h2>
@@ -358,7 +388,7 @@ function ItemContainer() {
                       ))}
                   </div>
                 ) : null}
-              </div>
+              </div> */}
             </div>
           ) : (
             <p>Item Not Found</p>

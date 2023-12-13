@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
@@ -6,9 +6,22 @@ import "./Navigation.css";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import OpenModalButton from "../OpenModalButton";
+import SearchBar from "../Items/SearchBar";
+import { useDispatch } from "react-redux";
+import { fetchItems } from "../../store/items";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    (async () => {
+      await dispatch(fetchItems());
+    })();
+  }, [dispatch]);
+  const itemsObj = useSelector((state) => state.items);
+  const items = Object.values(itemsObj);
+
+  console.log(items)
 
   return (
     <ul className="navigation">
@@ -44,6 +57,9 @@ function Navigation({ isLoaded }) {
             </div>
           </NavLink>
         )}
+      </li>
+      <li>
+        <SearchBar className={"search_bar_component"} items={items} />
       </li>
       {isLoaded && (
         <li>

@@ -23,5 +23,6 @@ class FavoriteProduct(db.Model):
             'user_id': self.user_id,
             'product_id': self.product_id,
             'note': self.note,
-            'user': self.user.to_dict_fav()
+            'user': self.user.to_dict_fav(),
+            'item': self.item.to_dict_self()
         }

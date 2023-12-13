@@ -49,6 +49,13 @@ function UserDetails() {
   }, [dispatch, userId]);
 
   if (!user) return null;
+  const favorites = user.favorites;
+
+  let favoriteItems = [];
+  favorites.forEach((favorite) => {
+    favoriteItems.push(favorite.item);
+  });
+
   let userText;
   if (currUser) {
     if (userOrders == false) {
@@ -66,8 +73,18 @@ function UserDetails() {
         {"< Back to items"}
       </div>
       <div>
-        <div>
+        <div className="image_favorites">
           <img className="user_details_profile_img" src={user.profile_img} />
+          <div className="favorites">
+            <h2>My Favorite Items</h2>
+            <div className="fav_items">
+              {favoriteItems.map (item => (
+                <img onClick={() => {
+                  history.push(`/items/${item.id}`)
+                }} className="item_image_fav" src={item.preview_img} />
+              ))}
+            </div>
+          </div>
         </div>
         <div>
           <h2>{user.username}</h2>
