@@ -5,6 +5,7 @@ import ItemTile from "./itemTile";
 import "./items.css";
 import LoaderComp from "./loader";
 import SearchBar from "./SearchBar";
+import Filters from './filters'
 
 function ItemsComponent() {
   const dispatch = useDispatch();
@@ -12,16 +13,43 @@ function ItemsComponent() {
   const [seconds, setSeconds] = useState(1);
 
   const itemsObj = useSelector((state) => state.items);
-  const items = Object.values(itemsObj);
+  let items = Object.values(itemsObj);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
+  const [filters, setFilters] = useState({
+    min_price: 0,
+    max_price: 9999,
+    brand: "",
+    availability: false,
+  });
+
+  console.log(items)
+
+  let filteredItems = [...items];
+
+  if (filters.min_price || filters.max_price) {
+    filteredItems = filteredItems.filter(item => item.price <= filters.max_price && item.price >= filters.min_price);
+  }
+  if (filters.brand) {
+    filteredItems = filteredItems.filter(item => filters.brand.includes(item.brand));
+  }
+  if (filters.availability) {
+    filteredItems = filteredItems.filter(item => item.available_qty > 0);
+  }
+  
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  let currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
-  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+    setCurrentPage(1)
+    // setItemsPerPage(currentItems.length)
+  };
+
 
   let pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {
@@ -69,6 +97,7 @@ function ItemsComponent() {
         </div>
       ) : (
         <div>
+          <Filters onFilterChange={handleFilterChange} items={items} />
           <div className="all_items">
             {currentItems &&
               currentItems.map((item) => (

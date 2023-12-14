@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 
 function SearchBar({ items, className }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const searchRef = useRef();
 
   const history = useHistory();
 
@@ -13,10 +12,8 @@ function SearchBar({ items, className }) {
   };
 
   const handleClickOutside = (event) => {
-    if (searchRef.current && !searchRef.current.contains(event.target)) {
       if (!event.target.classList.contains("search_term_target")) {
         setSearchTerm("");
-      }
     }
   };
 
@@ -38,12 +35,11 @@ function SearchBar({ items, className }) {
         <div className="search_bar_glass">
         <i class="fa-solid fa-magnifying-glass"></i>
       <input
-        ref={searchRef}
         type="text"
         placeholder="Search by name or brand..."
         value={searchTerm}
         onChange={handleInputChange}
-        className="search_bar"
+        className="search_bar search_term_target"
       />
         </div>
       <div className={searchBarClassName}>
