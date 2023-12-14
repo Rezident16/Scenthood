@@ -36,7 +36,7 @@ function Filters({ onFilterChange, items }) {
   return (
     <div className="filters">
       <div className="item_price_filter">
-        <h3>Price Per Item</h3>
+        <h3>Price Per Item: </h3>
         <div className="item_price_min_max_filter">
           <div className="item_price_each">
             <label>Min: </label>
@@ -72,7 +72,7 @@ function Filters({ onFilterChange, items }) {
         </select>
       </div>
       <div className="availability_filter_container">
-        <h3> Availability </h3>
+        <h3> Availability: </h3>
         <label className={filters.availability ? "checked" : "unchecked"}>
           <input
             type="checkbox"
