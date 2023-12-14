@@ -727,10 +727,10 @@ input[type="radio"] {
     position: relative;
     width: fit-content;
     background-color: white;
-    top: 6px;
-    z-index: 1;
+    top: 8px;
     color: rgb(83, 82, 82);
     left: 12px;
+    padding: 2px;
 }
 
 .item_brand_filter {
