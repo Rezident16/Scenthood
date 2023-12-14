@@ -11,12 +11,14 @@ function ItemsComponent() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [seconds, setSeconds] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const itemsObj = useSelector((state) => state.items);
   let items = Object.values(itemsObj);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  if (currentPage == 0) setCurrentPage(1);
+
 
   const [filters, setFilters] = useState({
     min_price: 0,
@@ -25,7 +27,6 @@ function ItemsComponent() {
     availability: false,
   });
 
-  console.log(items)
 
   let filteredItems = [...items];
 
@@ -42,12 +43,13 @@ function ItemsComponent() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   let currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  console.log(currentPage)
+  // let currentItems = filteredItems
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
     setCurrentPage(1)
-    // setItemsPerPage(currentItems.length)
   };
 
 
@@ -88,7 +90,9 @@ function ItemsComponent() {
     })();
   }, [dispatch]);
 
-  if (!items) return null;
+  if (!items.length) return null;
+  // if (!currentItems.length) return null;
+
   return (
     <div className="all_items_container">
       {isLoading ? (
@@ -97,6 +101,7 @@ function ItemsComponent() {
         </div>
       ) : (
         <div>
+          <div className="items_and_filter_container">
           <Filters onFilterChange={handleFilterChange} items={items} />
           <div className="all_items">
             {currentItems &&
@@ -107,6 +112,7 @@ function ItemsComponent() {
                   item={item}
                 />
               ))}
+          </div>
           </div>
           <div className="page_buttons">
             <button

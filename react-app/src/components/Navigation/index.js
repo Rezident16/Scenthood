@@ -21,8 +21,6 @@ function Navigation({ isLoaded }) {
   const itemsObj = useSelector((state) => state.items);
   const items = Object.values(itemsObj);
 
-  console.log(items)
-
   return (
     <ul className="navigation">
       <li className="left_nav">
