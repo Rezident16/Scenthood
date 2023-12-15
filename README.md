@@ -6,13 +6,20 @@
 
 ## Technology Used
 ### Frameworks and Libraries
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![Python](https://img.shields.io/badge/-Python-%233776AB?style=for-the-badge&logo=python&logoColor=white) 
+![Flask](https://img.shields.io/badge/-Flask-%23000000?style=for-the-badge&logo=python&logoColor=white) 
+![React](https://img.shields.io/badge/-React-%2361DAFB?style=for-the-badge&logo=react&logoColor=black) 
+![Redux](https://img.shields.io/badge/-Redux-%23764ABC?style=for-the-badge&logo=react&logoColor=white) 
+![CSS3](https://img.shields.io/badge/-CSS3-%231572B6?style=for-the-badge&logo=react&logoColor=white) 
+![HTML5](https://img.shields.io/badge/-HTML5-%23E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![Docker](https://img.shields.io/badge/-Docker-%232496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Javascript](https://img.shields.io/badge/-JavaScript-black?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
  ### Database:
- ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+ ![Postgres](https://img.shields.io/badge/-postgresql-%234169E1?style=for-the-badge&logo=javascript&logoColor=white)
 
  ### Hosting:
- ![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)
+ ![Render](https://img.shields.io/badge/-render-%2346E3B7?style=for-the-badge&logo=render&logoColor=white)
 
 ## Wiki links
 + [**Database Schema**](https://github.com/Rezident16/Scenthood/wiki/Database-layout)
