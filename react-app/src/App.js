@@ -27,6 +27,7 @@ function App() {
       dispatch(fetchLoadCart(JSON.parse(storage)));
     }
   }, [dispatch]);
+  
   useEffect(() => {
     (async () => {
       await dispatch(fetchItems());
