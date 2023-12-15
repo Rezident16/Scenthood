@@ -40,11 +40,9 @@ export const submitOrder = (body) => async (dispatch) => {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log('ok')
       dispatch(clearCart());
       return data;
     } else {
-      console.log('not ok')
       const errors = await response.json();
       return errors;
     }
