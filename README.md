@@ -1,5 +1,6 @@
-## Connect:
+## Connect with me:
 [![LinkedIn](https://img.shields.io/badge/-linkedin-%230A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/andreivorobev/)
+[![Gmail](https://img.shields.io/badge/-gmail-%23EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:andrey.vorob1995@gmail.com)
 
 ## About
 [Scenthood](https://scenthood.onrender.com/) is an e-commerce site specifically designed for buying and selling fragrances and is inspired by [Wayfair](https://www.wayfair.com/) and [Amazon](https://www.amazon.com/).
