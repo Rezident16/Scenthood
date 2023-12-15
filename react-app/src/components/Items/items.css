@@ -218,40 +218,27 @@ input[type="radio"] {
 }
 
 .delete_review_button {
-    border: none;
-    font-family: 'Lato';
-    font-size: inherit;
-    color: inherit;
-    background: none;
-    cursor: pointer;
-    display: inline-block;
-    /* margin: 15px 30px; */
-    /* text-transform: uppercase; */
-    /* letter-spacing: 1px; */
-    /* font-weight: 700; */
-    outline: none;
-    position: relative;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-    width: 150px;
-    /* height: 35px; */
+    display: flex;
     border: 1px solid gray;
-    /* border-radius: 5px; */
-    background-color: lavenderblush;
-    margin-bottom: 10px;
+    /* border-radius: 10px; */
+    height: 29px;
+    align-items: center;
+    justify-content: center;
+    width: 154.5px;
+    cursor: pointer;
+    color: black; /* Change the text color to contrast with the background */
+    background-image: linear-gradient(white, orange);
+    font-weight: bold; /* Make the text more prominent */
+    transition: background-color 0.3s ease; /* Add a transition for a smoother hover effect */
+}
+
+.delete_review_button:hover {
+    background-image: linear-gradient(white, rgb(255, 132, 0)); /* Change the background color on hover */
 }
 
 .delete_review_button:active {
     color: black;
-    background-color: rgb(213, 201, 206);
-}
-
-.delete_review_button:hover {
-    /* background-color: orange; */
-    background-image: linear-gradient(lavenderblush, orange);
-    color: black;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    background-image: linear-gradient(white, gray);
 }
 
 .item_review_buttons {
@@ -454,8 +441,18 @@ input[type="radio"] {
     margin: 25px;
 }
 
+.item_tile_outer {
+    width: 395.2px;
+}
+
 .review_text {
-    padding-right: 30px;
+    width: 50%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
 }
 
 .stars_review {

@@ -27,6 +27,7 @@
 
 .user_whole_container {
     margin-bottom: 5px;
+    padding-left: 10px;
 }
 
 .order_details_container {
@@ -108,6 +109,17 @@
     flex-direction: column;
     gap: 5px;
 }
+
+.user__submitted_review_container {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+    width: 800px;
+} 
+
 
 .not_selected {
     border: 1px solid gray;

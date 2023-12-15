@@ -191,7 +191,9 @@ function UserDetails() {
                                 </div>
                               ) : (
                                 <div className="item_profile_order_review">
-                                  You said: {userReview[0].note}{" "}
+                                  <div className="user__submitted_review_container">
+                                  {userReview[0].note}{" "}
+                                  </div>
                                   <div className="username_update_delete_review">
                                     <OpenModalButton
                                       className={"delete_review_button"}

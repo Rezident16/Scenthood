@@ -22,16 +22,18 @@ import ItemForm from "./CreateUpdateItemForm";
 import DeleteItemModal from "./deleteItem";
 import OpenModalDiv from "../Navigation/DivModal";
 import { likeItem, unlikeItem } from "./like_remove";
+import CartModal from "../Cart/CartModal";
 
 function ItemContainer() {
   const dispatch = useDispatch();
   const { itemId } = useParams();
   const history = useHistory();
   const [Qty, setQty] = useState(1);
-  const { closeModal } = useModal();
+  const { closeModal, setModalContent } = useModal();
   const [isLoading, setIsLoading] = useState(true);
 
   const [seconds, setSeconds] = useState(1);
+
 
   useEffect(() => {
     seconds > 0 && setTimeout(() => setSeconds(seconds - 1), 1000);
@@ -129,6 +131,7 @@ function ItemContainer() {
     e.preventDefault();
     dispatch(addToCart(item, Qty));
     closeModal();
+    setModalContent(<CartModal />);
   };
 
   const goBack = async (e) => {
@@ -166,7 +169,9 @@ function ItemContainer() {
                       {currentUser ? (
                         !userFavorite && currentUser ? (
                           <div
-                            onClick={() => likeItem(dispatch, item, currentUser)}
+                            onClick={() =>
+                              likeItem(dispatch, item, currentUser)
+                            }
                             className="icon-container"
                           >
                             <i className="fa-regular fa-heart"></i>
@@ -180,8 +185,7 @@ function ItemContainer() {
                             ></i>
                           </div>
                         )
-                        
-                        ) : (null)}
+                      ) : null}
                     </div>
                   </div>
                   <div>
