@@ -536,7 +536,7 @@ input[type="radio"] {
     width: 600px;
     border: 1px solid gray;
     top: 49px;
-    /* z-index: 1000; */
+    z-index: 1;
 }
 
 .search_term_img {
