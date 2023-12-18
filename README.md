@@ -76,18 +76,23 @@
 
 
 ## Feature List
-* Left Hand Navigation that allows users to quickly filter items by brand, price, and availability:
+#### Left Hand Navigation that allows users to quickly filter items by brand, price, and availability:
    <br/>
-![image](https://github.com/Rezident16/Scenthood/assets/137537436/39386043-1391-4987-853a-d956015be6ca)
+   
+![lefthand](https://github.com/Rezident16/Scenthood/assets/137537436/f04d686f-b75e-485d-93e5-82339e4a70de)
 
-
-* Search Bar allows users to quickly find the items they need by name or by brand:
+#### Search Bar allows users to quickly find the items they need by name or by brand:
    <br/>
-![image](https://github.com/Rezident16/Scenthood/assets/137537436/dbf045ff-9d54-4ceb-add9-3add7f7a38c6)
+   
+![searchBar](https://github.com/Rezident16/Scenthood/assets/137537436/8803f8d7-8a4a-4c85-9cfe-75124e6ff013)
 
-* Cart utilizes local storage to keep it persistent:
+
+#### Cart utilizes local storage to keep it persistent:
   <br/>
-![image](https://github.com/Rezident16/Scenthood/assets/137537436/a490eac9-3980-47b1-ae33-8cd311bec673)
+  
+![cart](https://github.com/Rezident16/Scenthood/assets/137537436/7c77f58c-006f-4a93-a06e-2703cd9c9e42)
+
+
 
 ## Future Implementations:
 * Reorder the items
