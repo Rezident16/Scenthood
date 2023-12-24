@@ -10,6 +10,7 @@ import { getSpecific } from "../../store/user";
 import CartItemTile from "./CartItemTile";
 import { fetchUpdateItem } from "../../store/item";
 import "./Cart.css";
+import SetUserAddress from "../GoogleMapsApi";
 
 function Checkout() {
   const cart = useSelector((state) => state.cart);
@@ -29,13 +30,14 @@ function Checkout() {
   const [city, setCity] = useState(user ? `${user.city}` : "");
   const [state, setState] = useState(user ? `${user.state}` : "");
   const [errors, setErrors] = useState({});
+  SetUserAddress(setAddress, setCity, setState);
 
-    let buttonClassname;
-    if (!city || !state || !address) {
-      buttonClassname = "disabled_signup_login_button";
-    } else {
-      buttonClassname = "signup_login_button";
-    }
+  let buttonClassname;
+  if (!city || !state || !address) {
+    buttonClassname = "disabled_signup_login_button";
+  } else {
+    buttonClassname = "signup_login_button";
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -44,8 +46,6 @@ function Checkout() {
     if (!city) errorsObj.city = "City is required";
     if (!state) errorsObj.state = "State is required";
     if (!address) errorsObj.address = "Address is required";
-
-
 
     if (!user) {
       setModalContent(<LoginFormModal />);
@@ -83,9 +83,11 @@ function Checkout() {
           <label className="form_label">
             Address
             <input
+              id="searchTextField"
               type="text"
               onChange={(e) => setAddress(e.target.value)}
               value={address}
+              className="checkout_address_input"
             />
           </label>
           <label className="form_label">
@@ -164,7 +166,11 @@ function Checkout() {
         </div>
         <div className="order_total_button">
           <div>Order Total: ${total.toFixed(2)}</div>
-          {items.length ? <button className={buttonClassname} type="submit">Place Order</button> : null}
+          {items.length ? (
+            <button className={buttonClassname} type="submit">
+              Place Order
+            </button>
+          ) : null}
         </div>
       </form>
 

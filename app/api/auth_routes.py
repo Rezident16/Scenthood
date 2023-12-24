@@ -95,3 +95,7 @@ def unauthorized():
     Returns unauthorized JSON when flask-login authentication fails
     """
     return {'errors': ['Unauthorized']}, 401
+
+@auth_routes.route('/google/key')
+def get_key():
+    return {'key': os.environ.get('REACT_APP_GOOGLE_MAPS_API_KEY')}
