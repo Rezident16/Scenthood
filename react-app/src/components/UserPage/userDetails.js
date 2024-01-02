@@ -36,7 +36,6 @@ function UserDetails() {
 
   const ordersObj = useSelector((state) => state.orders);
   const orders = Object.values(ordersObj);
-  console.log(orders)
   orders.forEach((order) => {
     order.order_prodcts.forEach((orderProduct) => {
       const userReview = orderProduct.item.reviews.filter(
@@ -59,7 +58,6 @@ function UserDetails() {
     favorite.item.fav = favorite;
     favoriteItems.push(favorite.item);
   });
-  console.log(favoriteItems)
   let userText;
   if (currUser) {
     if (userOrders == false) {
