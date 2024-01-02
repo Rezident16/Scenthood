@@ -100,7 +100,6 @@
 
 
 ## Future Implementations:
-* Reorder the items
 * Display OOS messaging on the item tiles on /items
 * Allow users to discount their items
 
