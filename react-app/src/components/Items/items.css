@@ -1,10 +1,11 @@
 .all_items {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(400px, max-content));
     gap: 10px;
     padding-left: 10px;
     padding-right: 10px;
     justify-content: center;
+    width: 100%;
 }
 
 .go_back_button {
@@ -35,6 +36,7 @@
 }
 
 
+
 .item_tile {
     border: 1px solid #ccc;
     padding: 10px;
@@ -43,6 +45,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    /* width: 100%; */
 }
 
 .item_tile:hover {
@@ -235,14 +238,18 @@ input[type="radio"] {
     justify-content: center;
     width: 154.5px;
     cursor: pointer;
-    color: black; /* Change the text color to contrast with the background */
+    color: black;
+    /* Change the text color to contrast with the background */
     background-image: linear-gradient(white, orange);
-    font-weight: bold; /* Make the text more prominent */
-    transition: background-color 0.3s ease; /* Add a transition for a smoother hover effect */
+    font-weight: bold;
+    /* Make the text more prominent */
+    transition: background-color 0.3s ease;
+    /* Add a transition for a smoother hover effect */
 }
 
 .delete_review_button:hover {
-    background-image: linear-gradient(white, rgb(255, 132, 0)); /* Change the background color on hover */
+    background-image: linear-gradient(white, rgb(255, 132, 0));
+    /* Change the background color on hover */
 }
 
 .delete_review_button:active {
@@ -461,7 +468,7 @@ input[type="radio"] {
     padding: 20px;
     margin-bottom: 15px;
     background-color: #fff;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
 }
 
 .stars_review {
