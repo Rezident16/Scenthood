@@ -1,0 +1,45 @@
+.reorder_button {
+    display: flex;
+    border: 1px solid gray;
+
+    height: 29px;
+    align-items: center;
+    justify-content: center;
+    width: 154.5px;
+    cursor: pointer;
+    color: black;
+    background-image: linear-gradient(white, orange);
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.reorder_button:hover {
+    background-image: linear-gradient(white, rgb(255, 132, 0));
+}
+
+.reorder_button:active {
+    color: black;
+    background-image: linear-gradient(white, gray);
+}
+
+.disabled_reorder_button {
+    background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+    display: flex;
+    border: 1px solid gray;
+    height: 29px;
+    align-items: center;
+    justify-content: center;
+    width: 154.5px;
+    font-weight: bold;
+}
+
+.reorder_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 15px;
+    gap: 5px;
+}

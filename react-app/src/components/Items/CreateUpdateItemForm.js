@@ -61,8 +61,6 @@ function ItemForm({ item, formType, userId }) {
     tooltiptext = "";
   }
 
-  console.log(available_qty.length);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errorsObj = {};

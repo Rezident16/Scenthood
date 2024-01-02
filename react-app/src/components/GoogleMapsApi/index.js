@@ -24,7 +24,6 @@ function SetUserAddress(setAddress, setCity, setState) {
             addressComponents[i].types.includes("administrative_area_level_1")
           ) {
             state = addressComponents[i].short_name;
-            console.log(addressComponents[i]);
           }
           if (addressComponents[i].types.includes("street_number")) {
             address += addressComponents[i].long_name;

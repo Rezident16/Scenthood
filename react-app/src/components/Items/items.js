@@ -43,8 +43,6 @@ function ItemsComponent() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   let currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-  console.log(currentPage)
-  // let currentItems = filteredItems
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
   const handleFilterChange = (newFilters) => {

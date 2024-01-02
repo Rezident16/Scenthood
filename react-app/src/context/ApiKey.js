@@ -15,10 +15,6 @@ function MapsProvider({ children }) {
       script.src = `https://maps.googleapis.com/maps/api/js?key=${data.key}&libraries=places`;
       script.async = true;
       script.defer = true;
-      script.onload = () => {
-        console.log("Google Maps API script has loaded");
-        // Now, the google object should be available
-      };
       document.head.append(script);
     };
     apiKeyFunc();

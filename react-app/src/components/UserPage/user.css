@@ -108,13 +108,14 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    margin-bottom: 10px;
 }
 
 .user__submitted_review_container {
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 3px;
     background-color: #fff;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
     width: 800px;
@@ -153,6 +154,9 @@
 
 .address_placed_total {
     width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .address_placed_total > div {
@@ -195,3 +199,19 @@
     padding-bottom: 5px;
     /* border-bottom: 2px solid #007185; */
 }
+
+.fa-circle-xmark {
+    position: relative;
+    bottom: 55px;
+    left: 55px;
+    color: red;
+    cursor: pointer;
+}
+
+.hover-div .fa-regular {
+    visibility: hidden;
+  }
+  
+  .hover-div:hover .fa-regular {
+    visibility: visible;
+  }

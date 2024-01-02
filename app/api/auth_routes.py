@@ -66,7 +66,6 @@ def sign_up():
     
     if form.validate_on_submit():
         image = form.data['profile_img']
-        print(form.data)
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
         user = User(
@@ -85,7 +84,6 @@ def sign_up():
         db.session.commit()
         login_user(user)
         return user.to_dict_self()
-    # print (validation_errors_to_error_messages(form.errors))
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 

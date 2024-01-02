@@ -67,8 +67,6 @@ export const fetchLoadCart = () => async (dispatch) => {
   };
 
   const cartReducer = (state = {}, action) => {
-    console.log("Action:", action);
-    console.log("State:", state);
     switch (action.type) {
       case LOAD_CART_COOKIE:
         let cart = localStorage.getItem("scenthoodcart");
@@ -81,7 +79,6 @@ export const fetchLoadCart = () => async (dispatch) => {
             [action.item.id]: { ...action.item, qty: parseInt(action.qty) },
           })
         );
-        console.log(action)
         return {
           ...state,
           [action.item.id]: { ...action.item, qty: parseInt(action.qty) },

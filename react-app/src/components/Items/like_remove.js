@@ -25,4 +25,5 @@ export const unlikeItem = async (dispatch, fav) => {
 
     await dispatch(deleteFavoriteThunk(fav.id))
     await dispatch(fetchOneItem(fav.product_id))
+    await dispatch(getSpecific(fav.user_id))
 }

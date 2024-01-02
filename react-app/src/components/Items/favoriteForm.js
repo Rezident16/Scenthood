@@ -36,7 +36,6 @@ function FavoriteForm({ formAction, item, favorite }) {
       errorsObj.comment = "Field required";
     }
     setErrors(errorsObj);
-    // console.log(errors)
 
     if (!Object.values(errorsObj).length) {
       const formdata = new FormData();

@@ -71,7 +71,6 @@ function Checkout() {
       }
       history.push(`users/${user.id}`);
     } else {
-      console.log("hello");
       setErrors(errorsObj);
     }
   };

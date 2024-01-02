@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchItems } from "../../store/items";
-import ItemTile from "./itemTile";
 import "./items.css";
 import { useParams } from "react-router-dom";
 import { fetchOneItem } from "../../store/item";
@@ -9,13 +7,10 @@ import { useHistory } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { addToCart } from "../../store/cart";
 import { useModal } from "../../context/Modal";
-import { deleteReviewThunk } from "../../store/item";
 import OpenModalButton from "../OpenModalButton";
 import DeleteReviewModal from "./deleteReviewModal";
 import ReviewForm from "./reviewForm";
 import { clearItemState } from "../../store/item";
-import FavoriteForm from "./favoriteForm";
-import DeleteCommentModal from "./deleteCommentModal";
 import { clearState } from "../../store/user";
 import LoaderComp from "./loader";
 import ItemForm from "./CreateUpdateItemForm";
@@ -76,7 +71,6 @@ function ItemContainer() {
     }
   }
 
-  console.log(favoriteItem);
   let reviewRating = 0;
   let avgReview = 0;
   let reviewText;
@@ -99,7 +93,6 @@ function ItemContainer() {
   if (stock >= 0) {
     if (stock == 0) {
       inStock = "Out of Stock";
-      console.log("wer are here");
       stockClassName = "out_of_stock";
     } else if (stock == 1) {
       inStock = `Only ${stock} item left in stock - order soon`;

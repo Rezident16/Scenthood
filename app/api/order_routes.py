@@ -22,7 +22,6 @@ def create_order():
         )
         req = request.get_json()
         items = req['items']
-        print("Received JSON data:", req)
         order_products = list()
         price = 0
         for item in items:
@@ -41,10 +40,8 @@ def create_order():
         db.session.add(new_order)
         db.session.commit()
 
-        print("Order successfully created:", new_order.to_dict_self())
         return new_order.to_dict_self()
     if form.errors:
-        print("Form errors:", form.errors)
         return form.errors
 
 @order_routes.route('/<int:orderId>/items/<int:itemId>/reviews', methods=["POST"])

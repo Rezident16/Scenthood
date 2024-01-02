@@ -2,8 +2,9 @@
     position: relative;
     height: 80vh;
     overflow: hidden;
-    width: 200vh;
+    /* width: 200vh; */
     /* z-index: 0; */
+    width: 100%;
   }
   
   .video-bg {

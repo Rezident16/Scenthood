@@ -14,6 +14,9 @@ import { fetchUserOrders } from "../../store/orders";
 import { clearItemState } from "../../store/item";
 import { clearState } from "../../store/user";
 import ItemForm from "../Items/CreateUpdateItemForm";
+import CartModal from "../Cart/CartModal";
+import ReorderButton from "../Reorder/reOrder";
+import { unlikeItem } from "../Items/like_remove";
 
 function UserDetails() {
   const { userId } = useParams();
@@ -33,7 +36,7 @@ function UserDetails() {
 
   const ordersObj = useSelector((state) => state.orders);
   const orders = Object.values(ordersObj);
-
+  console.log(orders)
   orders.forEach((order) => {
     order.order_prodcts.forEach((orderProduct) => {
       const userReview = orderProduct.item.reviews.filter(
@@ -53,9 +56,10 @@ function UserDetails() {
 
   let favoriteItems = [];
   favorites.forEach((favorite) => {
+    favorite.item.fav = favorite;
     favoriteItems.push(favorite.item);
   });
-
+  console.log(favoriteItems)
   let userText;
   if (currUser) {
     if (userOrders == false) {
@@ -79,9 +83,12 @@ function UserDetails() {
             <h2>My Favorite Items</h2>
             <div className="fav_items">
               {favoriteItems.map (item => (
-                <img onClick={() => {
-                  history.push(`/items/${item.id}`)
-                }} className="item_image_fav" src={item.preview_img} />
+                <div className="hover-div">
+                  <i class="fa-regular fa-circle-xmark" onClick={ () => unlikeItem(dispatch, item.fav)}></i>
+                  <img onClick={() => {
+                    history.push(`/items/${item.id}`)
+                  }} className="item_image_fav" src={item.preview_img} />
+                </div>
               ))}
             </div>
           </div>
@@ -146,9 +153,12 @@ function UserDetails() {
                 orders.map((order) => (
                   <div className="order_details_container" key={order.id}>
                     <div className="address_placed_total">
+                      <div>
                       <div>Address: {order.address}</div>
                       <div>Placed at: {order.created_at}</div>
                       <div>Total: ${order.price.toFixed(2)}</div>
+                      </div>
+                      <ReorderButton order={order} />
                     </div>
                     <div className="order_items">
                       {order.order_prodcts.map((orderProduct) => {
