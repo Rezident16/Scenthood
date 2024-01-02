@@ -202,10 +202,14 @@
 
 .fa-circle-xmark {
     position: relative;
-    bottom: 55px;
-    left: 55px;
+    top: 10px;
+    left: 40px;
     color: red;
     cursor: pointer;
+}
+
+.hover-div {
+    width: 55px;
 }
 
 .hover-div .fa-regular {
