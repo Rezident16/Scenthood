@@ -93,9 +93,13 @@
 ![cart](https://github.com/Rezident16/Scenthood/assets/137537436/7c77f58c-006f-4a93-a06e-2703cd9c9e42)
 
 
+#### Google Maps API to auto-populate the address:
+  <br/>
+  
+![order](https://github.com/Rezident16/Scenthood/assets/137537436/30914ecf-5cf1-4275-9233-47324e7131ca)
+
 
 ## Future Implementations:
-* Reorder the items
 * Display OOS messaging on the item tiles on /items
 * Allow users to discount their items
 
