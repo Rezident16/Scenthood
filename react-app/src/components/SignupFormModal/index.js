@@ -75,6 +75,9 @@ function SignupFormModal() {
       errorsObj.password =
         "Confirm Password field must be the same as the Password field";
     }
+    if (password.length < 8) {
+      errorsObj.password = "Password must be at least 8 characters long";
+    }
     if (description.length < 25)
       errorsObj.description = "About you needs to be at least 25 characters";
 

@@ -5,6 +5,19 @@
 ## About
 [Scenthood](https://scenthood.onrender.com/) is an e-commerce site specifically designed for buying and selling fragrances and is inspired by [Wayfair](https://www.wayfair.com/) and [Amazon](https://www.amazon.com/).
 
+## Installation Instructions
+### Backend
+- Run `pipenv -r install requirements.txt` to install packages and dependencies
+- Run `pip install email_validator` to install email validator
+- Create a .env file (see .env.example for values)
+- Local database records can be changed in the `app/seeds` directory
+- In `pipenv shell`, `run flask db upgrade` and `flask seed all`
+- To start server, run `flask run`
+### Frontend
+- In `/react-app` run `npm install` to install packages and dependencies
+- Make sure to use node version 16 `nvm use 16`
+- Run `npm start` to start React app
+
 ## Landing Page
 ![image](https://github.com/Rezident16/Scenthood/assets/137537436/a37e3d17-fc31-4e9a-9db8-e6beaa9f1e64)
 
@@ -102,4 +115,3 @@
 ## Future Implementations:
 * Display OOS messaging on the item tiles on /items
 * Allow users to discount their items
-
