@@ -111,7 +111,10 @@
   
 ![order](https://github.com/Rezident16/Scenthood/assets/137537436/30914ecf-5cf1-4275-9233-47324e7131ca)
 
+<<<<<<< HEAD
 
 ## Future Implementations:
 * Display OOS messaging on the item tiles on /items
 * Allow users to discount their items
+=======
+>>>>>>> e93579319871820a406bd1ae1d2b357f737aebdd
