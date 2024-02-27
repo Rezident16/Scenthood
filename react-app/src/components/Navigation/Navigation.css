@@ -166,6 +166,10 @@
   justify-content: center;
 }
 
+.search_bar_component_logged_out {
+  display: none;
+}
+
 
 
 .profile-dropdown {

@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-function SearchBar({ items, className }) {
+function SearchBar({ items }) {
   const [searchTerm, setSearchTerm] = useState("");
+
+  const user = useSelector((state) => state.session.user);
+
+  const className = user ? "search_bar_component" : "search_bar_component_logged_out";
 
   const history = useHistory();
 

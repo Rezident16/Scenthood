@@ -1,30 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../store/session";
+import { useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
 import CartModal from "../Cart/CartModal";
-import { Link } from "react-router-dom";
-import OpenModalDiv from "./DivModal";
-import ItemForm from "../Items/CreateUpdateItemForm";
-import { useHistory } from "react-router-dom";
-import SearchBar from "../Items/SearchBar";
+import LoginSignup from "./LoginSignup";
+import UserHamburger from "./Hamburger";
 
 function ProfileButton({ user }) {
-  const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const ulRef = useRef();
-  const history = useHistory();
-  const items = useSelector((state) => state.items);
 
   const [qty, setQty] = useState(0);
   const cart = useSelector((state) => state.cart);
-  const openMenu = async () => {
-    if (showMenu) return;
-    setShowMenu(true);
-  };
   useEffect(() => {
     if (user) setIsUser(true);
     else setIsUser(false);
@@ -52,27 +39,16 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const goToProfile = () => {
-    history.push(`/users/${user.id}`);
-    closeMenu();
-  };
-
-  const handleLogout = (e) => {
-    e.preventDefault();
-    dispatch(logout());
-    closeMenu();
-    history.push("/items");
-  };
-
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
   const userClass = isUser ? "" : "hidden";
 
+  let cartClass = user || qty > 0 ? "navigation_buttons_cart" : "hidden";
+
   return (
     <div id="nav-buttons">
       <OpenModalButton
-        className={"navigation_buttons_cart"}
+        className={cartClass}
         buttonText={
           <>
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>{" "}
@@ -82,59 +58,10 @@ function ProfileButton({ user }) {
         onItemClick={closeMenu}
         modalComponent={<CartModal />}
       />
-
-      <div className={userClass}>
-        <button id="hamburger" onClick={openMenu}>
-          <i
-            class="fa fa-bars"
-            aria-hidden="true"
-            style={{ fontSize: "30px", color: "black" }}
-          />
-        </button>
-        <ul className={ulClassName} ref={ulRef}>
-          <div className="profile_text">
-            <li>{user?.username}</li>
-            <li>{user?.email}</li>
-            <li>
-              {user?.first_name} {user?.last_name}
-            </li>
-            <li className="seperator"></li>
-            <li className="profile_button" onClick={goToProfile}>
-              My Profile
-            </li>
-            <li onClick={closeMenu}>
-              <OpenModalDiv
-                onItemClick={closeMenu}
-                className={"profile_button"}
-                buttonText="Sell Your Item"
-                modalComponent={<ItemForm formType="create" />}
-              />
-            </li>
-            <li className="logout_button_li">
-              <div onClick={handleLogout} className="logout_button">
-                Log Out
-              </div>
-            </li>
-          </div>
-        </ul>
-      </div>
+      <UserHamburger userClass={userClass} />
 
       {!user && (
-        <div className="login_signup_buttons">
-          <OpenModalButton
-            className={"navigation_buttons"}
-            buttonText="Log In"
-            onItemClick={closeMenu}
-            modalComponent={<LoginFormModal />}
-          />
-
-          <OpenModalButton
-            className={"navigation_buttons"}
-            buttonText="Sign Up"
-            onItemClick={closeMenu}
-            modalComponent={<SignupFormModal />}
-          />
-        </div>
+        <LoginSignup closeMenu={closeMenu} />
       )}
     </div>
   );

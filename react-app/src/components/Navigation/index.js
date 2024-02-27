@@ -57,7 +57,7 @@ function Navigation({ isLoaded }) {
         )}
       </li>
       <li>
-        <SearchBar className={"search_bar_component"} items={items} />
+        <SearchBar items={items} />
       </li>
       {isLoaded && (
         <li>
