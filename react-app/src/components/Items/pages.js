@@ -1,11 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchItems } from "../../store/items";
-import ItemTile from "./itemTile";
+import React, { useEffect } from "react";
 import "./items.css";
-import LoaderComp from "./loader";
-import SearchBar from "./SearchBar";
-import Filters from "./filters";
+import ItemsPerPage from "./ItemsPerPage";
 
 function Pages({setCurrentPage, currentPage, itemsPerPage, setItemsPerPage, filteredItems}) {
 
@@ -74,21 +69,7 @@ function Pages({setCurrentPage, currentPage, itemsPerPage, setItemsPerPage, filt
         >
           Next
         </button>
-        <div className="items_per_page">
-          <label>Show per page: </label>
-          <select
-            className="select_items_per_page"
-            value={itemsPerPage}
-            onChange={(e) => {
-              setItemsPerPage(e.target.value);
-            }}
-          >
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-          </select>
-        </div>
+        <ItemsPerPage itemsPerPage={itemsPerPage} setItemsPerPage={setItemsPerPage}/>
       </div>
     </div>
   );
