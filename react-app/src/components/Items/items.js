@@ -6,6 +6,7 @@ import "./items.css";
 import LoaderComp from "./loader";
 import SearchBar from "./SearchBar";
 import Filters from './filters'
+import Pages from "./pages";
 
 function ItemsComponent() {
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ function ItemsComponent() {
   let items = Object.values(itemsObj);
 
   if (currentPage == 0) setCurrentPage(1);
-
 
   const [filters, setFilters] = useState({
     min_price: 0,
@@ -112,7 +112,8 @@ function ItemsComponent() {
               ))}
           </div>
           </div>
-          <div className="page_buttons">
+          <Pages setCurrentPage={setCurrentPage} currentPage={currentPage} itemsPerPage={itemsPerPage} setItemsPerPage={setItemsPerPage} filteredItems={filteredItems}/>
+          {/* <div className="page_buttons">
             <button
               className={
                 currentPage === 1 ? "disabled_previous_page" : "previous_page"
@@ -165,7 +166,7 @@ function ItemsComponent() {
                 <option value="30">30</option>
               </select>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>
