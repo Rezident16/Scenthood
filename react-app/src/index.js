@@ -10,6 +10,7 @@ import * as sessionActions from "./store/session";
 import App from "./App";
 
 import "./index.css";
+import SearchBarProvider from "./context/SearchBarClass";
 
 const store = configureStore();
 
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV !== "production") {
 // HTML elements on top of the all the other HTML elements:
 function Root() {
 	return (
+		<SearchBarProvider>
 		<MapsProvider>
 		<ModalProvider>
 			<Provider store={store}>
@@ -33,6 +35,7 @@ function Root() {
 			</Provider>
 		</ModalProvider>
 		</MapsProvider>
+		</SearchBarProvider>
 	);
 }
 

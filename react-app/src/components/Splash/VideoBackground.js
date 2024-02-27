@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./VideoBackground.css"; // Import your CSS file
 import { useHistory } from "react-router-dom";
+import { useSearchBar } from "../../context/SearchBarClass";
 
 const VideoBackground = () => {
+  const { setSearchClass } = useSearchBar();
+
+  useEffect(() => {
+    setSearchClass("search_bar_component_logged_out");
+  }, []);
   const history = useHistory();
   const push = () => {
+    setSearchClass("search_bar_component")
     history.push("/items");
   };
   return (

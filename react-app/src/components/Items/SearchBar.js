@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import { useSearchBar } from "../../context/SearchBarClass";
+
 function SearchBar({ items }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const user = useSelector((state) => state.session.user);
 
-  const className = user ? "search_bar_component" : "search_bar_component_logged_out";
+  const { searchClass } = useSearchBar();
 
   const history = useHistory();
 
@@ -36,7 +38,7 @@ function SearchBar({ items }) {
   );
 
   return (
-    <div className={className}>
+    <div className={searchClass}>
         <div className="search_bar_glass">
         <i class="fa-solid fa-magnifying-glass"></i>
       <input
