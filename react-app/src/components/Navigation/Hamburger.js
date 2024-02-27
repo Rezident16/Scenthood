@@ -2,11 +2,10 @@ import OpenModalDiv from "./DivModal";
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
-import OpenModalDiv from "./DivModal";
 import ItemForm from "../Items/CreateUpdateItemForm";
 import { useHistory } from "react-router-dom";
 
-function UserHamburger ({userClass}) {
+function UserHamburger ({userClass, user}) {
 
     const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);

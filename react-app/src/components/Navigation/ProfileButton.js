@@ -58,7 +58,7 @@ function ProfileButton({ user }) {
         onItemClick={closeMenu}
         modalComponent={<CartModal />}
       />
-      <UserHamburger userClass={userClass} />
+      <UserHamburger userClass={userClass} user={user} />
 
       {!user && (
         <LoginSignup closeMenu={closeMenu} />

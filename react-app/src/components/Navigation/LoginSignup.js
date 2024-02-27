@@ -1,4 +1,6 @@
 import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
 
 
 function LoginSignup({closeMenu}) {
