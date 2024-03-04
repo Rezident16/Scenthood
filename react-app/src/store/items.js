@@ -23,6 +23,13 @@ export const fetchItems = () => async (dispatch) => {
     dispatch(loadItems(data))
 }
 
+// Fetch items by page and pageNum
+// export const fetchItems = (pageNum, itemNum) => async (dispatch) => {
+//     const response = await fetch(`/api/items/page/${pageNum}/count/${itemNum}`);
+//     const data = await response.json()
+//     dispatch(loadItems(data))
+// }
+
 // Remove Item
 export const fetchDeleteItem = (id) => async (dispatch) => {
     const response = await fetch (`/api/items/${id}`, {
@@ -36,6 +43,7 @@ export const fetchDeleteItem = (id) => async (dispatch) => {
         return errors
     }
 }
+
 
 const itemsReducer = (state = {}, action) => {
     switch(action.type) {

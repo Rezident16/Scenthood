@@ -17,6 +17,7 @@ function CartModal() {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
+
   const [total, setTotal] = useState(0);
 
   const items = Object.values(cart);

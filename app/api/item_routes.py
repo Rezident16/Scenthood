@@ -14,6 +14,19 @@ def get_all_items():
     items = Item.query.all()
     return {"Items": [item.to_dict_owner() for item in items]}
 
+
+
+# Get items by page and count
+@item_routes.route('page/<int:page>/count/<int:items_per_page>', methods=['GET'])
+def get_items_query(page, items_per_page):
+    start_index = (page - 1) * items_per_page
+    end_index = start_index + items_per_page
+    # Query only the items for this page
+    items = Item.query.slice(start_index, end_index).all()
+
+    # Convert items to a format that can be jsonified
+    return {"Items": [item.to_dict_owner() for item in items]}
+
 # Get one item
 @item_routes.route('/<int:itemId>')
 def get_item(itemId):
