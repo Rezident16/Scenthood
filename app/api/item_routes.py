@@ -14,6 +14,11 @@ def get_all_items():
     items = Item.query.all()
     return {"Items": [item.to_dict_owner() for item in items]}
 
+# Get items total count
+@item_routes.route('count', methods=['GET'])
+def get_items_count():
+    count = Item.query.count()
+    return {"count": count}
 
 
 # Get items by page and count

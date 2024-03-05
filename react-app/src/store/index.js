@@ -7,6 +7,7 @@ import oneItemReducer from './item';
 import cartReducer from './cart';
 import orderReducer from './order';
 import ordersReducer from './orders';
+import countReducer from './itemsTotal';
 
 const rootReducer = combineReducers({
   session,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   item: oneItemReducer,
   cart: cartReducer,
   order: orderReducer,
-  orders: ordersReducer
+  orders: ordersReducer,
+  count: countReducer
 });
 
 

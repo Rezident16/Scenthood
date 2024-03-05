@@ -11,9 +11,9 @@ import queredItems from "./queryParams";
 import { useLocation } from "react-router-dom";
 
 // Function to use useParams to get the page number and items per page
-// function useQuery() {
-//   return new URLSearchParams(useLocation().search);
-// }
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 function ItemsComponent() {
   const dispatch = useDispatch();
@@ -35,9 +35,13 @@ function ItemsComponent() {
   });
 
   // Get the page number and items per page from the URL
-  // let query = useQuery();
-  // let pageNum = query.get("page");
-  // let itemNum = query.get("itemsNum");
+  let query = useQuery();
+  let pageNum = query.get("page");
+  // default to 1 if no page number is provided
+  if (pageNum) setCurrentPage(pageNum);
+  let itemNum = query.get("itemsNum");
+  // default to 10 if no items per page is provided
+  if (itemNum) setItemsPerPage(itemNum);
   
 
   let filteredItems = filter(items, filters);
@@ -75,10 +79,10 @@ function ItemsComponent() {
   useEffect(() => {
     (async () => {
       // use this to fetch items by page and item number
-      // await dispatch(fetchItems(pageNum, itemNum));
-      await dispatch(fetchItems());
+      await dispatch(fetchItems(currentPage, itemsPerPage));
+      // await dispatch(fetchItems());
     })();
-  }, [dispatch]);
+  }, [dispatch, currentPage, itemsPerPage]);
 
   if (!items.length) return null;
   // if (!currentItems.length) return null;
