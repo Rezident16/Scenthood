@@ -283,6 +283,8 @@ function ItemContainer() {
                 {reviews.length ? (
                   <div className="user_review_container">
                     <h2 className="h2_reviews_text">Customer Reviews</h2>
+                    <div className="review_list">
+
                     {reviews &&
                       reviews.map((review) => (
                         <div className="user_review">
@@ -331,6 +333,7 @@ function ItemContainer() {
                             ) : null)}
                         </div>
                       ))}
+                    </div>
                   </div>
                 ) : (
                   <div>
