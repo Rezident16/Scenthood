@@ -16,8 +16,7 @@ function CartModal() {
   const user = useSelector((state) => state.session.user);
   const { closeModal } = useModal();
   const dispatch = useDispatch();
-
-
+  const [showCart, setShowCart] = useState("cart_modal not_show");
   const [total, setTotal] = useState(0);
 
   const items = Object.values(cart);
@@ -28,6 +27,11 @@ function CartModal() {
     });
     setTotal(parseFloat(newTotal.toFixed(2)));
   }, [cart]);
+
+  setTimeout(() => {
+    setShowCart("cart_modal show");
+  }, 100)
+
 
   const onClick = async () => {
     if (!user) {
@@ -40,7 +44,7 @@ function CartModal() {
   };
 
   return (
-    <div className="cart_modal">
+    <div className={showCart}>
       <div className="cart_items">
         {items.length ? (
           items.map((item) => <CartItem item={item} key={item.id}></CartItem>)
