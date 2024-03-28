@@ -23,29 +23,3 @@ def delete_fav(favId):
     db.session.commit()
 
     return {"status": "success"}, 200 
-# update favorite /favorites/:id
-@favorite_routes.route('/<int:favId>', methods=["POST"])
-@login_required
-def update_fav(favId):
-    item = FavoriteProduct.query.get(favId)
-
-    if not item:
-        return {}
-
-    form = FavoriteForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-
-    if form.validate_on_submit():
-        data = form.data
-
-        if item.user_id != current_user.id:
-            return abort(403, description='Unauthorized')
-        
-        item.note = data['note']
-
-        db.session.commit()
-
-        return item.to_dict_self(), 200
-    
-    if form.errors:
-        return form.errors

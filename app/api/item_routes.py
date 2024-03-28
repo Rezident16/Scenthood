@@ -138,6 +138,7 @@ def delete_item(itemId):
 @item_routes.route('/<int:itemId>/favorites', methods=['POST'])
 @login_required
 def favorite_item(itemId):
+    print("favorite_item ================")
     item = Item.query.get(itemId)
 
     if not item:
@@ -148,19 +149,10 @@ def favorite_item(itemId):
     if existing_favorite is not None:
         return abort(400, description="User already has favorited this item")
 
-    form = FavoriteForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    data = form.data
-
-    if form.validate_on_submit():
-        new_favorite = FavoriteProduct(
-            user_id = current_user.id,
-            product_id = itemId,
-            # note = data['note']
-        )
-        db.session.add(new_favorite)
-        db.session.commit()
-        return new_favorite.to_dict_self()
-
-    if form.errors:
-        return form.errors
+    new_favorite = FavoriteProduct(
+        user_id = current_user.id,
+        product_id = itemId,
+    )
+    db.session.add(new_favorite)
+    db.session.commit()
+    return new_favorite.to_dict_self()
