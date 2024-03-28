@@ -15,7 +15,7 @@ export const likeItem = async (dispatch, item, currentUser) => {
     const formdata = new FormData();
     formdata.append("user_id", currentUser.id);
     formdata.append("product_id", item.id);
-    formdata.append("note", "like like like like like like like");
+    // formdata.append("note", "like like like like like like like");
 
     await dispatch(createFavoriteThunk(item.id, formdata));
     await dispatch(fetchOneItem(item.id));
