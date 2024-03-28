@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8bc3d54243f0
+Revision ID: 6ea8c58802e4
 Revises: 
-Create Date: 2023-12-05 15:56:10.787956
+Create Date: 2024-03-28 13:48:43.596594
 
 """
 from alembic import op
@@ -13,7 +13,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = '8bc3d54243f0'
+revision = '6ea8c58802e4'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -37,7 +37,6 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
-
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
 
@@ -72,11 +71,11 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE orders SET SCHEMA {SCHEMA};")
 
+    
     op.create_table('favorite_products',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('product_id', sa.Integer(), nullable=False),
-    # sa.Column('note', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['product_id'], ['items.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -84,6 +83,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE favorite_products SET SCHEMA {SCHEMA};")
+
 
     op.create_table('order_products',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -97,6 +97,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE order_products SET SCHEMA {SCHEMA};")
+
 
     op.create_table('reviews',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -113,7 +114,6 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE reviews SET SCHEMA {SCHEMA};")
-
     # ### end Alembic commands ###
 
 
