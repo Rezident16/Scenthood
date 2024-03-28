@@ -156,7 +156,7 @@ def favorite_item(itemId):
         new_favorite = FavoriteProduct(
             user_id = current_user.id,
             product_id = itemId,
-            note = data['note']
+            # note = data['note']
         )
         db.session.add(new_favorite)
         db.session.commit()
