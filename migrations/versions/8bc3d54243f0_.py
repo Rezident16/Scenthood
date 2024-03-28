@@ -76,7 +76,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('product_id', sa.Integer(), nullable=False),
-    sa.Column('note', sa.String(), nullable=False),
+    # sa.Column('note', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['product_id'], ['items.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

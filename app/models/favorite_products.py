@@ -11,7 +11,7 @@ class FavoriteProduct(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('items.id')), nullable=False)
     # is_favorite = db.Column(db.Boolean, default=False)
-    note = db.Column(db.String, nullable=False)
+    # note = db.Column(db.String, nullable=False)
 
 
     user = db.relationship('User', back_populates = 'favorites')
@@ -22,7 +22,7 @@ class FavoriteProduct(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'product_id': self.product_id,
-            'note': self.note,
+            # 'note': self.note,
             'user': self.user.to_dict_fav(),
             'item': self.item.to_dict_self()
         }
