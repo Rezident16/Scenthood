@@ -11,7 +11,6 @@ def seed_favorites():
             fav = FavoriteProduct(
                 user_id = int(fav_row[0]),
                 product_id=int(fav_row[1]),
-                # note=(fav_row[2]),
             )
             db.session.add(fav)
             db.session.commit()
