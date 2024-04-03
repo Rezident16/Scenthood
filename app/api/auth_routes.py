@@ -12,6 +12,7 @@ from pip._vendor import cachecontrol
 import google.auth.transport.requests
 from tempfile import NamedTemporaryFile
 import json
+import os
 
 auth_routes = Blueprint('auth', __name__)
 """
@@ -147,3 +148,48 @@ def unauthorized():
 @auth_routes.route('/google/key')
 def get_key():
     return {'key': os.environ.get('REACT_APP_GOOGLE_MAPS_API_KEY')}
+
+@auth_routes.route("/oauth_login")
+def oauth_login():
+    authorization_url, state = flow.authorization_url()
+    session["state"] = state
+    return redirect(authorization_url)
+
+@auth_routes.route("/callback")
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    # This is our CSRF protection for the Oauth Flow!
+    if not session["state"] == request.args["state"]:
+        abort(500)  # State does not match!
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=CLIENT_ID
+    )
+
+    temp_email = id_info.get('email')
+    user_exists = User.query.filter(User.email == temp_email).first()
+
+    if not user_exists:
+        user_exists = User(
+            first_name=id_info.get("given_name"),
+            last_name=id_info.get("family_name"),
+            email=temp_email,
+            city='unknown',
+            state='unknown',
+            password='OAUTH'
+        )
+
+        db.session.add(user_exists)
+        db.session.commit()
+
+    login_user(user_exists)
+
+    return redirect(f"{REACT_APP_BASE_URL}/") # This will send the final redirect to our user's browser.
