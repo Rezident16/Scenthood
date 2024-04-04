@@ -5,6 +5,7 @@ import { signUp } from "../../store/session";
 import "./SignupForm.css";
 import SetUserAddress from '../GoogleMapsApi/index';
 
+
 function SignupFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -22,6 +23,8 @@ function SignupFormModal() {
   const [imageLoading, setImageLoading] = useState(false);
   const [localImg, setLocalImg] = useState(null);
   SetUserAddress(setAddress, setCity, setState);
+
+  const baseUrl = process.env.NODE_ENV === "production" ? "https://scenthood.onrender.com" : "http://localhost:5000";
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
@@ -426,7 +429,7 @@ function SignupFormModal() {
           {imageLoading && <p>Image is Loading...</p>}
         </div>
       </form>
-      <a href={`${process.env.REACT_APP_BASE_URL}/api/auth/oauth_login`}><button>OAUTH</button></a>
+      <a href={`${baseUrl}/api/auth/oauth_login`}><button>OAUTH</button></a>
     </div>
   );
 }
