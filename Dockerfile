@@ -42,8 +42,6 @@ RUN pip install email_validator
 RUN pip install psycopg2
 COPY . .
 COPY --from=build /react_app /var/www/react-app
-RUN flask db downgrade
 RUN flask db upgrade
-RUN flask seed undo
 RUN flask seed all
 CMD gunicorn app:app
