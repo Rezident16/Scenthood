@@ -4,15 +4,18 @@ from app.forms import LoginForm
 from app.forms import SignUpForm
 from .aws_helpers import *
 from flask_login import current_user, login_user, logout_user, login_required
+
+import os
+import pathlib
+
 import requests
-from flask import abort, redirect
+from flask import abort, redirect # note that you can slap these 2 imports at the end of the 'from flask import' statement that you probably already have.
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
 import google.auth.transport.requests
 from tempfile import NamedTemporaryFile
 import json
-import os
 
 auth_routes = Blueprint('auth', __name__)
 """
@@ -151,14 +154,18 @@ def get_key():
 
 @auth_routes.route("/oauth_login")
 def oauth_login():
-    authorization_url, state = flow.authorization_url()
+    authorization_url, state = flow.authorization_url(prompt="select_account consent")
+    print("AUTH URL: ", authorization_url)
+    referrer = request.headers.get('Referer')
+    session["referrer"] = referrer
     session["state"] = state
     return redirect(authorization_url)
+
 
 @auth_routes.route("/callback")
 def callback():
     flow.fetch_token(authorization_response=request.url)
-
+    print("sign up route")
     # This is our CSRF protection for the Oauth Flow!
     if not session["state"] == request.args["state"]:
         abort(500)  # State does not match!
@@ -182,13 +189,19 @@ def callback():
             first_name=id_info.get("given_name"),
             last_name=id_info.get("family_name"),
             email=temp_email,
-            city='unknown',
-            state='unknown',
-            password='OAUTH'
+            password='OAUTH',
+            username="test",
+            address = "123 Test St",
+            city = "Test",
+            state = "Test",
+            profile_img = "https://i.imgur.com/2ZQ9ZVp.png",
+            description = "test"
         )
 
         db.session.add(user_exists)
         db.session.commit()
+
+    print(user_exists, "USER +++++++++++++++")
 
     login_user(user_exists)
 

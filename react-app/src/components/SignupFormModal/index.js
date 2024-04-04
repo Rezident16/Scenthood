@@ -22,8 +22,7 @@ function SignupFormModal() {
   const [imageLoading, setImageLoading] = useState(false);
   const [localImg, setLocalImg] = useState(null);
   SetUserAddress(setAddress, setCity, setState);
-  const url = "http://localhost:5000"
-  console.log(url)
+  const url = "http://localhost:3000"
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
@@ -428,7 +427,7 @@ function SignupFormModal() {
           {imageLoading && <p>Image is Loading...</p>}
         </div>
       </form>
-      <a href={`${url}/api/auth/oauth_login`}><img alt='google' id='google'></img></a>
+      <a href={`http://localhost:5000/api/auth/oauth_login`}><button>OAUTH</button></a>
     </div>
   );
 }
