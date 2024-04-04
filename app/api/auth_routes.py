@@ -185,18 +185,19 @@ def callback():
     user_exists = User.query.filter(User.email == temp_email).first()
 
     if not user_exists:
+        email_arr = temp_email.split('@')
         user_exists = User(
-            first_name=id_info.get("given_name"),
-            last_name=id_info.get("family_name"),
-            email=temp_email,
-            password='OAUTH',
-            username="test",
-            address = "123 Test St",
-            city = "Test",
-            state = "Test",
-            profile_img = "https://i.imgur.com/2ZQ9ZVp.png",
-            description = "test"
-        )
+                first_name=id_info.get("given_name"),
+                last_name=id_info.get("family_name"),
+                email=temp_email,
+                password='OAUTH',
+                username=email_arr[0],
+                address = "None",
+                city = "None",
+                state = "None",
+                profile_img = "https://scenthood.s3.us-east-2.amazonaws.com/generic.png",
+                description = "None"
+            )
 
         db.session.add(user_exists)
         db.session.commit()
@@ -205,4 +206,7 @@ def callback():
 
     login_user(user_exists)
 
-    return redirect(f"{REACT_APP_BASE_URL}/") # This will send the final redirect to our user's browser.
+    if user_exists.address != "None":
+        return redirect(f"{REACT_APP_BASE_URL}/")
+    else:
+        return redirect(f"{REACT_APP_BASE_URL}/complete")

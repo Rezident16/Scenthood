@@ -54,14 +54,11 @@ function App() {
           <Route exact path="/items/:itemId">
             <ItemContainer />
           </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
           <Route exact path="/items">
             <ItemsComponent />
           </Route>
-          <Route path="/:notHome">
-            <Footer />
+          <Route path="/complete">
+            <SignupFormPage />
           </Route>
         </Switch>
       )}

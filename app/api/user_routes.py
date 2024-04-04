@@ -1,7 +1,10 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, session, request
 from flask_login import login_required,current_user
 from app.models import User, Order
-
+from app.forms import SignUpForm
+from .aws_helpers import *
+from app.models import *
+from app.forms import *
 
 user_routes = Blueprint('users', __name__)
 
@@ -14,6 +17,8 @@ def users():
     """
     users = User.query.all()
     return {'users': [user.to_dict_self() for user in users]}
+
+
 
 
 @user_routes.route('/current')
@@ -35,6 +40,38 @@ def user(userId):
     except AttributeError:
         return None
     return user.to_dict_self()
+
+@user_routes.route('/<int:userId>/edit', methods=["POST"])
+@login_required
+def edit_user(userId):
+    """
+    Edits a user
+    """
+    form = OauthSignUpForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    user = User.query.get(userId)
+
+    if form.validate_on_submit():
+        data = form.data
+        image = data['profile_img']
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+
+        remove_file_from_s3(user.profile_img)
+        user.profile_img = upload["url"]
+        user.username = data['username']
+        user.first_name = data['first_name']
+        user.last_name = data['last_name']
+        user.address = data['address']
+        user.city = data['city']
+        user.state = data['state']
+        user.description = data['description']
+
+        db.session.commit()
+        return user.to_dict_self()
+    
+    if form.errors:
+        return form.errors
 
 @user_routes.route('/<int:userId>/orders/<int:orderId>')
 def order(orderId):

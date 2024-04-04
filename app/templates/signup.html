@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}
+        </p>
+        <p>
+            {{ form.address.label }}<br>
+            {{ form.address(size=32) }}
+        </p>
+        <p>
+            {{ form.city.label }}<br>
+            {{ form.city(size=32) }}
+        </p>
+        <p>
+            {{ form.state.label }}<br>
+            {{ form.state(size=32) }}
+        </p>
+        <p>
+            {{ form.profile_img.label }}<br>
+            {{ form.profile_img() }}
+        </p>
+        <p>
+            {{ form.description.label }}<br>
+            {{ form.description() }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+</body>
+</html>
