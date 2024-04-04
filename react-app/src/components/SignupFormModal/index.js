@@ -429,7 +429,8 @@ function SignupFormModal() {
           {imageLoading && <p>Image is Loading...</p>}
         </div>
       </form>
-      <a href={`${baseUrl}/api/auth/oauth_login`}><button>OAUTH</button></a>
+      {/* Hide it for now before styling */}
+      {/* <a href={`${baseUrl}/api/auth/oauth_login`}><button>OAUTH</button></a> */}
     </div>
   );
 }
