@@ -26,7 +26,7 @@ function LoginSignup({closeMenu}) {
             onItemClick={closeMenu}
             modalComponent={<SignupFormModal />}
           />
-          {/* <button className="navigation_buttons" onClick={redirect}>Sign Up</button> */}
+          {/* <button className="navigation_buttons" onClick={redirect}>Sign Up Page</button> */}
         </div>
   );
 }
