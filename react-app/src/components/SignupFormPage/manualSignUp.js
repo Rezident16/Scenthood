@@ -27,7 +27,7 @@ function Signup_form() {
   const [errors, setErrors] = useState([]);
   const [imageLoading, setImageLoading] = useState(false);
   const [localImg, setLocalImg] = useState(null);
-  SetUserAddress(setAddress, setCity, setState);
+//   SetUserAddress(setAddress, setCity, setState);
 
   const baseUrl =
     process.env.NODE_ENV === "production"
