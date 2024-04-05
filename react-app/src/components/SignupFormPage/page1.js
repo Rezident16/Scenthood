@@ -110,7 +110,9 @@ function First_page({
 
               <div></div>
               {
-                <button onClick={nextPage} className={buttonClassname}>
+                <button onClick={nextPage} 
+                // className={buttonClassname}
+                >
                   Next
                 </button>
               }

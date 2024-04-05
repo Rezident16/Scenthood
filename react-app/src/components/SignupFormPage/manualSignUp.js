@@ -138,6 +138,8 @@ const isLoaded = useJsApiLoader({
     }
   };
 
+  console.log(page)
+
   return (
     <div className="">
       <form enctype="multipart/form-data" className="" onSubmit={handleSubmit}>
@@ -165,6 +167,10 @@ const isLoaded = useJsApiLoader({
             setCity={setCity}
             setState={setState}
             errors={errors}
+            page={page}
+            setPage={setPage}
+            nextPage={nextPage}
+            prevPage={prevPage}
           />
         )}
 

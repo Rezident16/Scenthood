@@ -12,6 +12,7 @@ function Second_page({
   nextPage,
   prevPage,
   errors,
+  page
 }) {
   let buttonClassname;
   let tooltip;
@@ -26,6 +27,8 @@ function Second_page({
     tooltip = "";
     tooltiptext = "";
   }
+
+  console.log(page)
   return (
     <div className="">
       <div className="button_field">
@@ -152,7 +155,9 @@ function Second_page({
 
           {<button onClick={prevPage}>Previous</button>}
           {
-            <button onClick={nextPage} className={buttonClassname}>
+            <button onClick={nextPage} 
+            // className={buttonClassname}
+            >
               Next
             </button>
           }
