@@ -15,20 +15,12 @@ function Second_page({
   page,
 }) {
   let buttonClassname;
-  let tooltip;
-  let tooltiptext;
   SetUserAddress(setAddress, setCity, setState);
   if (!address || !city || !state) {
     buttonClassname = "disabled_next_button";
-    tooltip = "tooltip";
-    tooltiptext = "tooltiptext";
   } else {
     buttonClassname = "next_button";
-    tooltip = "";
-    tooltiptext = "";
   }
-
-  console.log(page);
   return (
     <div className="sign_up_page_container">
         <div className="2">
