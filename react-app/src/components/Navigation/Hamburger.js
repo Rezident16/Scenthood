@@ -60,7 +60,7 @@ function UserHamburger ({userClass, user}) {
         <ul className={ulClassName} ref={ulRef}>
           <div className="profile_text">
             <li>{user?.username}</li>
-            <li>{user?.email}</li>
+            {/* <li>{user?.email}</li> */}
             <li>
               {user?.first_name} {user?.last_name}
             </li>

@@ -137,7 +137,7 @@ function ItemContainer() {
   };
 
   return (
-    <div>
+    <div  className="item_main">
       <div className="go_back_button" onClick={goBack}>
         {"< Back to items"}
       </div>

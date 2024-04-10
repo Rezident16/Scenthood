@@ -20,13 +20,13 @@ function LoginSignup({closeMenu}) {
             modalComponent={<LoginFormModal />}
           />
 
-          <OpenModalButton
+          {/* <OpenModalButton
             className={"navigation_buttons"}
             buttonText="Sign Up"
             onItemClick={closeMenu}
             modalComponent={<SignupFormModal />}
-          />
-          {/* <button className="navigation_buttons" onClick={redirect}>Sign Up Page</button> */}
+          /> */}
+          <button className="navigation_buttons" onClick={redirect}>Sign Up</button>
         </div>
   );
 }
