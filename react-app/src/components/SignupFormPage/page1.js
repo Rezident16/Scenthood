@@ -14,21 +14,14 @@ function First_page({
   errors,
 }) {
   let buttonClassname;
-  let tooltip;
-  let tooltiptext;
   if (!email || !username || !firstName || !lastName) {
-    buttonClassname = "disabled_signup_login_button tooltip";
-    tooltip = "tooltip";
-    tooltiptext = "tooltiptext";
+    buttonClassname = "disabled_next_button";
   } else {
-    buttonClassname = "signup_login_button";
-    tooltip = "";
-    tooltiptext = "";
+    buttonClassname = "next_button";
   }
   return (
-    <div className="button_field">
-      <div className="1">
-        <label className="form_label signup_form">
+      <div className="sign_up_page_container">
+        <label>
           <div>
             Email
             <span aria-hidden="true" className="required">
@@ -40,13 +33,13 @@ function First_page({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="login_signup_input signup_input"
+            className=""
           />
           <span style={{ height: "10px", width: "250px" }}>
             <span className="errors">{errors.email}</span>
           </span>
         </label>
-        <label className="form_label">
+        <label className="">
           <div>
             Username
             <span aria-hidden="true" className="required">
@@ -58,13 +51,13 @@ function First_page({
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            className="login_signup_input signup_input"
+            className=""
           />
           <span style={{ height: "10px", width: "250px" }}>
             <span className="errors">{errors.username}</span>
           </span>
         </label>
-        <label className="form_label">
+        <label className="">
           <div>
             First Name
             <span aria-hidden="true" className="required">
@@ -72,7 +65,7 @@ function First_page({
             </span>
           </div>
           <input
-            className="login_signup_input signup_input"
+            className=""
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -82,7 +75,7 @@ function First_page({
             <span className="errors">{errors.firstName}</span>
           </span>
         </label>
-        <label className="form_label">
+        <label className="">
           <div>
             Last Name
             <span aria-hidden="true" className="required">
@@ -94,33 +87,21 @@ function First_page({
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
-            className="login_signup_input signup_input"
+            className=""
           />
           <span style={{ height: "10px", width: "250px" }}>
             <span className="errors">{errors.lastName}</span>
           </span>
           <div>
-            {" "}
-            <div className={tooltip}>
-              {tooltip != "" ? (
-                <span className={tooltiptext}>
-                  Don't forget to fill out everything
-                </span>
-              ) : null}
-
-              <div></div>
-              {
                 <button onClick={nextPage} 
-                // className={buttonClassname}
+                className={buttonClassname}
+                disabled={buttonClassname === "disabled_next_button" ? true : false}
                 >
-                  Next
+                  Continue
                 </button>
-              }
-            </div>
           </div>
         </label>
       </div>
-    </div>
   );
 }
 

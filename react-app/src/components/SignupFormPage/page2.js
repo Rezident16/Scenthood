@@ -12,28 +12,27 @@ function Second_page({
   nextPage,
   prevPage,
   errors,
-  page
+  page,
 }) {
   let buttonClassname;
   let tooltip;
   let tooltiptext;
   SetUserAddress(setAddress, setCity, setState);
   if (!address || !city || !state) {
-    buttonClassname = "disabled_signup_login_button tooltip";
+    buttonClassname = "disabled_next_button";
     tooltip = "tooltip";
     tooltiptext = "tooltiptext";
   } else {
-    buttonClassname = "signup_login_button";
+    buttonClassname = "next_button";
     tooltip = "";
     tooltiptext = "";
   }
 
-  console.log(page)
+  console.log(page);
   return (
-    <div className="">
-      <div className="button_field">
+    <div className="sign_up_page_container">
         <div className="2">
-          <label className="form_label">
+          <label className="">
             <div>
               Address
               <span aria-hidden="true" className="required">
@@ -46,14 +45,14 @@ function Second_page({
               onChange={(e) => setAddress(e.target.value)}
               required
               id="searchTextField"
-              className="login_signup_input signup_input"
+              className=""
             />
             <span style={{ height: "10px" }}>
               <span className="errors">{errors.address}</span>
             </span>
           </label>
-          <div className="address_city_state">
-            <label className="form_label">
+          <div className="city_state">
+            <label className="">
               <div>
                 City
                 <span aria-hidden="true" className="required">
@@ -69,7 +68,7 @@ function Second_page({
               />
               <span style={{ height: "10px" }}></span>
             </label>
-            <label className="form_label">
+            <label className="">
               <div>
                 State
                 <span aria-hidden="true" className="required">
@@ -144,24 +143,18 @@ function Second_page({
             </label>
           </div>
         </div>
-      </div>
-      <div>
-        <div className={tooltip}>
-          {tooltip != "" ? (
-            <span className={tooltiptext}>
-              Don't forget to fill out everything
-            </span>
-          ) : null}
-
-          {<button onClick={prevPage}>Previous</button>}
-          {
-            <button onClick={nextPage} 
-            // className={buttonClassname}
-            >
-              Next
-            </button>
-          }
-        </div>
+      
+      <div className="next_previous">
+        {
+          <button className="next_button" onClick={prevPage}>
+            Previous
+          </button>
+        }
+        {
+          <button onClick={nextPage} className={buttonClassname}>
+            Next
+          </button>
+        }
       </div>
     </div>
   );
