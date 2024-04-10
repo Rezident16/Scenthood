@@ -27,9 +27,12 @@ function UserDetails() {
     await dispatch(clearItemState());
     history.push("/items");
   };
-
+  let isCompleted = true
   const user = useSelector((state) => state.user.user);
   const currUser = useSelector((state) => state.session.user);
+  if (currUser) {
+    isCompleted = currUser.address != 'None' ? true : false;
+  }
   const [userOrders, setUserOrders] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState("not_selected");
   const [selectedItems, setSelectedItems] = useState("selected");
@@ -51,6 +54,9 @@ function UserDetails() {
   }, [dispatch, userId]);
 
   if (!user) return null;
+  if (!isCompleted) {
+    history.push('/complete')
+  }
   const favorites = user.favorites;
 
   let favoriteItems = [];

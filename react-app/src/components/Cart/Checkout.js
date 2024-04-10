@@ -15,6 +15,12 @@ import SetUserAddress from "../GoogleMapsApi";
 function Checkout() {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.session.user);
+  let isCompleted = true
+
+  if (user) {
+    isCompleted = user.address != 'None' ? true : false;
+  }
+  // isCompleted = user.address != 'None' ? true : false;
   const history = useHistory();
   const { setModalContent } = useModal();
   const dispatch = useDispatch();
@@ -25,6 +31,10 @@ function Checkout() {
   items.forEach((item) => {
     total += item.price * item.qty;
   });
+
+  if (!isCompleted) {
+    history.push("/complete");
+  }
 
   const [address, setAddress] = useState(user ? `${user.address}` : "");
   const [city, setCity] = useState(user ? `${user.city}` : "");

@@ -11,6 +11,10 @@ function UserHamburger ({userClass, user}) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
   const history = useHistory();
+  let isCompleted = true;
+  if (user) {
+    isCompleted = user.address != 'None' ? true : false;
+  }
 
   const openMenu = async () => {
     if (showMenu) return;
@@ -65,6 +69,8 @@ function UserHamburger ({userClass, user}) {
               {user?.first_name} {user?.last_name}
             </li>
             <li className="seperator"></li>
+            {isCompleted? (
+              <div className="hamburger_buttons">
             <li className="profile_button" onClick={goToProfile}>
               My Profile
             </li>
@@ -76,6 +82,20 @@ function UserHamburger ({userClass, user}) {
                 modalComponent={<ItemForm formType="create" />}
               />
             </li>
+              </div>
+
+            ) : (
+            <li onClick={closeMenu}>
+              <button className="profile_button"
+              onClick={() => {
+                history.push(`/complete`)
+              }}
+              >
+                Complete Profile
+              </button>
+            </li>
+
+            )}
             <li className="logout_button_li">
               <div onClick={handleLogout} className="logout_button">
                 Log Out
