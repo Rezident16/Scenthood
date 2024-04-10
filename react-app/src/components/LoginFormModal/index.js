@@ -48,7 +48,7 @@ function LoginFormModal() {
 
   return (
     <div className="form_container_login">
-      <h2>Sign In</h2>
+      <h2></h2>
       <form className="sign_up_page_container" onSubmit={handleSubmit}>
         <label className="form_label">
           <div>

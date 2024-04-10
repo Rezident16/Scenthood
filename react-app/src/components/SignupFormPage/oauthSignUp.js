@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { update } from "../../store/session";
 import "./SignupForm.css";
-import SetUserAddress from '../GoogleMapsApi/index';
+import SetUserAddress from "../GoogleMapsApi/index";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -15,7 +15,7 @@ function SignupFormPage() {
   const [username, setUsername] = useState(sessionUser.username);
   const [firstName, setFirstName] = useState(sessionUser.first_name);
   const [lastName, setLastName] = useState(sessionUser.last_name);
-  const [address, setAddress] = useState(""); 
+  const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [localImg, setLocalImg] = useState(null);
@@ -25,8 +25,8 @@ function SignupFormPage() {
   const [imageLoading, setImageLoading] = useState(false);
   SetUserAddress(setAddress, setCity, setState);
 
-  if (sessionUser.address != "None" && sessionUser.description != "None") return <Redirect to="/" />;
-
+  if (sessionUser.address != "None" && sessionUser.description != "None")
+    return <Redirect to="/" />;
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
@@ -50,13 +50,9 @@ function SignupFormPage() {
     !profile_img ||
     !description
   ) {
-    buttonClassname = "disabled_signup_login_button tooltip";
-    tooltip = "tooltip";
-    tooltiptext = "tooltiptext";
+    buttonClassname = "disabled_next_button";
   } else {
-    buttonClassname = "signup_login_button";
-    tooltip = "";
-    tooltiptext = "";
+    buttonClassname = "next_button";
   }
 
   const handleSubmit = async (e) => {
@@ -85,13 +81,8 @@ function SignupFormPage() {
       formData.append("profile_img", profile_img);
       formData.append("description", description);
 
-      console.log(formData)
-      const data = await dispatch(
-        update(
-          sessionUser.id,
-          formData
-        )
-      );
+      console.log(formData);
+      const data = await dispatch(update(sessionUser.id, formData));
       if (data) {
         let dataErrors = {};
         data.forEach((error) => {
@@ -110,17 +101,21 @@ function SignupFormPage() {
   };
 
   return (
-    <div className="signup_complete">
+    <div className="sign_up_page_container"
+    style={{ marginTop: "20px",
+    marginBottom: "20px",
+  }}
+    >
       <form
         enctype="multipart/form-data"
-        className="signup_complete"
+        className=""
+        // style={{ width: "430px" }}
         onSubmit={handleSubmit}
       >
         <h2>Complete your profile</h2>
-        <div className="button_field">
-          <div>
+        <div className="">
             <div>
-              <label className="form_label">
+              <label className="">
                 <did>
                   Username
                   <span aria-hidden="true" className="required">
@@ -132,15 +127,15 @@ function SignupFormPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="login_signup_input signup_input"
+                  className=""
                 />
-                <div style={{ height: "22px" }}>
+                <span style={{ height: "22px" }}>
                   {errors.username && (
                     <span className="errors">{errors.username}</span>
                   )}
-                </div>
+                </span>
               </label>
-              <label className="form_label">
+              <label className="">
                 <div>
                   First Name
                   <span aria-hidden="true" className="required">
@@ -148,7 +143,7 @@ function SignupFormPage() {
                   </span>
                 </div>
                 <input
-                  className="login_signup_input signup_input"
+                  className=""
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -160,7 +155,7 @@ function SignupFormPage() {
                   )}
                 </span>
               </label>
-              <label className="form_label">
+              <label className="">
                 <div>
                   Last Name
                   <span aria-hidden="true" className="required">
@@ -172,7 +167,7 @@ function SignupFormPage() {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   required
-                  className="login_signup_input signup_input"
+                  className=""
                 />
                 <span style={{ height: "22px" }}>
                   {errors.lastName && (
@@ -181,9 +176,9 @@ function SignupFormPage() {
                 </span>
               </label>
             </div>
-          </div>
+
           <div>
-            <label className="form_label">
+            <label className="">
               <div>
                 Address
                 <span aria-hidden="true" className="required">
@@ -196,7 +191,7 @@ function SignupFormPage() {
                 onChange={(e) => setAddress(e.target.value)}
                 required
                 id="searchTextField"
-                className="login_signup_input signup_input"
+                className=""
               />
               <span style={{ height: "22px" }}>
                 {errors.address && (
@@ -204,8 +199,8 @@ function SignupFormPage() {
                 )}
               </span>
             </label>
-            <div className="address_city_state">
-              <label className="form_label">
+            <div className="city_state">
+              <label className="">
                 <div>
                   City
                   <span aria-hidden="true" className="required">
@@ -217,13 +212,13 @@ function SignupFormPage() {
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   required
-                  className="login_signup_input city_input"
+                  className=""
                 />
                 <span style={{ height: "22px" }}>
                   {errors.city && <span className="errors">{errors.city}</span>}
                 </span>
               </label>
-              <label className="form_label">
+              <label className="">
                 <div>
                   State
                   <span aria-hidden="true" className="required">
@@ -231,7 +226,9 @@ function SignupFormPage() {
                   </span>
                 </div>
                 <select
-                  className="login_signup_input state"
+                  style={{ width: "100%",
+                  height: "25px",
+                }}
                   type="text"
                   value={state}
                   onChange={(e) => {
@@ -301,7 +298,7 @@ function SignupFormPage() {
                 </span>
               </label>
             </div>
-            <label className="form_label">
+            <label className="">
               <div>
                 About You:
                 <span aria-hidden="true" className="required">
@@ -309,7 +306,10 @@ function SignupFormPage() {
                 </span>
               </div>
               <textarea
-                className="login_signup_textarea"
+                className=""
+                style={{ height: "150px",
+                  width: "100%",
+              }}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
@@ -322,7 +322,7 @@ function SignupFormPage() {
             </label>
           </div>
         </div>
-        <label className="file_input">
+        <label className="">
           <div>
             Upload Image{" "}
             <span aria-hidden="true" className="required">
@@ -350,14 +350,18 @@ function SignupFormPage() {
           </div>
         </label>
         <div>
-          <div className={tooltip}>
-            {tooltip != "" ? (
-              <span className={tooltiptext}>
-                Don't forget to fill out everything
-              </span>
-            ) : null}
-
-            <button className={buttonClassname} type="submit">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <button
+              className={buttonClassname}
+              style={{ width: "70%" }}
+              type="submit"
+            >
               Sign Up
             </button>
           </div>
