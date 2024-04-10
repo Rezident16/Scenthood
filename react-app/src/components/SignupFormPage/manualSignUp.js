@@ -139,8 +139,6 @@ const isLoaded = useJsApiLoader({
     }
   };
 
-  console.log(page)
-
   return (
     <div className="">
       <form enctype="multipart/form-data" className="" onSubmit={handleSubmit}>

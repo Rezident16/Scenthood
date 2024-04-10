@@ -69,3 +69,15 @@
     gap: 10px;
     width: 100%;
   }
+
+
+  #google {
+    height: 55px;
+    width: 200px;
+  }
+
+  .google_image_container {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  }
