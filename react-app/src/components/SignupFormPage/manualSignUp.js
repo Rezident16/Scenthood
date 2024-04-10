@@ -74,6 +74,7 @@ const isLoaded = useJsApiLoader({
   };
 
   const handleSubmit = async (e) => {
+    console.log('clicked submit')
     e.preventDefault();
     let errorsObj = {};
     if (!email) errorsObj.email = "Email is required";
