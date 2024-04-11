@@ -7,6 +7,8 @@ import SetUserAddress from "../GoogleMapsApi/index";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useJsApiLoader } from "@react-google-maps/api";
+import { useApiKey } from "../../context/ApiKey";
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -24,7 +26,20 @@ function SignupFormPage() {
   const [description, setDescription] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   SetUserAddress(setAddress, setCity, setState);
+  const {isGoogleScriptLoaded} = useApiKey();
 
+  const baseUrl =
+  process.env.NODE_ENV === "production"
+  ? "https://scenthood.onrender.com"
+  : "http://localhost:5000";
+  
+  const isLoaded = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  });
+
+  
+  if (!sessionUser || !isLoaded || !isGoogleScriptLoaded) return null
   if (sessionUser.address != "None" && sessionUser.description != "None")
     return <Redirect to="/" />;
 
@@ -38,8 +53,6 @@ function SignupFormPage() {
   };
 
   let buttonClassname;
-  let tooltip;
-  let tooltiptext;
   if (
     !username ||
     !firstName ||
@@ -81,7 +94,6 @@ function SignupFormPage() {
       formData.append("profile_img", profile_img);
       formData.append("description", description);
 
-      console.log(formData);
       const data = await dispatch(update(sessionUser.id, formData));
       if (data) {
         let dataErrors = {};
@@ -100,8 +112,8 @@ function SignupFormPage() {
     }
   };
 
-  return (
-    <div className="sign_up_page_container"
+  return (isLoaded && (
+      <div className="sign_up_page_container"
     style={{ marginTop: "20px",
     marginBottom: "20px",
   }}
@@ -369,7 +381,7 @@ function SignupFormPage() {
         </div>
       </form>
     </div>
-  );
+  ))
 }
 
 export default SignupFormPage;

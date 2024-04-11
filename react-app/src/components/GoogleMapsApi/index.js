@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useApiKey } from "../../context/ApiKey";
 
 function SetUserAddress(setAddress, setCity, setState) {
-  const apiKey = useApiKey();
+  const {apiKey, isGoogleScriptLoaded} = useApiKey();
   let autocomplete;
   useEffect(() => {
-    if (apiKey && window.google) {
+    if (apiKey && isGoogleScriptLoaded && window.google) {
       autocomplete = new window.google.maps.places.Autocomplete(
         document.getElementById("searchTextField")
       );
@@ -32,13 +32,12 @@ function SetUserAddress(setAddress, setCity, setState) {
             address += " " + addressComponents[i].long_name;
           }
         }
-
         setAddress(address.trim());
         setCity(city);
         setState(state);
       });
-    }
-  }, [setAddress, setCity, setState]);
+    } 
+  }, [setAddress, setCity, setState, isGoogleScriptLoaded]);
 }
 
 export default SetUserAddress;
