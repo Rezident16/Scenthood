@@ -336,7 +336,7 @@ function SignupFormPage() {
         </div>
         <label className="">
           <div>
-            Upload Image{" "}
+            Profile Image{" "}
             <span aria-hidden="true" className="required">
               *
             </span>

@@ -52,11 +52,11 @@ function ItemForm({ item, formType, userId }) {
     !parseInt(available_qty) < 0 ||
     !description
   ) {
-    buttonClassname = "disabled_signup_login_button";
+    buttonClassname = "disabled_next_button";
     tooltip = "tooltip";
     tooltiptext = "tooltiptext";
   } else {
-    buttonClassname = "signup_login_button";
+    buttonClassname = "next_button";
     tooltip = "";
     tooltiptext = "";
   }
@@ -102,16 +102,18 @@ function ItemForm({ item, formType, userId }) {
   };
 
   return (
-    <div>
-      <form
-        className="form_container item_form"
-        enctype="multipart/form-data"
-        onSubmit={handleSubmit}
-      >
+    <div className="sign_up_page_container" style={{ width: "400px" }}>
+      <form className="" enctype="multipart/form-data" onSubmit={handleSubmit}>
         {formType == "edit" ? <h2>Update Item</h2> : <h2>Add New Item</h2>}
-        <div className="name_brand_price">
-          <div className="brand_name">
-            <label className="form_label">
+        <div
+        // className="name_brand_price"
+        >
+          <div
+          // className="brand_name"
+          >
+            <label
+            // className="form_label"
+            >
               <div>
                 Product Name
                 <span aria-hidden="true" className="required">
@@ -119,7 +121,7 @@ function ItemForm({ item, formType, userId }) {
                 </span>
               </div>
               <input
-                className="login_input"
+                // className="login_input"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -129,7 +131,9 @@ function ItemForm({ item, formType, userId }) {
                 {errors.name && <span className="errors">{errors.name}</span>}
               </span>
             </label>
-            <label className="form_label">
+            <label
+            // className="form_label"
+            >
               <div>
                 Brand
                 <span aria-hidden="true" className="required">
@@ -137,7 +141,7 @@ function ItemForm({ item, formType, userId }) {
                 </span>
               </div>
               <input
-                className="login_input"
+                // className="login_input"
                 type="text"
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
@@ -148,30 +152,42 @@ function ItemForm({ item, formType, userId }) {
               </span>
             </label>
           </div>
-          <div className="price_qty">
-            <label className="form_label">
+          <div
+            // className="price_qty"
+            // className="city_state"
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <label
+            // className="form_label"
+            >
               <div>
                 Price
                 <span aria-hidden="true" className="required">
                   *
                 </span>
               </div>
-              <div>
-                <input
-                  className="login_input"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  required
-                />
-              </div>
+
+              <input
+                // className="login_input"
+                type="number"
+                step="0.01"
+                min="0"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+                style={{ width: "100%" }}
+              />
               <span style={{ height: "20px" }}>
                 {errors.price && <span className="errors">{errors.price}</span>}
               </span>
             </label>
-            <label className="form_label">
+            <label
+            // className="form_label"
+            >
               <div>
                 Available Quantity
                 <span aria-hidden="true" className="required">
@@ -179,13 +195,14 @@ function ItemForm({ item, formType, userId }) {
                 </span>
               </div>
               <input
-                className="login_input available_qty_form"
+                // className="login_input available_qty_form"
                 type="number"
                 step="1"
                 min="0"
                 value={available_qty}
                 onChange={(e) => setAvailableQty(e.target.value)}
                 required
+                style={{ width: "100%" }}
               />
               <span style={{ height: "20px" }}>
                 {errors.available_qty && (
@@ -195,7 +212,9 @@ function ItemForm({ item, formType, userId }) {
             </label>
           </div>
         </div>
-        <label className="form_label">
+        <label
+        // className="form_label"
+        >
           <div>
             Description
             <span aria-hidden="true" className="required">
@@ -203,11 +222,12 @@ function ItemForm({ item, formType, userId }) {
             </span>
           </div>
           <textarea
-            className="login_signup_textarea"
+            // className="login_signup_textarea"
             rows="10"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            style={{ height: "150px", width: "100%" }}
           />
           <span style={{ height: "20px" }}>
             {errors.description && (
@@ -216,23 +236,29 @@ function ItemForm({ item, formType, userId }) {
           </span>
         </label>
 
-        <label className="form_label item_form_input">
+        <label
+        // className="form_label item_form_input"
+        >
           <div>
-            Upload Image
+            Product Image
             <span aria-hidden="true" className="required">
               *
             </span>
           </div>
           <input
-            className="input_create_item"
-            id="item-img-input"
+            // className="input_create_item"
+            className="image_file_container"
+            // id="item-img-input"
             type="file"
             name="Item Image"
             accept=".jpg, .jpeg, .png"
             onChange={onFileChange}
           />
         </label>
-        <div className="image_placeholder_item">
+        <div
+          // className="image_placeholder_item"
+          className="image_placeholder_signup"
+        >
           {localImg && (
             <div>
               <img id="item_form_img" src={localImg} alt="" />
@@ -244,12 +270,7 @@ function ItemForm({ item, formType, userId }) {
             <span className="errors">{errors.preview_img}</span>
           )}
         </span>
-        <div className={tooltip}>
-          {tooltip != "" ? (
-            <span className={tooltiptext}>
-              Don't forget to fill out everything
-            </span>
-          ) : null}
+        <div>
           <button className={buttonClassname}>Submit</button>
         </div>
         {imageLoading && <p>Image is Loading...</p>}
