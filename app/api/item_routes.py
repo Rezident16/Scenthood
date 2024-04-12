@@ -33,7 +33,6 @@ def get_item(itemId):
     """Get One Item"""
     item = Item.query.get(itemId)
     if not item:
-        # return abort(404, description='Item not found')
         return {}
     return item.to_dict_owner()
 
@@ -79,17 +78,12 @@ def update_item(itemId):
     item = Item.query.get(itemId)
 
     if not item:
-        # return abort(404, description='Item not found')
         return {}
     form = ItemForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
         data = form.data
-
-        # if item.owner_id != current_user.id:
-        #     return abort(403, description='Unauthorized')
-        # need to update the quantity on purchase, therefore should be allowed for now
         
         if data["preview_img"]:
             image = data['preview_img']
@@ -97,7 +91,6 @@ def update_item(itemId):
             upload = upload_file_to_s3(image)
 
             if "url" not in upload:
-                # return render_template("restaurant_form.html", form=form, errors=upload)
                 return { 'errors': upload }, 500
             else :
                 remove_file_from_s3(item.preview_img)
