@@ -4,6 +4,7 @@ from app.forms import LoginForm
 from app.forms import SignUpForm
 from .aws_helpers import *
 from flask_login import current_user, login_user, logout_user, login_required
+from oauthlib.oauth2.rfc6749.errors import AccessDeniedError
 
 import os
 import pathlib
@@ -161,52 +162,54 @@ def oauth_login():
     session["state"] = state
     return redirect(authorization_url)
 
-
 @auth_routes.route("/callback")
 def callback():
-    flow.fetch_token(authorization_response=request.url)
-    print("sign up route")
-    # This is our CSRF protection for the Oauth Flow!
-    if not session["state"] == request.args["state"]:
-        abort(500)  # State does not match!
+    try:
+        flow.fetch_token(authorization_response=request.url)
+        print("sign up route")
+        # This is our CSRF protection for the Oauth Flow!
+        if not session["state"] == request.args["state"]:
+            abort(500)  # State does not match!
 
-    credentials = flow.credentials
-    request_session = requests.session()
-    cached_session = cachecontrol.CacheControl(request_session)
-    token_request = google.auth.transport.requests.Request(session=cached_session)
+        credentials = flow.credentials
+        request_session = requests.session()
+        cached_session = cachecontrol.CacheControl(request_session)
+        token_request = google.auth.transport.requests.Request(session=cached_session)
 
-    id_info = id_token.verify_oauth2_token(
-        id_token=credentials._id_token,
-        request=token_request,
-        audience=CLIENT_ID
-    )
+        id_info = id_token.verify_oauth2_token(
+            id_token=credentials._id_token,
+            request=token_request,
+            audience=CLIENT_ID
+        )
 
-    temp_email = id_info.get('email')
-    user_exists = User.query.filter(User.email == temp_email).first()
+        temp_email = id_info.get('email')
+        user_exists = User.query.filter(User.email == temp_email).first()
 
-    if not user_exists:
-        email_arr = temp_email.split('@')
-        user_exists = User(
-                first_name=id_info.get("given_name"),
-                last_name=id_info.get("family_name"),
-                email=temp_email,
-                password='OAUTH',
-                username=email_arr[0],
-                address = "None",
-                city = "None",
-                state = "None",
-                profile_img = "https://scenthood.s3.us-east-2.amazonaws.com/generic.png",
-                description = "None"
-            )
+        if not user_exists:
+            email_arr = temp_email.split('@')
+            user_exists = User(
+                    first_name=id_info.get("given_name"),
+                    last_name=id_info.get("family_name"),
+                    email=temp_email,
+                    password='OAUTH',
+                    username=email_arr[0],
+                    address = "None",
+                    city = "None",
+                    state = "None",
+                    profile_img = "https://scenthood.s3.us-east-2.amazonaws.com/generic.png",
+                    description = "None"
+                )
 
-        db.session.add(user_exists)
-        db.session.commit()
+            db.session.add(user_exists)
+            db.session.commit()
 
-    print(user_exists, "USER +++++++++++++++")
+        print(user_exists, "USER +++++++++++++++")
 
-    login_user(user_exists)
+        login_user(user_exists)
 
-    if user_exists.address != "None":
-        return redirect(f"{REACT_APP_BASE_URL}/")
-    else:
-        return redirect(f"{REACT_APP_BASE_URL}/complete")
+        if user_exists.address != "None":
+            return redirect(f"{REACT_APP_BASE_URL}/")
+        else:
+            return redirect(f"{REACT_APP_BASE_URL}/complete")
+    except AccessDeniedError:
+        return redirect(REACT_APP_BASE_URL)
