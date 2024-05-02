@@ -49,8 +49,8 @@ def upload_image(data):
     image.filename = get_unique_filename(image.filename)
     upload = upload_file_to_s3(image)
     if 'url' not in upload:
-        return None
-    return upload['url']
+        return None, upload
+    return upload['url'], None
 
 def create_item(data, image_url):
     new_item = Item (
@@ -75,7 +75,7 @@ def post_item():
     if data is None:
         return form.errors
 
-    image_url = upload_image(data)
+    image_url, upload = upload_image(data)
     if image_url is None:
         return {'errors': upload}, 500
 
@@ -111,7 +111,7 @@ def update_item(itemId):
 
     image_url = None
     if data["preview_img"]:
-        image_url = upload_image(data)
+        image_url, upload = upload_image(data)
         if image_url is None:
             return { 'errors': upload }, 500
 
