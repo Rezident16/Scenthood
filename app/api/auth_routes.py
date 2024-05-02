@@ -3,6 +3,7 @@ from app.models import User, db
 from app.forms import LoginForm, SignUpForm
 from .aws_helpers import *
 from flask_login import current_user, login_user, logout_user, login_required
+from oauthlib.oauth2.rfc6749.errors import AccessDeniedError
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
@@ -20,32 +21,39 @@ CLIENT_ID = os.getenv('CLIENT_ID')
 BASE_URL = os.getenv('BASE_URL')
 REACT_APP_BASE_URL = os.getenv('REACT_APP_BASE_URL')
 
-client_secrets = {
-  "web": {
-    "client_id": CLIENT_ID,
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_secret": CLIENT_SECRET,
-    "redirect_uris": [
-      f"{BASE_URL}/api/auth/callback"
-    ]
-  }
-}
+def create_client_secrets():
+    client_secrets = {
+        "web": {
+            "client_id": CLIENT_ID,
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+            "client_secret": CLIENT_SECRET,
+            "redirect_uris": [
+                f"{BASE_URL}/api/auth/callback"
+            ]
+        }
+    }
+    return client_secrets
 
-secrets = NamedTemporaryFile()
-with open(secrets.name, "w") as output:
-    json.dump(client_secrets, output)
+def create_flow(client_secrets):
+    secrets = NamedTemporaryFile()
+    with open(secrets.name, "w") as output:
+        json.dump(client_secrets, output)
 
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
-flow = Flow.from_client_secrets_file(
-    client_secrets_file=secrets.name,
-    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
-    redirect_uri=f"{BASE_URL}/api/auth/callback"
-)
+    flow = Flow.from_client_secrets_file(
+        client_secrets_file=secrets.name,
+        scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
+        redirect_uri=f"{BASE_URL}/api/auth/callback"
+    )
 
-secrets.close()
+    secrets.close()
+    return flow
+
+client_secrets = create_client_secrets()
+flow = create_flow(client_secrets)
 
 def validation_errors_to_error_messages(validation_errors):
     errorMessages = []
@@ -60,10 +68,11 @@ def validate_and_submit_form(form):
         return True
     return False
 
-def create_new_user(form):
-    image = form.data['profile_img']
+def upload_profile_image(image):
     image.filename = get_unique_filename(image.filename)
-    upload = upload_file_to_s3(image)
+    return upload_file_to_s3(image)
+
+def create_new_user(form, profile_img_url):
     user = User(
         username=form.data['username'],
         email=form.data['email'],
@@ -73,9 +82,12 @@ def create_new_user(form):
         address = form.data['address'],
         city = form.data['city'].title(),
         state = form.data['state'],
-        profile_img = upload['url'],
+        profile_img = profile_img_url,
         description = form.data['description']
     )
+    return user
+
+def add_user_to_db(user):
     db.session.add(user)
     db.session.commit()
     return user
@@ -104,7 +116,9 @@ def logout():
 def sign_up():
     form = SignUpForm()
     if validate_and_submit_form(form):
-        user = create_new_user(form)
+        profile_img_url = upload_profile_image(form.data['profile_img'])
+        user = create_new_user(form, profile_img_url)
+        user = add_user_to_db(user)
         login_user(user)
         return user.to_dict_self()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
@@ -127,45 +141,49 @@ def oauth_login():
 
 @auth_routes.route("/callback")
 def callback():
-    flow.fetch_token(authorization_response=request.url)
-    if not session["state"] == request.args["state"]:
-        abort(500)  # State does not match!
+    try:
+        flow.fetch_token(authorization_response=request.url)
+        print("sign up route")
+        # This is our CSRF protection for the Oauth Flow!
+        if not session["state"] == request.args["state"]:
+            abort(500)  # State does not match!
 
-    credentials = flow.credentials
-    request_session = requests.session()
-    cached_session = cachecontrol.CacheControl(request_session)
-    token_request = google.auth.transport.requests.Request(session=cached_session)
+        credentials = flow.credentials
+        request_session = requests.session()
+        cached_session = cachecontrol.CacheControl(request_session)
+        token_request = google.auth.transport.requests.Request(session=cached_session)
 
-    id_info = id_token.verify_oauth2_token(
-        id_token=credentials._id_token,
-        request=token_request,
-        audience=CLIENT_ID
-    )
+        id_info = id_token.verify_oauth2_token(
+            id_token=credentials._id_token,
+            request=token_request,
+            audience=CLIENT_ID
+        )
 
-    temp_email = id_info.get('email')
-    user_exists = User.query.filter(User.email == temp_email).first()
+        temp_email = id_info.get('email')
+        user_exists = User.query.filter(User.email == temp_email).first()
 
-    if not user_exists:
-        email_arr = temp_email.split('@')
-        user_exists = User(
-                first_name=id_info.get("given_name"),
-                last_name=id_info.get("family_name"),
-                email=temp_email,
-                password='OAUTH',
-                username=email_arr[0],
-                address = "None",
-                city = "None",
-                state = "None",
-                profile_img = "https://scenthood.s3.us-east-2.amazonaws.com/generic.png",
-                description = "None"
-            )
+        if not user_exists:
+            email_arr = temp_email.split('@')
+            user_exists = User(
+                    first_name=id_info.get("given_name"),
+                    last_name=id_info.get("family_name"),
+                    email=temp_email,
+                    password='OAUTH',
+                    username=email_arr[0],
+                    address = "None",
+                    city = "None",
+                    state = "None",
+                    profile_img = "https://scenthood.s3.us-east-2.amazonaws.com/generic.png",
+                    description = "None"
+                )
 
-        db.session.add(user_exists)
-        db.session.commit()
+            db.session.add(user_exists)
+            db.session.commit()
+        login_user(user_exists)
 
-    login_user(user_exists)
-
-    if user_exists.address != "None":
-        return redirect(f"{REACT_APP_BASE_URL}/")
-    else:
-        return redirect(f"{REACT_APP_BASE_URL}/complete")
+        if user_exists.address != "None":
+            return redirect(f"{REACT_APP_BASE_URL}/")
+        else:
+            return redirect(f"{REACT_APP_BASE_URL}/complete")
+    except AccessDeniedError:
+        return redirect(REACT_APP_BASE_URL)
