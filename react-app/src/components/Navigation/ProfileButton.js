@@ -60,9 +60,7 @@ function ProfileButton({ user }) {
       />
       <UserHamburger userClass={userClass} user={user} />
 
-      {!user && (
-        <LoginSignup closeMenu={closeMenu} />
-      )}
+      {!user && <LoginSignup closeMenu={closeMenu} />}
     </div>
   );
 }
