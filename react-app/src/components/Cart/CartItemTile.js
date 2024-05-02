@@ -1,8 +1,6 @@
 import "./Cart.css";
 
 function CartItemTile({ item }) {
-  let total = item.price * item.qty;
-
   return (
     <div className="item_order_container">
       <div>

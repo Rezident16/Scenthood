@@ -1,89 +1,69 @@
-import { useSelector } from "react-redux";
-import LoginFormModal from "../LoginFormModal";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { submitOrder } from "../../store/cart";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import { useDispatch } from "react-redux";
-import { fetchLoadCart } from "../../store/cart";
-import { getSpecific } from "../../store/user";
+import { submitOrder } from "../../store/cart";
+import LoginFormModal from "../LoginFormModal";
 import CartItemTile from "./CartItemTile";
-import { fetchUpdateItem } from "../../store/item";
 import "./Cart.css";
-import SetUserAddress from "../GoogleMapsApi";
 
 function Checkout() {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.session.user);
-  let isCompleted = true
-
-  if (user) {
-    isCompleted = user.address != 'None' ? true : false;
-  }
-  // isCompleted = user.address != 'None' ? true : false;
   const history = useHistory();
   const { setModalContent } = useModal();
   const dispatch = useDispatch();
-
-  const items = Object.values(cart);
-
-  let total = 0;
-  items.forEach((item) => {
-    total += item.price * item.qty;
-  });
-
-  if (!isCompleted) {
-    history.push("/complete");
-  }
 
   const [address, setAddress] = useState(user ? `${user.address}` : "");
   const [city, setCity] = useState(user ? `${user.city}` : "");
   const [state, setState] = useState(user ? `${user.state}` : "");
   const [errors, setErrors] = useState({});
-  SetUserAddress(setAddress, setCity, setState);
 
-  let buttonClassname;
-  if (!city || !state || !address) {
-    buttonClassname = "disabled_signup_login_button";
-  } else {
-    buttonClassname = "signup_login_button";
-  }
+  useEffect(() => {
+    if (user && user.address === 'None') {
+      history.push("/complete");
+    }
+  }, [user, history]);
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const calculateTotal = () => {
+    return Object.values(cart).reduce((total, item) => {
+      return total + item.price * item.qty;
+    }, 0);
+  };
 
+  const validateForm = () => {
     const errorsObj = {};
     if (!city) errorsObj.city = "City is required";
     if (!state) errorsObj.state = "State is required";
     if (!address) errorsObj.address = "Address is required";
+    setErrors(errorsObj);
+    return !Object.values(errorsObj).length;
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
     if (!user) {
       setModalContent(<LoginFormModal />);
       return;
     }
-    if (!Object.values(errorsObj).length) {
+
+    if (validateForm()) {
       const order = {
         address: address,
         city: city,
         state: state,
-        items: items,
+        items: Object.values(cart),
       };
+
       await dispatch(submitOrder(order));
-      for (let item of items) {
-        const formData = new FormData();
-        formData.append("name", item.name);
-        formData.append("brand", item.brand);
-        formData.append("description", item.description);
-        formData.append("price", item.price);
-        formData.append("available_qty", item.available_qty - item.qty);
-        formData.append("preview_img", item.preview_img);
-        await dispatch(fetchUpdateItem(item.id, formData));
-      }
       history.push(`users/${user.id}`);
-    } else {
-      setErrors(errorsObj);
     }
   };
+
+  const total = calculateTotal();
+  const items = Object.values(cart);
+  const buttonClassname = (!city || !state || !address) ? "disabled_signup_login_button" : "signup_login_button";
 
   return (
     <div className="checkout_container">

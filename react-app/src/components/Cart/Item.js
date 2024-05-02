@@ -1,25 +1,26 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateCartQty, removeFromCart } from "../../store/cart";
-import { useEffect } from "react";
-import React from 'react';
 
 function CartItem({ item }) {
   const dispatch = useDispatch();
   const [Qty, setQty] = useState();
-  const stock = item.available_qty;
-  const options = () => {
+
+  const generateOptions = (stock) => {
     const optionsArr = [];
-    if (stock) {
-      let highest = 40;
-      if (stock < highest) {
-        highest = stock;
-      }
-      for (let i = 1; i <= highest; i++) {
-        optionsArr.push(i);
-      }
+    const highest = Math.min(stock, 40);
+    for (let i = 1; i <= highest; i++) {
+      optionsArr.push(i);
     }
     return optionsArr;
+  };
+
+  const handleSelectChange = (e) => {
+    if (e.target.value === "remove") {
+      dispatch(removeFromCart(item));
+    } else {
+      dispatch(updateCartQty(item, e.target.value));
+    }
   };
 
   useEffect(() => {
@@ -32,18 +33,12 @@ function CartItem({ item }) {
       <div className="item_name">{item.name}</div>
       <div className="price_qty">
         <select
-        className="qty"
-          onChange={(e) => {
-            if (e.target.value === "remove") {
-              dispatch(removeFromCart(item));
-            } else {
-              dispatch(updateCartQty(item, e.target.value));
-            }
-          }}
+          className="qty"
+          onChange={handleSelectChange}
           value={Qty}
         >
           <option value="remove">Remove</option>
-          {options().map((option) => (
+          {generateOptions(item.available_qty).map((option) => (
             <option value={option} key={option}>
               {option}
             </option>
