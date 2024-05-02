@@ -8,6 +8,7 @@ import { fetchOneItem } from "../../store/item";
 import { useHistory } from "react-router-dom";
 import { fetchLoadCart } from "../../store/cart";
 import "./items.css";
+import './item_form.css';
 
 function ItemForm({ item, formType, userId }) {
   const { closeModal } = useModal();
@@ -102,180 +103,104 @@ function ItemForm({ item, formType, userId }) {
   };
 
   return (
-    <div className="sign_up_page_container" style={{ width: "400px" }}>
-      <form className="" enctype="multipart/form-data" onSubmit={handleSubmit}>
-        {formType == "edit" ? <h2>Update Item</h2> : <h2>Add New Item</h2>}
-        <div
-        // className="name_brand_price"
-        >
-          <div
-          // className="brand_name"
-          >
-            <label
-            // className="form_label"
-            >
-              <div>
-                Product Name
-                <span aria-hidden="true" className="required">
-                  *
-                </span>
-              </div>
-              <input
-                // className="login_input"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-              <span style={{ height: "20px" }}>
-                {errors.name && <span className="errors">{errors.name}</span>}
-              </span>
-            </label>
-            <label
-            // className="form_label"
-            >
-              <div>
-                Brand
-                <span aria-hidden="true" className="required">
-                  *
-                </span>
-              </div>
-              <input
-                // className="login_input"
-                type="text"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-                required
-              />
-              <span style={{ height: "20px" }}>
-                {errors.brand && <span className="errors">{errors.brand}</span>}
-              </span>
-            </label>
-          </div>
-          <div
-            // className="price_qty"
-            // className="city_state"
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <label
-            // className="form_label"
-            >
-              <div>
-                Price
-                <span aria-hidden="true" className="required">
-                  *
-                </span>
-              </div>
-
-              <input
-                // className="login_input"
-                type="number"
-                step="0.01"
-                min="0"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                required
-                style={{ width: "100%" }}
-              />
-              <span style={{ height: "20px" }}>
-                {errors.price && <span className="errors">{errors.price}</span>}
-              </span>
-            </label>
-            <label
-            // className="form_label"
-            >
-              <div>
-                Available Quantity
-                <span aria-hidden="true" className="required">
-                  *
-                </span>
-              </div>
-              <input
-                // className="login_input available_qty_form"
-                type="number"
-                step="1"
-                min="0"
-                value={available_qty}
-                onChange={(e) => setAvailableQty(e.target.value)}
-                required
-                style={{ width: "100%" }}
-              />
-              <span style={{ height: "20px" }}>
-                {errors.available_qty && (
-                  <span className="errors">{errors.available_qty}</span>
-                )}
-              </span>
-            </label>
-          </div>
-        </div>
-        <label
-        // className="form_label"
-        >
-          <div>
-            Description
-            <span aria-hidden="true" className="required">
-              *
-            </span>
-          </div>
-          <textarea
-            // className="login_signup_textarea"
-            rows="10"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            style={{ height: "150px", width: "100%" }}
-          />
-          <span style={{ height: "20px" }}>
-            {errors.description && (
-              <span className="errors">{errors.description}</span>
-            )}
-          </span>
-        </label>
-
-        <label
-        // className="form_label item_form_input"
-        >
-          <div>
-            Product Image
-            <span aria-hidden="true" className="required">
-              *
-            </span>
-          </div>
-          <input
-            // className="input_create_item"
-            className="image_file_container"
-            // id="item-img-input"
-            type="file"
-            name="Item Image"
-            accept=".jpg, .jpeg, .png"
-            onChange={onFileChange}
-          />
-        </label>
-        <div
-          // className="image_placeholder_item"
-          className="image_placeholder_signup"
-        >
-          {localImg && (
-            <div>
-              <img id="item_form_img" src={localImg} alt="" />
-            </div>
-          )}
-        </div>
-        <span style={{ height: "20px" }}>
-          {errors.preview_img && (
-            <span className="errors">{errors.preview_img}</span>
-          )}
-        </span>
-        <div>
-          <button className={buttonClassname}>Submit</button>
-        </div>
-        {imageLoading && <p>Image is Loading...</p>}
-      </form>
-    </div>
+    <form 
+      enctype="multipart/form-data" 
+      onSubmit={handleSubmit} 
+      style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        backgroundColor: '#f3f3f3', 
+        padding: '20px', 
+        borderRadius: '4px', 
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)', 
+        width: '100%', 
+        maxWidth: '400px', 
+        fontFamily: 'Arial, sans-serif' 
+      }}
+    >
+      {formType === "edit" ? <h2>Update Item</h2> : <h2>Add New Item</h2>}
+      <label style={{ width: '90%', marginBottom: '10px' }}>
+        Product Name
+        <span aria-hidden="true" style={{ color: 'red' }}>*</span>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          style={{ width: '90%', padding: '10px', borderRadius: '4px', border: '1px solid #ddd' }}
+        />
+        {errors.name && <span style={{ color: 'red', fontSize: '0.8em' }}>{errors.name}</span>}
+      </label>
+      <label style={{ width: '90%', marginBottom: '10px' }}>
+        Brand
+        <span aria-hidden="true" style={{ color: 'red' }}>*</span>
+        <input
+          type="text"
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
+          required
+          style={{ width: '90%', padding: '10px', borderRadius: '4px', border: '1px solid #ddd' }}
+        />
+        {errors.brand && <span style={{ color: 'red', fontSize: '0.8em' }}>{errors.brand}</span>}
+      </label>
+      <label style={{ width: '90%', marginBottom: '10px' }}>
+        Price
+        <span aria-hidden="true" style={{ color: 'red' }}>*</span>
+        <input
+          type="number"
+          step="0.01"
+          min="0"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+          style={{ width: '90%', padding: '10px', borderRadius: '4px', border: '1px solid #ddd' }}
+        />
+        {errors.price && <span style={{ color: 'red', fontSize: '0.8em' }}>{errors.price}</span>}
+      </label>
+      <label style={{ width: '90%', marginBottom: '10px' }}>
+        Available Quantity
+        <span aria-hidden="true" style={{ color: 'red' }}>*</span>
+        <input
+          type="number"
+          step="1"
+          min="0"
+          value={available_qty}
+          onChange={(e) => setAvailableQty(e.target.value)}
+          required
+          style={{ width: '90%', padding: '10px', borderRadius: '4px', border: '1px solid #ddd' }}
+        />
+        {errors.available_qty && <span style={{ color: 'red', fontSize: '0.8em' }}>{errors.available_qty}</span>}
+      </label>
+      <label style={{ width: '90%', marginBottom: '10px' }}>
+        Description
+        <span aria-hidden="true" style={{ color: 'red' }}>*</span>
+        <textarea
+          rows="10"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+          style={{ height: '150px', width: '90%', padding: '10px', borderRadius: '4px', border: '1px solid #ddd' }}
+        />
+        {errors.description && <span style={{ color: 'red', fontSize: '0.8em' }}>{errors.description}</span>}
+      </label>
+      <label style={{ width: '90%', marginBottom: '10px' }}>
+        Product Image
+        <span aria-hidden="true" style={{ color: 'red' }}>*</span>
+        <input
+          type="file"
+          name="Item Image"
+          accept=".jpg, .jpeg, .png"
+          onChange={onFileChange}
+          style={{ width: '90%', padding: '10px', borderRadius: '4px', border: '1px solid #ddd' }}
+        />
+      </label>
+      {localImg && <img id="item_form_img" src={localImg} alt="" style={{ maxWidth: '90%', height: 'auto' }} />}
+      {errors.preview_img && <span style={{ color: 'red', fontSize: '0.8em' }}>{errors.preview_img}</span>}
+      <button style={{ width: '80%', padding: '10px', backgroundColor: '#f90', border: '1px solid', borderColor: '#a88734 #9c7e31 #846a29', cursor: 'pointer', borderRadius: '4px', color: '#111' }}>Submit</button>
+      {imageLoading && <p>Image is Loading...</p>}
+    </form>
   );
 }
 
