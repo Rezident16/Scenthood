@@ -12,6 +12,8 @@ import os
 import requests
 import json
 from tempfile import NamedTemporaryFile
+from flask_wtf.csrf import generate_csrf
+
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -184,6 +186,10 @@ def callback():
         if user_exists.address != "None":
             return redirect(f"{REACT_APP_BASE_URL}/")
         else:
-            return redirect(f"{REACT_APP_BASE_URL}/complete")
+            csrf_token = generate_csrf()
+            session['csrf_token'] = csrf_token
+            response = redirect(f"{REACT_APP_BASE_URL}/complete")
+            response.set_cookie('csrf_token', csrf_token)
+            return response
     except AccessDeniedError:
         return redirect(REACT_APP_BASE_URL)
