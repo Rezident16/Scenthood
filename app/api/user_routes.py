@@ -24,11 +24,12 @@ def validate_form(form):
         return None
 
 def update_user_data(user, data, image):
-    image.filename = get_unique_filename(image.filename)
-    upload = upload_file_to_s3(image)
+    if image:
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+        remove_file_from_s3(user.profile_img)
+        user.profile_img = upload["url"]
 
-    remove_file_from_s3(user.profile_img)
-    user.profile_img = upload["url"]
     user.username = data['username']
     user.first_name = data['first_name']
     user.last_name = data['last_name']
@@ -60,13 +61,17 @@ def user(userId):
 @user_routes.route('/<int:userId>/edit', methods=["POST"])
 @login_required
 def edit_user(userId):
-    form = UpdateUserForm()
-    data = validate_form(form)
-    if data is None:
+    form = UpdateUserForm(request.form)
+    form.user_id.data = userId 
+
+    if not form.validate():
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
     user = get_user_by_id(userId)
-    updated_user = update_user_data(user, data, data['profile_img'])
+    if user is None:
+        return {"error": "User not found"}, 404
+
+    updated_user = update_user_data(user, form.data, form.profile_img.data if 'profile_img' in request.files else None)
     return updated_user.to_dict_self()
 
 @user_routes.route('/<int:userId>/orders/<int:orderId>')
