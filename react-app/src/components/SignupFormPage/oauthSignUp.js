@@ -98,7 +98,9 @@ function SignupFormPage() {
       const data = await dispatch(update(sessionUser.id, formData));
       if (data) { 
         let dataErrors = {};
+        console.log('data', data)
         data.forEach((error) => {
+          console.log('error', error)
           const errorsSplit = error.split(" :");
           dataErrors[errorsSplit[0]] = errorsSplit[1];
         });
