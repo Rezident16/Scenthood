@@ -72,6 +72,7 @@ def edit_user(userId):
     if user is None:
         return {"error": "User not found"}, 404
 
+    print(data)
     updated_user = update_user_data(user, data, data.profile_img if 'profile_img' in data else None)
     return updated_user.to_dict_self()
 
