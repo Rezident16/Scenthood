@@ -58,8 +58,9 @@ def user(userId):
     user = get_user_by_id(userId)
     return user.to_dict_self() if user else None
 
+# this is specifically used for the oauth signup
 @user_routes.route('/<int:userId>/edit', methods=["POST"])
-@login_required
+# @login_required
 def edit_user(userId):
     form = UpdateUserForm(request.form)
     form.user_id.data = userId 
