@@ -17,7 +17,7 @@ def user_exists(form, field):
 def username_exists(form, field):
     # Checking if username is already in use
     username = field.data
-    user_id = form.user_id.data
+    user_id = form.id.data
     user = User.query.filter(User.username == username, User.id != user_id).first()
     if user:
         raise ValidationError('Username is already in use.')
@@ -25,7 +25,7 @@ def username_exists(form, field):
 IMAGE_EXTENSIONS = {"pdf", "png", "jpg", "jpeg", "gif"}
 
 class UpdateUserForm(FlaskForm):
-    user_id = IntegerField('user_id', validators=[DataRequired()])
+    user_id = IntegerField('id', validators=[DataRequired()])
     username = StringField('username', validators=[DataRequired(), username_exists])
     email = StringField('email', validators=[DataRequired(), user_exists, Email("Please enter a valid email")])
     password = StringField('password', validators=[DataRequired()])
