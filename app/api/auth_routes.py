@@ -118,7 +118,7 @@ def logout():
 def sign_up():
     form = SignUpForm()
     if validate_and_submit_form(form):
-        profile_img_url = upload_profile_image(form.data['profile_img'])
+        profile_img_url = upload_profile_image(form.data['profile_img'])['url']
         user = create_new_user(form, profile_img_url)
         user = add_user_to_db(user)
         login_user(user)
