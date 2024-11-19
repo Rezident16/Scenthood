@@ -9,6 +9,13 @@ user_routes = Blueprint('users', __name__)
 def get_user_by_id(userId):
     return User.query.get(userId)
 
+def validation_errors_to_error_messages(validation_errors):
+    errorMessages = []
+    for field in validation_errors:
+        for error in validation_errors[field]:
+            errorMessages.append(f'{field} : {error}')
+    return errorMessages
+
 def validate_form(form):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -56,7 +63,7 @@ def edit_user(userId):
     form = UpdateUserForm()
     data = validate_form(form)
     if data is None:
-        return form.errors
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
     user = get_user_by_id(userId)
     updated_user = update_user_data(user, data, data['profile_img'])

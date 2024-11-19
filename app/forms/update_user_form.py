@@ -25,7 +25,7 @@ def username_exists(form, field):
 IMAGE_EXTENSIONS = {"pdf", "png", "jpg", "jpeg", "gif"}
 
 class UpdateUserForm(FlaskForm):
-    user_id = IntegerField('id', validators=[DataRequired()])
+    id = IntegerField('id', validators=[DataRequired()])
     username = StringField('username', validators=[DataRequired(), username_exists])
     email = StringField('email', validators=[DataRequired(), user_exists, Email("Please enter a valid email")])
     password = StringField('password', validators=[DataRequired()])
