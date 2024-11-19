@@ -61,7 +61,7 @@ def user(userId):
 @user_routes.route('/<int:userId>/edit', methods=["POST"])
 # @login_required
 def edit_user(userId):
-    form = UpdateUserForm(request.form)
+    form = UpdateUserForm()
     form.user_id.data = userId 
 
     data = validate_form(form)
@@ -72,8 +72,7 @@ def edit_user(userId):
     if user is None:
         return {"error": "User not found"}, 404
 
-    print(data)
-    updated_user = update_user_data(user, data, data.profile_img if 'profile_img' in data else None)
+    updated_user = update_user_data(user, data, form.data['profile_img'] if 'profile_img' in form.data else None)
     return updated_user.to_dict_self()
 
 @user_routes.route('/<int:userId>/orders/<int:orderId>')
