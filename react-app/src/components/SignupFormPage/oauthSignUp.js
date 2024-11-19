@@ -85,6 +85,7 @@ function SignupFormPage() {
     if (!Object.values(errorsObj).length) {
       setImageLoading(true);
       const formData = new FormData();
+      formData.append("id", sessionUser.id);
       formData.append("username", username);
       formData.append("first_name", firstName);
       formData.append("last_name", lastName);
@@ -95,7 +96,7 @@ function SignupFormPage() {
       formData.append("description", description);
 
       const data = await dispatch(update(sessionUser.id, formData));
-      if (data) {
+      if (data) { 
         let dataErrors = {};
         data.forEach((error) => {
           const errorsSplit = error.split(" :");

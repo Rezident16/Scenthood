@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import login_required, current_user
-from app.models import User, Order
-from app.forms import SignUpForm
+from app.models import *
+from app.forms import SignUpForm, UpdateUserForm
 from .aws_helpers import *
 
 user_routes = Blueprint('users', __name__)
@@ -53,7 +53,7 @@ def user(userId):
 @user_routes.route('/<int:userId>/edit', methods=["POST"])
 @login_required
 def edit_user(userId):
-    form = SignUpForm()
+    form = UpdateUserForm()
     data = validate_form(form)
     if data is None:
         return form.errors
