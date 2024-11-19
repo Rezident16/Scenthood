@@ -85,7 +85,7 @@ function SignupFormPage() {
     if (!Object.values(errorsObj).length) {
       setImageLoading(true);
       const formData = new FormData();
-      formData.append("id", sessionUser.id);
+      formData.append("user_id", sessionUser.id);
       formData.append("username", username);
       formData.append("first_name", firstName);
       formData.append("last_name", lastName);
