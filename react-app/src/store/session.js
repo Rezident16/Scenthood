@@ -66,6 +66,7 @@ export const login = (email, password) => async (dispatch) => {
       return data.errors;
     }
   } else {
+    console.log(response)
     return ["An error occurred. Please try again."];
   }
 };
@@ -124,6 +125,7 @@ export const signUp =
           return data.errors;
         }
       } else {
+        console.log(response)
         return ["An error occurred. Please try again."];
       }
     } catch (error) {
@@ -152,6 +154,7 @@ export const signUp =
           return data.errors;
         }
       } else {
+        console.log(response)
         return ["An error occurred. Please try again."];
       }
     } catch (error) {

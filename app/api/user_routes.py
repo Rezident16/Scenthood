@@ -65,7 +65,7 @@ def edit_user(userId):
     form = UpdateUserForm(request.form)
     form.user_id.data = userId 
 
-    if not form.validate_form():
+    if not validate_form(form):
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
     user = get_user_by_id(userId)
