@@ -81,3 +81,53 @@
   justify-content: center;
   align-items: center;
   }
+
+
+  @media (max-width: 600px) {
+    .sign_up_page_container {
+      padding: 10px;
+    }
+
+    .login_signup_textarea {
+      width: 10rem;
+    }
+  
+    .sign_up_page_container h1 {
+      font-size: 24px;
+    }
+  
+    .sign_up_page_container label {
+      font-size: 14px;
+    }
+  
+    .sign_up_page_container input {
+      padding: 5px;
+    }
+  
+    .next_button, .disabled_next_button {
+      height: 2rem;
+      width: 6rem;
+    }
+  
+    .next_previous {
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-around;
+    }
+  
+    .city_state {
+      flex-direction: column;
+      gap: 5px;
+    }
+  
+    #google {
+      height: 45px;
+      width: 100%;
+    }
+  
+    .google_image_container {
+      flex-direction: column;
+    }
+
+  }

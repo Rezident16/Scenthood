@@ -38,7 +38,7 @@ function Third_page({
   };
 
   return (
-    <div className="sign_up_page_container" style={{ width: "430px" }}>
+    <div className="sign_up_page_container">
       <div className="3">
         <label className="">
           <div>

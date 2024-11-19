@@ -276,6 +276,47 @@
   box-shadow: 3px 3px 5px hsl(39, 100%, 50%, 0.3);
 }
 
-/* .logout_button:active {
-  background-color: red;
-} */
+/* Mobile */
+@media (max-width: 600px) {
+  .navigation {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .left_nav {
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .navigation_buttons,
+  .navigation_buttons_cart,
+  .profile_button,
+  .logout_button {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .login_signup_buttons,
+  #nav-buttons {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    width: 12rem;
+    height: 2rem;
+  }
+
+  .search_bar_component {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .profile-dropdown {
+    width: 100%;
+    right: 0;
+    left: 0;
+  }
+}
