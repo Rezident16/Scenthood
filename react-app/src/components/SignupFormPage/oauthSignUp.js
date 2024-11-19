@@ -104,7 +104,7 @@ function SignupFormPage() {
         errorsObj = { ...errorsObj, ...dataErrors };
         setErrors(errorsObj);
         setImageLoading(false);
-      } else {
+      } else if (!Object.values(errorsObj).length.length) {
         history.push("/");
       }
     } else {
