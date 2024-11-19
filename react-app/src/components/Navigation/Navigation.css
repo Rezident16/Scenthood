@@ -315,8 +315,23 @@
   }
 
   .profile-dropdown {
-    width: 100%;
+    width: 50vw;
     right: 0;
-    left: 0;
+    left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search_bar_component {
+    display: none;
+  }
+
+  .hidden{
+    display: none;
+  }
+
+  .profile_text {
+    width: 40vw;
   }
 }
