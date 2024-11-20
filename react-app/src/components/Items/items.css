@@ -533,7 +533,7 @@ input[type="radio"] {
     flex-direction: column;
     /* position: relative; */
     /* z-index: 100; */
-    /* border-radius: 5px; */
+    border-radius: 5px;
 }
 
 /* .search_bar {
@@ -544,20 +544,38 @@ input[type="radio"] {
 }  */
 */
 
+.search_bar_component {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    /* position: relative; */
+    /* z-index: 100; */
+    /* border-radius: 5px; */
+}
+
+/* .search_bar {
+    width: 600px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+} */
+
 .search_terms {
     display: flex;
     flex-direction: column;
     position: absolute;
     background-color: white;
-    width: 37.5rem; /* 600px to rem */
+    width: 37.5rem;
     border: 1px solid gray;
-    top: 3.0625rem; /* 49px to rem */
+    top: 3.0625rem;
     z-index: 1;
 }
 
 .search_term_img {
-    width: 1.875rem; /* 30px to rem */
-    height: 2.5rem; /* 40px to rem */
+    width: 1.875rem;
+    height: 2.5rem;
 }
 
 .empty_search_bar {
@@ -567,21 +585,60 @@ input[type="radio"] {
 .search_term_result {
     display: flex;
     align-items: center;
-    gap: 1.25rem; /* 20px to rem */
-    padding-left: 0.625rem; /* 10px to rem */
+    gap: 1.25rem;
+    padding-left: 0.625rem;
     z-index: 100;
 }
 
 .item_name_brand_search {
     display: flex;
     align-items: center;
-    gap: 0.3125rem; /* 5px to rem */
+    gap: 0.3125rem;
 }
 
 .search_term_result:hover {
     background-color: lightgray;
     cursor: pointer;
 }
+
+/* .search_terms {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+    width: 37.5rem;
+    border: 1px solid gray;
+    top: 3.0625rem;
+    z-index: 1;
+} */
+
+/* .search_term_img {
+    width: 1.875rem;
+    height: 2.5rem;
+} */
+
+/* .empty_search_bar {
+    display: none;
+} */
+
+/* .search_term_result {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding-left: 0.625rem;
+    z-index: 100;
+}
+
+.item_name_brand_search {
+    display: flex;
+    align-items: center;
+    gap: 0.3125rem;
+}
+
+.search_term_result:hover {
+    background-color: lightgray;
+    cursor: pointer;
+} */
 
 .page_buttons {
     display: flex;
@@ -660,7 +717,7 @@ input[type="radio"] {
 
 .search_bar {
     width: 100%;
-    height: 1.25rem; /* 20px to rem */
+    height: 20px; /* 20px to rem */
     display: flex;
     align-items: center;
     border: none;
