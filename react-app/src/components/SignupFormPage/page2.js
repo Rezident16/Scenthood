@@ -143,7 +143,10 @@ function Second_page({
           </button>
         }
         {
-          <button onClick={nextPage} className={buttonClassname}>
+          <button 
+          onClick={nextPage} className={buttonClassname}
+          disabled={buttonClassname === "disabled_next_button" ? true : false}
+          >
             Next
           </button>
         }

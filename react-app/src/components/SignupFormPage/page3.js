@@ -88,7 +88,9 @@ function Third_page({
           </button>
         }
         {
-          <button onClick={onSubmit} className={buttonClassname}>
+          <button onClick={onSubmit} className={buttonClassname}
+          disabled={buttonClassname === "disabled_next_button" ? true : false}
+          >
             Next
           </button>
         }

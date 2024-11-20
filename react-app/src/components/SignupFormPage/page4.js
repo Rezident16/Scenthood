@@ -87,7 +87,9 @@ function Forth_Page({
           </button>
         }
         {
-          <button className={buttonClassname} type="submit">
+          <button className={buttonClassname} type="submit"
+          disabled={buttonClassname === "disabled_next_button" ? true : false}
+          >
             Sign Up
           </button>
         }
