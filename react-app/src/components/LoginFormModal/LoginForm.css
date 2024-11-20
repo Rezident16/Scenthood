@@ -86,8 +86,8 @@
 .login_signup_textarea {
     /* border-radius: 5px; */
     border: 1px solid gray;
-    width: 420px;
-    height: 147px;
+    width: 100%;
+    height: 10rem;
 }
 
 
@@ -318,7 +318,7 @@ input::file-selector-button {
 
   @media (max-width: 600px) {
     .login_signup_textarea {
-        width: 18rem;
+        width: 98%;
     }
     
     /* .sign_up_page_container > div:first-child {
