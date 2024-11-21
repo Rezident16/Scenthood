@@ -903,6 +903,7 @@ input[type="radio"] {
         grid-template-columns: 1fr;
         padding-left: 0.5rem; /* 8px to rem */
         padding-right: 0.5rem; /* 8px to rem */
+        width: 95vw;
     }
 
     .item_tile > img {

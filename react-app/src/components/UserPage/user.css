@@ -220,3 +220,14 @@
   .hover-div:hover .fa-regular {
     visibility: visible;
   }
+
+  @media (max-width: 600px) {
+    .image_favorites {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .favorites {
+        font-size: 0.75rem;
+    }
+}

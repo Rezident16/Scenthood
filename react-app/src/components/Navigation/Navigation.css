@@ -282,6 +282,7 @@
     flex-direction: row;
     align-items: center;
     padding: 10px;
+    justify-content: space-between;
   }
 
   .left_nav {
@@ -300,12 +301,11 @@
     font-size: 14px;
   }
 
-  .login_signup_buttons,
-  #nav-buttons {
-    flex-direction: row;
-    align-items: center;
+  .login_signup_buttons {
+    /* flex-direction: row;
+    align-items: center; */
     gap: 1rem;
-    width: 12rem;
+    /* width: 12rem; */
     height: 2rem;
   }
 
@@ -334,4 +334,20 @@
   .profile_text {
     width: 40vw;
   }
+  .logo_text_parent {
+    display: none;
+  }
+
+  .navigation_buttons_cart, .navigation_buttons {
+    width: auto;
+    height: auto;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  #nav-buttons {
+    width: auto;
+  }
+
+  
 }
