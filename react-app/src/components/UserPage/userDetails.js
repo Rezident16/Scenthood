@@ -88,7 +88,7 @@ function UserDetails() {
             <div className="fav_items">
               {favoriteItems.map (item => (
                 <div className="hover-div">
-                  {currUser.id == userId ? (
+                  {currUser && currUser.id == userId ? (
                     <i class="fa-regular fa-circle-xmark" onClick={ () => unlikeItem(dispatch, item.fav)}></i>
                   ) : null}
                   <img onClick={() => {
