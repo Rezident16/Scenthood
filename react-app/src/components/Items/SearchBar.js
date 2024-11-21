@@ -36,6 +36,7 @@ function SearchBar({ items }) {
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.brand.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
 
   return (
     <div className={searchClass}>
@@ -50,7 +51,7 @@ function SearchBar({ items }) {
       />
         </div>
       <div className={searchBarClassName}>
-        {searchTerm &&
+        {searchTerm && filteredItems.length > 0 ? (
           filteredItems
             .map((item) => (
               <div
@@ -72,7 +73,20 @@ function SearchBar({ items }) {
                 </div>
               </div>
             ))
-            .slice(0, 5)}
+            .slice(0, 5)):
+            (<div
+              className="search_term_result search_term_target"
+              style={{cursor: "default"}}
+            >
+              <div className="item_name_brand_search search_term_target"
+              
+              >
+                <p className="search_term_target"
+                style={{fontFamily: "Poppins"}}
+                >Nothing here yet. Try searching for something else.</p>
+              </div>
+            </div>)
+            }
       </div>
     </div>
   );
