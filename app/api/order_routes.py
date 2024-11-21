@@ -28,6 +28,12 @@ def create_order(data, items):
             order_id = new_order.id,
             qty = item['qty']
         )
+        product = Item.query.get(item['id'])
+        product.available_qty -= item['qty']
+
+        if product.available_qty < 0:
+            raise ValueError(f"Not enough stock for product {product.name}")
+        
         price += item['price'] * item['qty']
 
         order_products.append(new_order_product)
