@@ -88,7 +88,9 @@ function UserDetails() {
             <div className="fav_items">
               {favoriteItems.map (item => (
                 <div className="hover-div">
-                  <i class="fa-regular fa-circle-xmark" onClick={ () => unlikeItem(dispatch, item.fav)}></i>
+                  {currUser.id == userId ? (
+                    <i class="fa-regular fa-circle-xmark" onClick={ () => unlikeItem(dispatch, item.fav)}></i>
+                  ) : null}
                   <img onClick={() => {
                     history.push(`/items/${item.id}`)
                   }} className="item_image_fav" src={item.preview_img} />
